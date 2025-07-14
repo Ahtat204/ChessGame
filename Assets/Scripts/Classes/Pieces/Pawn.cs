@@ -1,17 +1,36 @@
-﻿using Assets.Scripts.Classes;
-using Assets.Scripts.Enums;
+﻿using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
+using UnityEngine;
+using Square = UnityEngine.Vector2;
+using Squares = System.Collections.Generic.List<UnityEngine.Vector2>;
+
 
 namespace Assets.Scripts.Classes.Pieces
 {
-    public class Pawn : Piece, IMove, IPromotable
+    public class Pawn : Piece, IPromotable
     {
-        protected override uint Value { get; }
+        [SerializeField] private uint _value;
 
-        public void Move()
+        protected override Vector2 position { get; }
+
+        public override uint Value
+        {
+            get => _value;
+            protected set => _value = value;
+        }
+
+
+        protected override void Move(Square p)
         {
             throw new System.NotImplementedException();
         }
+
+        public override PieceColor Color { get; }
+        protected override Squares CalculateLegalMoves(Vector2 piecePosition)
+        {
+            return base.CalculateLegalMoves(piecePosition);
+        }
+
 
         Piece IPromotable.Promote(Pawn pawn)
         {

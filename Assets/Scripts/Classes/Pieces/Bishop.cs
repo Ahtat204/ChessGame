@@ -1,17 +1,35 @@
-﻿using Assets.Scripts.Classes;
+﻿
 using Assets.Scripts.Enums;
-using Assets.Scripts.Interfaces;
+using UnityEngine;
+using Square = UnityEngine.Vector2;
+using Squares = System.Collections.Generic.List<UnityEngine.Vector2>;
 
 namespace Assets.Scripts.Classes.Pieces
 {
     //Bishop Class
-    public class Bishop : Piece, IMove
+    public class Bishop : Piece
     {
-        protected override uint Value { get; }
+        [SerializeField] private uint _value;
 
-        public void Move()
+        protected override Vector2 position { get; }
+
+        public override uint Value
+        {
+            get => _value;
+            protected set => _value = value;
+        }
+
+        
+
+        protected override void Move(Square p)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override PieceColor Color { get; }
+        protected override Squares CalculateLegalMoves(Vector2 piecePosition)
+        {
+            return base.CalculateLegalMoves( piecePosition);
         }
     }
 }

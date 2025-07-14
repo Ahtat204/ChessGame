@@ -1,14 +1,38 @@
-﻿using Assets.Scripts.Interfaces;
-
+﻿using Assets.Scripts.Enums;
+using UnityEngine;
+using Square = UnityEngine.Vector2;
+using Squares = System.Collections.Generic.List<UnityEngine.Vector2>;
 
 namespace Assets.Scripts.Classes.Pieces
 {
-    public class Queen : Piece, IMove
+    public class Queen : Piece
     {
-        protected override uint Value => 9;
+        [SerializeField] private uint _value;
+        private Squares _square;
+
+        [SerializeField] private Vector2 Position;
+
+        [SerializeField] private PieceColor _pieceColor;
+        public override PieceColor Color => _pieceColor;
+
+        protected override Squares CalculateLegalMoves(Vector2 piecePosition)
+        {
+            return new Squares();
+        }
+
+        protected override Vector2 position
+        {
+            get => Position;
+        }
+
+        public override uint Value
+        {
+            get => 9;
+            protected set => _value = value;
+        }
 
 
-        public void Move()
+        protected override void Move(Square p)
         {
             throw new System.NotImplementedException();
         }

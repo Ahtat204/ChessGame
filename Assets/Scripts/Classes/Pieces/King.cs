@@ -1,17 +1,34 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using Assets.Scripts.Classes;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Interfaces;
+﻿using Assets.Scripts.Enums;
+using UnityEngine;
+using Square = UnityEngine.Vector2;
+using Positions = System.Collections.Generic.List<UnityEngine.Vector2>;
 
 namespace Assets.Scripts.Classes.Pieces
 {
-    public class King : Piece, IMove
+    public class King : Piece
     {
-        protected override uint Value { get; }
+        [SerializeField] private uint _value;
 
-        public void Move()
+        protected override Vector2 position { get; }
+
+        public override uint Value
+        {
+            get => _value;
+            protected set => _value = value;
+        }
+
+        
+
+       
+        protected override void Move(Square p)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override PieceColor Color { get; }
+        protected override Positions CalculateLegalMoves(Vector2 piecePosition)
+        {
+            return base.CalculateLegalMoves(piecePosition);
         }
     }
 }
