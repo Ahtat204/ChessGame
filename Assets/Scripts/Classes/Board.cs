@@ -1,6 +1,12 @@
-﻿namespace Assets.Scripts.Classes
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Classes
+
 {
-    internal class Board
+    public class Board
     {
+        public static float size;
+
+        
     }
 }
