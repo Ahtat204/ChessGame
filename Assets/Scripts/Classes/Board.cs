@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿#define UNITY_EDITOR
+#define UNITY_ANDROID
+
+using UnityEngine;
 using UnityEngine.Tilemaps;
 using Assets.Scripts.Structs;
 
@@ -6,18 +9,39 @@ namespace Assets.Scripts.Classes
 {
     public class Board : MonoBehaviour
     {
-        public  Tilemap tilemap; // Assign in Inspector
-        private Coordinates Position;
-        public Vector3 mousePosWorld;
-        public Vector3Int mouseCell;
-        public Vector3 mouseCellInterpolated;
+        /// <summary>
+        /// a tile map field
+        /// </summary>
+        [Space] [SerializeField] private Tilemap tilemap; // Assign in Inspector
+
+        private Coordinates _position;
+
+        /// <summary>
+        /// a tile map field
+        /// </summary>
+        [Space] [SerializeField] private Vector3 mousePosWorld;
+
+        /// <summary>
+        /// a tile map field
+        /// </summary>
+        [Space] [SerializeField] private Vector3Int mouseCell;
+
+        /// <summary>
+        /// a tile map field
+        /// </summary>
+        [Space] [SerializeField] private Vector3 mouseCellInterpolated;
+
+        /// <summary>
+        /// to avoid creating camera inside the Update method with Camera.main , which is expensive in terms of resources , we create it once 
+        /// </summary>
+        private Camera _camera;
 
 
-        private void Awake()
+        private void Start()
         {
-            
-
+            _camera = Camera.main;
         }
+
 
         private void Update()
         {
@@ -36,15 +60,16 @@ namespace Assets.Scripts.Classes
                    Debug.Log("Cell: " + mouseCell);
                   Debug.Log("Interpolated: " + mouseCellInterpolated);
                   */
-                Position = GetCoordinates();
-                Debug.Log("Mouse clicked at: " + Position.ToString());
+                _position = GetCoordinates();
+                
             }
         }
 
-        public virtual Coordinates GetCoordinates()
+        public Coordinates GetCoordinates()
         {
-            System.Diagnostics.Debug.Assert(Camera.main != null, "Camera.main != null");
-            var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            
+            System.Diagnostics.Debug.Assert(_camera, "Camera.main != null");
+            var mouseWorldPos = _camera.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
 
             var cell = tilemap.WorldToCell(mouseWorldPos);

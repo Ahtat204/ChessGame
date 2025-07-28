@@ -1,40 +1,65 @@
-﻿using Assets.Scripts.Enums;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Structs;
 using UnityEngine;
-using Square = UnityEngine.Vector2;
-using Squares = System.Collections.Generic.List<UnityEngine.Vector2>;
+using UnityEngine.Tilemaps;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Assets.Scripts.Classes.Pieces
 {
     public class Queen : Piece
     {
-        [SerializeField] private uint _value;
-        private Squares _square;
-
-        [SerializeField] private Vector2 Position;
-
+        public Tilemap tilemap;
+        private uint valeur;
+        private List<Vector2Int> moves;
         [SerializeField] private PieceColor _pieceColor;
-        public override PieceColor Color => _pieceColor;
-
-        protected override Squares CalculateLegalMoves(Vector2 piecePosition)
-        {
-            return new Squares();
-        }
-
-        protected override Vector2 position
-        {
-            get => Position;
-        }
 
         public override uint Value
         {
             get => 9;
-            protected set => _value = value;
+            protected set => valeur = value;
         }
 
+        public override PieceColor Color => _pieceColor;
 
-        protected override void Move(Square p)
+
+        protected override void Move(Coordinates p)
         {
-            throw new System.NotImplementedException();
+        }
+        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        {
+            var count = 0;
+            var legalMoves = new List<Vector2Int>();
+            var positionCell = (Vector2Int)tilemap.WorldToCell(position);
+            for (var i = 1; i <= 8; i++)
+            {
+                legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y));
+                legalMoves.Add(new Vector2Int(positionCell.x - i, positionCell.y));
+                legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y + i));
+                legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y - i));
+                legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y + i));
+                legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y - i));
+                legalMoves.Add(new Vector2Int(positionCell.x - i, positionCell.y + i));
+                legalMoves.Add(new Vector2Int(positionCell.x - i, positionCell.y - i));
+            }
+
+            legalMoves.Remove(positionCell);
+            var filtredMovesList =
+                legalMoves.Where(pos => pos.x >= 1 && pos.y >= 1 && pos.x <= 8 && pos.y <= 8).ToList();
+
+
+            return filtredMovesList;
+        }
+
+        private void Start()
+        {
+            moves = CalculateLegalMoves(transform.position);
+            foreach (var move in moves)
+            {
+                Debug.Log(move);
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Enums;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.Structs;
 using UnityEngine;
-using Square = UnityEngine.Vector2;
-using Squares = System.Collections.Generic.List<UnityEngine.Vector2>;
 
 
 namespace Assets.Scripts.Classes.Pieces
@@ -11,7 +11,7 @@ namespace Assets.Scripts.Classes.Pieces
     {
         [SerializeField] private uint _value;
 
-        protected override Vector2 position { get; }
+        
 
         public override uint Value
         {
@@ -20,15 +20,17 @@ namespace Assets.Scripts.Classes.Pieces
         }
 
 
-        protected override void Move(Square p)
+      
+
+        protected override void Move(Coordinates p)
         {
             throw new System.NotImplementedException();
         }
 
         public override PieceColor Color { get; }
-        protected override Squares CalculateLegalMoves(Vector2 piecePosition)
+        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
-            return base.CalculateLegalMoves(piecePosition);
+            throw new System.NotImplementedException();
         }
 
 

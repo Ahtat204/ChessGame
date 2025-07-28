@@ -2,24 +2,26 @@
 {
     public struct Coordinates
     {
-        private int x, y;
+        /// <summary>
+        /// a wrapping property for the x field
+        /// </summary>
+        public int X { get; }
 
-        public int X
-        {
-            get => x;
-            set => x = value;
-        }
+        /// <summary>
+        /// a wrapping property for the y field
+        /// </summary>
+        public int Y { get; }
 
-        public int Y
-        {
-            get => y;
-            set => y = value;
-        }
-
+        /// <summary>
+        /// Constructor of the Coordinates Struct
+        /// </summary>
+        /// <param name="x"> Horizantal Coordinate</param>
+        /// <param name="y"> Vertical Coordinate</param>
+        /// <exception cref="Exception">chess is 8x8 game , the numeration start from 1 not 0 </exception>
      public Coordinates(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            this.X = x;
+            this.Y = y;
             if (x == 0 || y == 0) throw new System.Exception("Invalid coordinates");
           
         }

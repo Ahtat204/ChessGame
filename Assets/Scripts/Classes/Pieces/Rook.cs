@@ -1,33 +1,31 @@
-﻿using Assets.Scripts.Enums;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Structs;
 using UnityEngine;
-using Square = UnityEngine.Vector2;
-using Squares = System.Collections.Generic.List<UnityEngine.Vector2>;
-
 namespace Assets.Scripts.Classes.Pieces
+
 {
     public class Rook : Piece
-
     {
         [SerializeField] private uint _value;
         [SerializeField] private PieceColor _pieceColor;
-        public override PieceColor Color => _pieceColor;
-        protected override Squares CalculateLegalMoves(Vector2 piecePosition)
+
+        protected override void Move(Coordinates p)
         {
-            return base.CalculateLegalMoves(piecePosition);
+            throw new System.NotImplementedException();
         }
 
-        protected override Vector2 position { get; }
+        public override PieceColor Color => _pieceColor;
+
+        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public override uint Value
         {
             get => _value;
             protected set => _value = value;
-        }
-
-
-        protected override void Move(Square p)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

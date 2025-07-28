@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 9456039}
   - component: {fileID: 9456038}
   m_Layer: 0
-  m_Name: w_pawn_png_128px (3)
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 64461291}
   - component: {fileID: 64461293}
   m_Layer: 0
-  m_Name: b_pawn_png_128px (1)
+  m_Name: BlackPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356,6 +356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 78644800}
   - component: {fileID: 78644799}
+  - component: {fileID: 78644801}
   m_Layer: 0
   m_Name: OOAD630
   m_TagString: Untagged
@@ -430,6 +431,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -360}
+--- !u!114 &78644801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78644798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22cf1700e5b04cb1909ca28e06e420c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 156888342}
+  mousePosWorld: {x: 0, y: 0, z: 0}
+  mouseCell: {x: 0, y: 0, z: 0}
+  mouseCellInterpolated: {x: 0, y: 0, z: 0}
 --- !u!1 &156888339
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +579,7 @@ GameObject:
   - component: {fileID: 165962722}
   - component: {fileID: 165962721}
   m_Layer: 0
-  m_Name: w_pawn_png_128px (7)
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -674,7 +691,7 @@ GameObject:
   - component: {fileID: 188472858}
   - component: {fileID: 188472857}
   m_Layer: 0
-  m_Name: w_pawn_png_128px (6)
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -786,7 +803,7 @@ GameObject:
   - component: {fileID: 209935645}
   - component: {fileID: 209935647}
   m_Layer: 0
-  m_Name: b_knight_png_128px (1)
+  m_Name: BalckKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -898,7 +915,7 @@ GameObject:
   - component: {fileID: 242615365}
   - component: {fileID: 242615367}
   m_Layer: 0
-  m_Name: b_pawn_png_128px (3)
+  m_Name: BlackPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1007,7 +1024,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 346441918}
-  - component: {fileID: 346441917}
   m_Layer: 0
   m_Name: gameobject
   m_TagString: Untagged
@@ -1015,22 +1031,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &346441917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346441916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22cf1700e5b04cb1909ca28e06e420c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemap: {fileID: 156888342}
-  mousePosWorld: {x: 0, y: 0, z: 0}
-  mouseCell: {x: 0, y: 0, z: 0}
-  mouseCellInterpolated: {x: 0, y: 0, z: 0}
 --- !u!4 &346441918
 Transform:
   m_ObjectHideFlags: 0
@@ -1058,7 +1058,7 @@ GameObject:
   - component: {fileID: 390628337}
   - component: {fileID: 390628336}
   m_Layer: 0
-  m_Name: w_rook_png_128px
+  m_Name: WhiteRook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1262,7 +1262,7 @@ GameObject:
   - component: {fileID: 565579085}
   - component: {fileID: 565579087}
   m_Layer: 0
-  m_Name: b_rook_png_128px (1)
+  m_Name: BlackRook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1374,7 +1374,7 @@ GameObject:
   - component: {fileID: 623783000}
   - component: {fileID: 623783002}
   m_Layer: 0
-  m_Name: b_pawn_png_128px (2)
+  m_Name: BalckPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1486,7 +1486,7 @@ GameObject:
   - component: {fileID: 657312825}
   - component: {fileID: 657312824}
   m_Layer: 0
-  m_Name: w_knight_png_128px (1)
+  m_Name: WhiteKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1598,7 +1598,7 @@ GameObject:
   - component: {fileID: 750679654}
   - component: {fileID: 750679653}
   m_Layer: 0
-  m_Name: w_pawn_png_128px
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1710,7 +1710,7 @@ GameObject:
   - component: {fileID: 811823640}
   - component: {fileID: 811823642}
   m_Layer: 0
-  m_Name: b_king_png_128px
+  m_Name: BlackKing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1822,7 +1822,7 @@ GameObject:
   - component: {fileID: 858036828}
   - component: {fileID: 858036830}
   m_Layer: 0
-  m_Name: b_pawn_png_128px
+  m_Name: BlackPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1934,7 +1934,7 @@ GameObject:
   - component: {fileID: 919756216}
   - component: {fileID: 919756215}
   m_Layer: 0
-  m_Name: w_king_png_128px
+  m_Name: WhiteKing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2046,7 +2046,7 @@ GameObject:
   - component: {fileID: 1076682359}
   - component: {fileID: 1076682361}
   m_Layer: 0
-  m_Name: b_pawn_png_128px (5)
+  m_Name: BlackPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2158,7 +2158,7 @@ GameObject:
   - component: {fileID: 1112956581}
   - component: {fileID: 1112956580}
   m_Layer: 0
-  m_Name: w_rook_png_128px (1)
+  m_Name: WhiteRook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2270,7 +2270,7 @@ GameObject:
   - component: {fileID: 1178185695}
   - component: {fileID: 1178185694}
   m_Layer: 0
-  m_Name: w_bishop_png_128px
+  m_Name: WhiteDarkBishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2382,7 +2382,7 @@ GameObject:
   - component: {fileID: 1226143942}
   - component: {fileID: 1226143941}
   m_Layer: 0
-  m_Name: w_pawn_png_128px (4)
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2494,7 +2494,7 @@ GameObject:
   - component: {fileID: 1365337939}
   - component: {fileID: 1365337941}
   m_Layer: 0
-  m_Name: b_pawn_png_128px (4)
+  m_Name: BlackPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2604,10 +2604,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1385448810}
   - component: {fileID: 1385448809}
-  - component: {fileID: 1385448811}
   - component: {fileID: 1385448812}
   m_Layer: 0
-  m_Name: b_queen_png_128px
+  m_Name: BlackQueen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2680,21 +2679,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -360.015}
---- !u!114 &1385448811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385448808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb46a10268c42c2a25821e31d07d445, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _value: 9
-  Position: {x: 0, y: 0}
-  _pieceColor: 0
 --- !u!50 &1385448812
 Rigidbody2D:
   serializedVersion: 4
@@ -2734,7 +2718,7 @@ GameObject:
   - component: {fileID: 1498821942}
   - component: {fileID: 1498821944}
   m_Layer: 0
-  m_Name: b_pawn_png_128px (7)
+  m_Name: BlackPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2846,7 +2830,7 @@ GameObject:
   - component: {fileID: 1543530764}
   - component: {fileID: 1543530766}
   m_Layer: 0
-  m_Name: b_rook_png_128px
+  m_Name: BlackRook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3003,7 +2987,7 @@ GameObject:
   - component: {fileID: 1641962368}
   - component: {fileID: 1641962370}
   m_Layer: 0
-  m_Name: b_bishop_png_128px (1)
+  m_Name: BlackWhiteBishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3049,7 +3033,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 26e0768622931724fb21329c0799bed1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3070,7 +3054,7 @@ Transform:
   m_GameObject: {fileID: 1641962367}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.00013516482, w: -1}
-  m_LocalPosition: {x: 1.48, y: 2.517, z: 0}
+  m_LocalPosition: {x: -0.89, y: 2.517, z: 0}
   m_LocalScale: {x: 0.3585559, y: 0.33085802, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3116,7 +3100,7 @@ GameObject:
   - component: {fileID: 1679048231}
   - component: {fileID: 1679048232}
   m_Layer: 0
-  m_Name: b_knight_png_128px
+  m_Name: BlackKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3241,7 +3225,7 @@ GameObject:
   - component: {fileID: 1715645294}
   - component: {fileID: 1715645293}
   m_Layer: 0
-  m_Name: w_knight_png_128px
+  m_Name: WhiteKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3353,7 +3337,7 @@ GameObject:
   - component: {fileID: 1732009600}
   - component: {fileID: 1732009602}
   m_Layer: 0
-  m_Name: b_pawn_png_128px (6)
+  m_Name: BlackPawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3464,8 +3448,9 @@ GameObject:
   - component: {fileID: 1753729843}
   - component: {fileID: 1753729842}
   - component: {fileID: 1753729841}
+  - component: {fileID: 1753729844}
   m_Layer: 0
-  m_Name: w_queen_png_128px
+  m_Name: WhiteQueen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3559,12 +3544,26 @@ Transform:
   m_GameObject: {fileID: 1753729840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3, y: -2.193, z: 0}
+  m_LocalPosition: {x: -0.31, y: 0.48, z: 0}
   m_LocalScale: {x: 0.3585559, y: 0.33085802, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1753729844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753729840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb46a10268c42c2a25821e31d07d445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 156888342}
+  _pieceColor: 0
 --- !u!1 &1809184006
 GameObject:
   m_ObjectHideFlags: 0
@@ -3577,7 +3576,7 @@ GameObject:
   - component: {fileID: 1809184008}
   - component: {fileID: 1809184007}
   m_Layer: 0
-  m_Name: w_pawn_png_128px (1)
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3689,7 +3688,7 @@ GameObject:
   - component: {fileID: 1829676864}
   - component: {fileID: 1829676863}
   m_Layer: 0
-  m_Name: w_pawn_png_128px (5)
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3800,7 +3799,7 @@ GameObject:
   - component: {fileID: 1834693789}
   - component: {fileID: 1834693788}
   m_Layer: 0
-  m_Name: b_bishop_png_128px (2)
+  m_Name: BlackDarkBishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3885,7 +3884,7 @@ GameObject:
   - component: {fileID: 1871037797}
   - component: {fileID: 1871037796}
   m_Layer: 0
-  m_Name: w_bishop_png_128px (1)
+  m_Name: WhiteLightBishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3997,7 +3996,7 @@ GameObject:
   - component: {fileID: 1945799442}
   - component: {fileID: 1945799441}
   m_Layer: 0
-  m_Name: w_pawn_png_128px (2)
+  m_Name: WhitePawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4097,118 +4096,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1992287069
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1992287071}
-  - component: {fileID: 1992287070}
-  - component: {fileID: 1992287072}
-  m_Layer: 0
-  m_Name: b_bishop_png_128px
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &1992287070
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992287069}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 26e0768622931724fb21329c0799bed1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1.27, y: 1.28}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &1992287071
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992287069}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.00013516482, w: -1}
-  m_LocalPosition: {x: -1.47, y: 2.5337744, z: 0}
-  m_LocalScale: {x: 0.3585559, y: 0.33085802, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -360.015}
---- !u!50 &1992287072
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992287069}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &2004849167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,7 +4174,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 78644800}
-  - {fileID: 1992287071}
   - {fileID: 1641962369}
   - {fileID: 1679048230}
   - {fileID: 209935646}
