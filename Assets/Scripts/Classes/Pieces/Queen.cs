@@ -2,37 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Enums;
-using Assets.Scripts.Structs;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using Vector2 = System.Numerics.Vector2;
+
 
 namespace Assets.Scripts.Classes.Pieces
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Queen : Piece
     {
-        public Tilemap tilemap;
-        private uint valeur;
-        private List<Vector2Int> moves;
-        [SerializeField] private PieceColor _pieceColor;
+        private GameObject _selectedObject;
+        private Rigidbody2D _rigidbody;
+        public override List<Vector2Int> PossibleMoves { get; protected set; }
+        [SerializeField] private PieceColor pieceColor;
+        public override uint Value => 9;
 
-        public override uint Value
+        public override PieceColor Color => pieceColor;
+
+        private void Update()
         {
-            get => 9;
-            protected set => valeur = value;
+            if (Input.GetMouseButtonDown(0))
+            {
+                var MousePos = CameraMain.ScreenToWorldPoint(Input.mousePosition);
+                DebugLog("mouse button down",MousePos);
+            }
+           
         }
 
-        public override PieceColor Color => _pieceColor;
-
-
-        protected override void Move(Coordinates p)
+        protected override void Move(Vector3Int to)
         {
+            if (!PossibleMoves.Contains((Vector2Int)to)) return;
+
+            var worldPosition = Tilemap.GetCellCenterWorld(to);
+            _rigidbody.MovePosition(worldPosition);
         }
+
+        /// <summary>
+        /// function will return all the legal moves the queen can do 
+        /// </summary>
+        /// <param name="position">this is will be the transform.position of the GameObject, The Queen</param>
+        /// <returns>return a List of Vector2Int of all the possible moves</returns>
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
-            var count = 0;
             var legalMoves = new List<Vector2Int>();
-            var positionCell = (Vector2Int)tilemap.WorldToCell(position);
+            var positionCell = (Vector2Int)Tilemap.WorldToCell(position);
             for (var i = 1; i <= 8; i++)
             {
                 legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y));
@@ -46,20 +59,16 @@ namespace Assets.Scripts.Classes.Pieces
             }
 
             legalMoves.Remove(positionCell);
-            var filtredMovesList =
-                legalMoves.Where(pos => pos.x >= 1 && pos.y >= 1 && pos.x <= 8 && pos.y <= 8).ToList();
-
-
-            return filtredMovesList;
+            var filteredMovesList =
+                legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
+            return filteredMovesList;
         }
 
-        private void Start()
+        public override void Awake()
         {
-            moves = CalculateLegalMoves(transform.position);
-            foreach (var move in moves)
-            {
-                Debug.Log(move);
-            }
+            base.Awake();
+            if (CameraMain == null || Tilemap == null) throw new NullReferenceException();
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
     }
 }

@@ -9,31 +9,18 @@ namespace Assets.Scripts.Classes.Pieces
 {
     public class Pawn : Piece, IPromotable
     {
-        [SerializeField] private uint _value;
-
-        
-
-        public override uint Value
-        {
-            get => _value;
-            protected set => _value = value;
-        }
-
-
-      
-
-        protected override void Move(Coordinates p)
+        private bool _isFirstMove;
+        public override List<Vector2Int> PossibleMoves{ get;protected set;}
+        public override uint Value => 1; 
+        protected override void Move(Vector3Int from)
         {
             throw new System.NotImplementedException();
         }
-
         public override PieceColor Color { get; }
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             throw new System.NotImplementedException();
         }
-
-
         Piece IPromotable.Promote(Pawn pawn)
         {
             throw new System.NotImplementedException();

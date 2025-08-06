@@ -2,7 +2,8 @@
 {
     public interface ISelectable
     {
-        protected void OnSelect();
-        protected void OnDeselect();
+        public void OnSelect();
+        public void OnDeselect();
+        public bool IsSelected { get;set; }
     }
 }

@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 78644801}
   m_Layer: 0
   m_Name: OOAD630
-  m_TagString: Untagged
+  m_TagString: board
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -444,9 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 156888342}
-  mousePosWorld: {x: 0, y: 0, z: 0}
-  mouseCell: {x: 0, y: 0, z: 0}
-  mouseCellInterpolated: {x: 0, y: 0, z: 0}
+  cam: {fileID: 519420031}
 --- !u!1 &156888339
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,9 +456,10 @@ GameObject:
   - component: {fileID: 156888340}
   - component: {fileID: 156888342}
   - component: {fileID: 156888341}
+  - component: {fileID: 156888343}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -567,6 +566,42 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &156888343
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156888339}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &165962720
 GameObject:
   m_ObjectHideFlags: 0
@@ -3185,7 +3220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4594a9926244cafa99370526f716b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 0
+  color: 0
 --- !u!50 &1679048232
 Rigidbody2D:
   serializedVersion: 4
@@ -3449,9 +3484,11 @@ GameObject:
   - component: {fileID: 1753729842}
   - component: {fileID: 1753729841}
   - component: {fileID: 1753729844}
+  - component: {fileID: 1753729845}
+  - component: {fileID: 1753729846}
   m_Layer: 0
   m_Name: WhiteQueen
-  m_TagString: Untagged
+  m_TagString: piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3544,7 +3581,7 @@ Transform:
   m_GameObject: {fileID: 1753729840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31, y: 0.48, z: 0}
+  m_LocalPosition: {x: -0.8, y: 0.47, z: 0}
   m_LocalScale: {x: 0.3585559, y: 0.33085802, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3562,8 +3599,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb46a10268c42c2a25821e31d07d445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 156888342}
-  _pieceColor: 0
+  pieceColor: 0
+--- !u!61 &1753729845
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753729840}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.41, y: 1.28}
+    newSize: {x: 1.41, y: 1.28}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.41, y: 1.28}
+  m_EdgeRadius: 0
+--- !u!114 &1753729846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753729840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd5c752cffcb2c48b5049783837443a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1809184006
 GameObject:
   m_ObjectHideFlags: 0
@@ -3798,6 +3891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1834693789}
   - component: {fileID: 1834693788}
+  - component: {fileID: 1834693790}
   m_Layer: 0
   m_Name: BlackDarkBishop
   m_TagString: Untagged
@@ -3872,6 +3966,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1834693790
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834693787}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1871037795
 GameObject:
   m_ObjectHideFlags: 0

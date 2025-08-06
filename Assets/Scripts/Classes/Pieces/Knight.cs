@@ -2,29 +2,30 @@
 using Assets.Scripts.Enums;
 using Assets.Scripts.Structs;
 using UnityEngine;
+
 namespace Assets.Scripts.Classes.Pieces
 {
     public class Knight : Piece
     {
-        [SerializeField] private uint _value;
-
-       
-        public override uint Value
-        {
-            get => _value;
-            protected set => _value = value;
-        }
+        [SerializeField] private PieceColor color;
+        public override List<Vector2Int> PossibleMoves{ get;protected set;}
+        public override uint Value => 3;
 
 
-        protected override void Move(Coordinates p)
+        protected override void Move(Vector3Int from)
         {
             throw new System.NotImplementedException();
         }
 
-        public override PieceColor Color { get; }
+        public override PieceColor Color => color;
+
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             throw new System.NotImplementedException();
+        }
+        public override void Awake()
+        {
+            base.Awake();
         }
     }
 }

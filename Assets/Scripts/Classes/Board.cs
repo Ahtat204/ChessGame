@@ -1,12 +1,16 @@
 ﻿#define UNITY_EDITOR
 #define UNITY_ANDROID
 
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Assets.Scripts.Structs;
 
 namespace Assets.Scripts.Classes
 {
+    /// <summary>
+    /// this class will be used to create a singleton instance of the TileMap and the camera to avoid multiple unnecessary instances
+    /// </summary>
     public class Board : MonoBehaviour
     {
         /// <summary>
@@ -14,66 +18,41 @@ namespace Assets.Scripts.Classes
         /// </summary>
         [Space] [SerializeField] private Tilemap tilemap; // Assign in Inspector
 
-        private Coordinates _position;
-
-        /// <summary>
-        /// a tile map field
-        /// </summary>
-        [Space] [SerializeField] private Vector3 mousePosWorld;
-
-        /// <summary>
-        /// a tile map field
-        /// </summary>
-        [Space] [SerializeField] private Vector3Int mouseCell;
-
-        /// <summary>
-        /// a tile map field
-        /// </summary>
-        [Space] [SerializeField] private Vector3 mouseCellInterpolated;
-
+        [Space] [SerializeField] private Camera cam;
+        private Piece selectedPiece;
+        public Tilemap Tilemap
+        {
+            get => tilemap;
+            private set => tilemap = value;
+        }
         /// <summary>
         /// to avoid creating camera inside the Update method with Camera.main , which is expensive in terms of resources , we create it once 
         /// </summary>
-        private Camera _camera;
-
-
-        private void Start()
+        public Camera MainCamera
         {
-            _camera = Camera.main;
+            get => cam;
+            private set => cam = value;
         }
 
+        public static Board BoardInstance { get; private set; }
 
-        private void Update()
+        public void SelectPiece(Piece piece)
         {
-            if (Input.GetMouseButtonDown(0))
+            selectedPiece = piece;
+          
+        }
+        private void Awake()
+        {
+            if (BoardInstance != null && BoardInstance != this)
             {
-                /*
-                Debug.Log("Mouse clicked");
-                // Convert screen to world
-                mousePosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                mousePosWorld.z = 0f; // Important in 2D
-
-                // Get cell position
-                mouseCell = tilemap.WorldToCell(mousePosWorld);
-                mouseCellInterpolated = tilemap.LocalToCellInterpolated(tilemap.transform.InverseTransformPoint(mousePosWorld));
-
-                   Debug.Log("Cell: " + mouseCell);
-                  Debug.Log("Interpolated: " + mouseCellInterpolated);
-                  */
-                _position = GetCoordinates();
-                
+                Destroy(this.gameObject);
+                return;
+            }
+            else
+            {
+                BoardInstance = this;
             }
         }
-
-        public Coordinates GetCoordinates()
-        {
-            
-            System.Diagnostics.Debug.Assert(_camera, "Camera.main != null");
-            var mouseWorldPos = _camera.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = 0f;
-
-            var cell = tilemap.WorldToCell(mouseWorldPos);
-            return new Coordinates(cell.x, cell.y);
-        }
+       
     }
 }
