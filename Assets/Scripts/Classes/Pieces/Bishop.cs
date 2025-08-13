@@ -25,13 +25,7 @@ namespace Assets.Scripts.Classes.Pieces
         public override PieceColor Color => pieceColor;
 
 
-        protected override void Move(Vector3Int to)
-        {
-            if (!PossibleMoves.Contains((Vector2Int)to)) return;
-
-            var worldPosition = Tilemap.GetCellCenterWorld(to);
-            _rigidbody.MovePosition(worldPosition);
-        }
+     
 
 
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)

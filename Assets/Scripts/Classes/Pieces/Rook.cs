@@ -11,13 +11,7 @@ namespace Assets.Scripts.Classes.Pieces
         public override List<Vector2Int> PossibleMoves{ get;protected set;}
         private Rigidbody2D _rigidbody;
 
-        protected override void Move(Vector3Int to)
-        {
-            if (!PossibleMoves.Contains((Vector2Int)to)) return;
-
-            var worldPosition = Tilemap.GetCellCenterWorld(to);
-            _rigidbody.MovePosition(worldPosition);
-        }
+       
 
         public override PieceColor Color => pieceColor;
 

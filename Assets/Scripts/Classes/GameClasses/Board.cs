@@ -1,12 +1,10 @@
 ﻿#define UNITY_EDITOR
 #define UNITY_ANDROID
 
-using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Assets.Scripts.Structs;
 
-namespace Assets.Scripts.Classes
+namespace Assets.Scripts.Classes.GameClasses
 {
     /// <summary>
     /// this class will be used to create a singleton instance of the TileMap and the camera to avoid multiple unnecessary instances
@@ -19,7 +17,7 @@ namespace Assets.Scripts.Classes
         [Space] [SerializeField] private Tilemap tilemap; // Assign in Inspector
 
         [Space] [SerializeField] private Camera cam;
-        private Piece selectedPiece;
+        private Piece _selectedPiece;
         public Tilemap Tilemap
         {
             get => tilemap;
@@ -38,14 +36,14 @@ namespace Assets.Scripts.Classes
 
         public void SelectPiece(Piece piece)
         {
-            selectedPiece = piece;
+            _selectedPiece = piece;
           
         }
         private void Awake()
         {
-            if (BoardInstance != null && BoardInstance != this)
+            if (BoardInstance && !Equals(BoardInstance, this))
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
                 return;
             }
             else

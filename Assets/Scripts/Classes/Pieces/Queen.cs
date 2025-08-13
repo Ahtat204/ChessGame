@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Enums;
-using Unity.VisualScripting;
 using UnityEngine;
-
 
 namespace Assets.Scripts.Classes.Pieces
 {
@@ -21,22 +19,11 @@ namespace Assets.Scripts.Classes.Pieces
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                var MousePos = CameraMain.ScreenToWorldPoint(Input.mousePosition);
-                DebugLog("mouse button down",MousePos);
-            }
-           
+            if (!Input.GetMouseButtonDown(0)) return;
+            var mousePos = CameraMain.ScreenToWorldPoint(Input.mousePosition);
+            
+
         }
-
-        protected override void Move(Vector3Int to)
-        {
-            if (!PossibleMoves.Contains((Vector2Int)to)) return;
-
-            var worldPosition = Tilemap.GetCellCenterWorld(to);
-            _rigidbody.MovePosition(worldPosition);
-        }
-
         /// <summary>
         /// function will return all the legal moves the queen can do 
         /// </summary>

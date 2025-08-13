@@ -11,12 +11,14 @@
         Stalemate,
         Draw
     }
-/// <summary>
-/// enum representing who's turn is to play
-/// </summary>
-    public enum Turn
+
+    /// <summary>
+    /// enum representing who's turn is to play
+    /// </summary>
+    public enum Turn : uint
     {
         Player,
-        Opponent,
+        Opponent
     }
+
 }

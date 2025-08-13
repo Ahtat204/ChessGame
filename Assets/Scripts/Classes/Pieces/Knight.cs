@@ -12,10 +12,7 @@ namespace Assets.Scripts.Classes.Pieces
         public override uint Value => 3;
 
 
-        protected override void Move(Vector3Int from)
-        {
-            throw new System.NotImplementedException();
-        }
+      
 
         public override PieceColor Color => color;
 

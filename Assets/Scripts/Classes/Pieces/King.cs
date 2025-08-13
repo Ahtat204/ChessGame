@@ -17,19 +17,13 @@ namespace Assets.Scripts.Classes.Pieces
         public override uint Value { get; }
 
 
-        protected override void Move(Vector3Int to)
-        {
-            if (!PossibleMoves.Contains((Vector2Int)to)) return;
-
-            var worldPosition = Tilemap.GetCellCenterWorld(to);
-            _rigidbody.MovePosition(worldPosition);
-        }
+      
 
         public override PieceColor Color { get; }
 
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override void Awake()

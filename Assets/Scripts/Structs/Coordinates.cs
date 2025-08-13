@@ -1,16 +1,22 @@
-﻿namespace Assets.Scripts.Structs
+﻿using System;
+
+namespace Assets.Scripts.Structs
 {
-    public struct Coordinates
+    /// <summary>
+    /// this struct will be used to represent piece coordinates (not used in moving piece) , 
+    /// </summary>
+    public readonly struct Coordinates
     {
         /// <summary>
-        /// a wrapping property for the x field
+        /// X coordinate property
         /// </summary>
-        public int X { get; }
+        public char X { get;  }
 
         /// <summary>
-        /// a wrapping property for the y field
+        /// Y coordinate property
         /// </summary>
-        public int Y { get; }
+        public uint Y { get; }
+
 
         /// <summary>
         /// Constructor of the Coordinates Struct
@@ -18,13 +24,13 @@
         /// <param name="x"> Horizantal Coordinate</param>
         /// <param name="y"> Vertical Coordinate</param>
         /// <exception cref="Exception">chess is 8x8 game , the numeration start from 1 not 0 </exception>
-     public Coordinates(int x, int y)
+        public Coordinates(char x, uint y)
         {
-            this.X = x;
-            this.Y = y;
-            if (x == 0 || y == 0) throw new System.Exception("Invalid coordinates");
-          
+            X = x;
+            Y = y;
+            throw new ArgumentException(x is < 'a' or > 'z' || y > 8 ? "invalid coordinates" : "");
         }
+
         public override string ToString()
         {
             return $"({X}, {Y})";
