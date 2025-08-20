@@ -1,46 +1,31 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
-
 
 namespace Assets.Scripts.Classes.BehaviorClasses
 {
     [RequireComponent(typeof(Piece))]
     public class SelectableDecorator : MonoBehaviour, ISelectable
     {
-        
-        private SelectableDecorator _decorator;
-        /// <summary>
-        /// for referencing the piece class that's attached to this gameObject together with this class ,whether it's Queen, Rook ....
-        /// </summary>
-        private Piece _piece;
-        public SelectedPiece SelectedPiece { get; private set; }
-        public uint ClickCount { get; set; }//UInt32 for consistency across platforms, and hide in the inspector
+        //UInt32 for consistency across platforms, and hide in the inspector
         public bool IsSelected { get; set; }
-
-        // Start is called before the first frame update
-
-
+        private static List<SelectableDecorator> MovableObjects => new ();
         private void Awake()
         {
-            ClickCount = 0;
-            _piece = GetComponent<Piece>();
-            SelectedPiece = SelectedPiece.Instance;
+            MovableObjects.Add(this);
+            IsSelected = false;
         }
-
-       
 
         public void OnSelect()
         {
             IsSelected = true;
-            
-            ClickCount++;
         }
 
-       public void OnDeselect()
+        public void OnDeselect()
         {
-           IsSelected = false;
-           ClickCount--;
+            IsSelected = false;
         }
 
         private void OnMouseDown()
@@ -48,11 +33,11 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             //Piece.DebugLog("mouse button down",transform.position);
             if (IsSelected) OnDeselect();
             else OnSelect();
+            
+            foreach (var obj in MovableObjects.Where(obj => obj != this))
+            {
+                obj.IsSelected = false;
+            }
         }
-
-        private void OnMouseUp()
-        {
-            throw new NotImplementedException();
         }
     }
-}

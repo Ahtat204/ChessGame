@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Assets.Scripts
 {
@@ -9,7 +8,7 @@ namespace Assets.Scripts
     public sealed class SelectedPiece : MonoBehaviour
     {
         public static SelectedPiece Instance;
-        public GameObject SelectedPieceObject { get; private set; }
+        public GameObject SelectedPieceObject { get;set; }
         private void Awake()
         {
             if (Instance && !Equals(Instance, this))

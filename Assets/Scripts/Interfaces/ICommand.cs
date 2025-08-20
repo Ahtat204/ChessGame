@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Assets.Scripts.Interfaces
+﻿namespace Assets.Scripts.Interfaces
 {
     /// <summary>
     /// this is a generic command pattern interface for all suitable use cases

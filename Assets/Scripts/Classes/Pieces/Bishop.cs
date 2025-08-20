@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Enums;
+using ChessGame.Assets.Scripts.Enums;
 using UnityEngine;
-
-using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts.Classes.Pieces
 {
@@ -13,8 +10,8 @@ namespace Assets.Scripts.Classes.Pieces
     /// </summary>
     public class Bishop : Piece
     {
-        
-        public override List<Vector2Int> PossibleMoves{ get;protected set;}
+
+        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         [SerializeField] private PieceColor pieceColor;
         private Rigidbody2D _rigidbody;
 /// <summary>

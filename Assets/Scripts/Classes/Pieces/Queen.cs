@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
 using System.Linq;
-using Assets.Scripts.Enums;
+using Assets.Scripts.Classes.BehaviorClasses;
+using Assets.Scripts.Classes.GameClasses;
+using ChessGame.Assets.Scripts.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
@@ -9,21 +11,15 @@ namespace Assets.Scripts.Classes.Pieces
     [RequireComponent(typeof(Rigidbody2D))]
     public class Queen : Piece
     {
+        private SelectableDecorator _decorator;
         private GameObject _selectedObject;
         private Rigidbody2D _rigidbody;
-        public override List<Vector2Int> PossibleMoves { get; protected set; }
+        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         [SerializeField] private PieceColor pieceColor;
         public override uint Value => 9;
-
         public override PieceColor Color => pieceColor;
 
-        private void Update()
-        {
-            if (!Input.GetMouseButtonDown(0)) return;
-            var mousePos = CameraMain.ScreenToWorldPoint(Input.mousePosition);
-            
 
-        }
         /// <summary>
         /// function will return all the legal moves the queen can do 
         /// </summary>
@@ -33,7 +29,7 @@ namespace Assets.Scripts.Classes.Pieces
         {
             var legalMoves = new List<Vector2Int>();
             var positionCell = (Vector2Int)Tilemap.WorldToCell(position);
-            for (var i = 1; i <= 8; i++)
+            for (var i = 1; i <= Board.Size; i++)
             {
                 legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y));
                 legalMoves.Add(new Vector2Int(positionCell.x - i, positionCell.y));
@@ -50,12 +46,13 @@ namespace Assets.Scripts.Classes.Pieces
                 legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
             return filteredMovesList;
         }
-
+        
         public override void Awake()
         {
             base.Awake();
             if (CameraMain == null || Tilemap == null) throw new NullReferenceException();
             _rigidbody = GetComponent<Rigidbody2D>();
+            _decorator = GetComponent<SelectableDecorator>();
         }
     }
 }

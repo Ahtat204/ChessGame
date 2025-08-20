@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Enums;
+﻿using System;
+using System.Collections.Generic;
+using ChessGame.Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
-using System;
 using UnityEngine;
-
 
 namespace Assets.Scripts.Classes.Pieces
 {
     public class Pawn : Piece, IPromotable
     {
         private bool _isFirstMove;
-        public override List<Vector2Int> PossibleMoves{ get;protected set;}
+        public override List<Vector2Int> PossibleMoves=> CalculateLegalMoves(transform.position);
         public override uint Value => 1; 
        
         public override PieceColor Color { get; }

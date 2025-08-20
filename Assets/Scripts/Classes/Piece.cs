@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Assets.Scripts.Classes.GameClasses;
-using Assets.Scripts.Enums;
+using ChessGame.Assets.Scripts.Enums;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Classes
         /// </summary>
         protected Camera CameraMain;
 
-        public abstract List<Vector2Int> PossibleMoves { get; protected set; }
+        public abstract List<Vector2Int> PossibleMoves { get;  }
 
         /// <summary>
         /// this property represent the Piece color , and should be initialized from the inspector in derived classes
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Classes
         public static void DebugLog<T>(string m,[Optional] T item)
         {
 #if UNITY_EDITOR
-            Debug.Log("Selected Piece" + item);
+            Debug.Log(m + item);
 #endif
         }
     }

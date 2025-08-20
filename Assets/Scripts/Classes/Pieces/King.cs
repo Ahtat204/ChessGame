@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Structs;
+using ChessGame.Assets.Scripts.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
 {
     public class King : Piece
     {
-        public override List<Vector2Int> PossibleMoves { get; protected set; }
+        public override List<Vector2Int> PossibleMoves=>CalculateLegalMoves(transform.position);
         private Rigidbody2D _rigidbody;
 
         /// <summary>

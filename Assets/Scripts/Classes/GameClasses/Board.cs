@@ -1,6 +1,7 @@
 ﻿#define UNITY_EDITOR
 #define UNITY_ANDROID
 
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Classes.GameClasses
     /// </summary>
     public class Board : MonoBehaviour
     {
+        public static uint Size=8;
         /// <summary>
         /// a tile map field
         /// </summary>
