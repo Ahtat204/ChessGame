@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChessGame.Assets.Scripts.Enums;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 

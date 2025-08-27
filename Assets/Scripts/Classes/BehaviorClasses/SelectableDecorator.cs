@@ -1,43 +1,52 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.BehaviorClasses
 {
-    [RequireComponent(typeof(Piece))]
-    public class SelectableDecorator : MonoBehaviour, ISelectable
+    
+    [RequireComponent(typeof(BoxCollider2D))]
+    internal class SelectableDecorator : MonoBehaviour, ISelectable
     {
         //UInt32 for consistency across platforms, and hide in the inspector
-        public bool IsSelected { get; set; }
-        private static List<SelectableDecorator> MovableObjects => new ();
+
+        public SelectionStatus Status { get; set; }
+        private static List<SelectableDecorator> MovableObjects => new();
+
         private void Awake()
         {
             MovableObjects.Add(this);
-            IsSelected = false;
+            Status = SelectionStatus.UnSelected;
         }
 
         public void OnSelect()
         {
-            IsSelected = true;
+            //IsSelected = true;
+            Status = SelectionStatus.Selected;
+            UtilityClass.DebugLog($"{gameObject.name}",2);
         }
 
         public void OnDeselect()
         {
-            IsSelected = false;
+            //  IsSelected = false;
+            Status = SelectionStatus.UnSelected;
         }
 
         private void OnMouseDown()
         {
             //Piece.DebugLog("mouse button down",transform.position);
-            if (IsSelected) OnDeselect();
+            if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
-            
+
             foreach (var obj in MovableObjects.Where(obj => obj != this))
             {
-                obj.IsSelected = false;
+                obj.Status = SelectionStatus.UnSelected;
+                //   obj.IsSelected = false;
+                // obj.Status = _unSelected ? SelectionStatus.UnSelected : SelectionStatus.Selected;
             }
         }
-        }
     }
+}

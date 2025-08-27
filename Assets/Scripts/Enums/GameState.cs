@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace ChessGame.Assets.Scripts.Enums
+namespace Assets.Scripts.Enums
 {
     /// <summary>
     /// Represents the two sides in a chess game.
     /// </summary>
-    public enum GameState : UInt16
+    public enum GameState : ushort
     {
         WaitingForPlayer,
         Check,
@@ -13,14 +13,13 @@ namespace ChessGame.Assets.Scripts.Enums
         Stalemate,
         Draw
     }
-
     /// <summary>
     /// enum representing who's turn is to play
     /// </summary>
-    public enum Turn : UInt16
+    public enum Turn : ushort
     {
-        Player,
-        Opponent
+        WhitePlayer,
+        BlackPlayer
     }
 
 }

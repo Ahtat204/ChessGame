@@ -1,4 +1,4 @@
-﻿using ChessGame.Assets.Scripts.Enums;
+﻿using Assets.Scripts.Enums;
 using Assets.Scripts.Structs;
 using UnityEngine;
 

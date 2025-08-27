@@ -1,8 +1,4 @@
-﻿#define UNITY_EDITOR
-#define UNITY_ANDROID
-
-using System.Drawing;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts.Classes.GameClasses
@@ -12,46 +8,39 @@ namespace Assets.Scripts.Classes.GameClasses
     /// </summary>
     public class Board : MonoBehaviour
     {
-        public static uint Size=8;
+        public static readonly uint Size=8;
         /// <summary>
         /// a tile map field
         /// </summary>
         [Space] [SerializeField] private Tilemap tilemap; // Assign in Inspector
-
+/// <summary>
+/// to avoid overusing Camera.main , better centralize it <remarks>assign in the inspector</remarks> 
+/// </summary>
         [Space] [SerializeField] private Camera cam;
-        private Piece _selectedPiece;
-        public Tilemap Tilemap
-        {
-            get => tilemap;
-            private set => tilemap = value;
-        }
+        
+        public Tilemap Tilemap=>tilemap;
+
         /// <summary>
         /// to avoid creating camera inside the Update method with Camera.main , which is expensive in terms of resources , we create it once 
         /// </summary>
-        public Camera MainCamera
-        {
-            get => cam;
-            private set => cam = value;
-        }
+        public Camera MainCamera => cam;
 
-        public static Board BoardInstance { get; private set; }
-
-        public void SelectPiece(Piece piece)
-        {
-            _selectedPiece = piece;
-          
-        }
-        private void Awake()
-        {
-            if (BoardInstance && !Equals(BoardInstance, this))
-            {
-                Destroy(gameObject);
+        public static Board BoardInstance;
+        
+        private void Awake() 
+        { 
+            // If there is an instance, and it's not me, delete myself.
+    
+            if (BoardInstance!=null && BoardInstance != this) 
+            { 
+                Destroy(this); 
                 return;
-            }
+            } 
             else
             {
                 BoardInstance = this;
-            }
+                DontDestroyOnLoad(this);
+            } 
         }
        
     }

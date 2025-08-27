@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ChessGame.Assets.Scripts.Enums
+namespace Assets.Scripts.Enums
 {
-    public enum PieceColor : UInt16
+    public enum PieceColor : ushort
     {
         White,
         Black

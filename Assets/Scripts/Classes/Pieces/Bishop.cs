@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using ChessGame.Assets.Scripts.Enums;
+using Assets.Scripts.Classes.BehaviorClasses;
+using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
@@ -8,27 +11,24 @@ namespace Assets.Scripts.Classes.Pieces
     /// <summary>
     /// Bishop class
     /// </summary>
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(MovementManager))]
+    [RequireComponent(typeof(SelectableDecorator))]
     public class Bishop : Piece
     {
-
-        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
-        [SerializeField] private PieceColor pieceColor;
-        private Rigidbody2D _rigidbody;
-/// <summary>
-/// in the chess community , it's known that a Bishop is stronger than a Knight , but for simplicity , we'll assume they're equal "in value"  
-/// </summary>
+        /// <summary>
+        /// in the chess community , it's known that a Bishop is stronger than a Knight , but for simplicity , we'll assume they're equal "in value"  
+        /// </summary>
         public override uint Value => 3;
 
+        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
+
+        [SerializeField] private PieceColor pieceColor;
         public override PieceColor Color => pieceColor;
-
-
-     
-
-
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>();
-            var positionCell = (Vector2Int)Tilemap.WorldToCell(position);
+            var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);
             for (var i = 0; i <= 8; i++)
             {
                 legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y + i));
@@ -38,16 +38,15 @@ namespace Assets.Scripts.Classes.Pieces
             }
 
             legalMoves.Remove(positionCell);
-            var filtredMovesList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
-            return filtredMovesList;
+            var filteredList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
+            return filteredList;
         }
-        
+
         public override void Awake()
         {
             base.Awake();
-            _rigidbody=GetComponent<Rigidbody2D>();
+            Debug.Log(pieceColor+gameObject.name+"position is "+Board.BoardInstance.Tilemap.WorldToCell(transform.position));
+           
         }
-
-       
     }
 }
