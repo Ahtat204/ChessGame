@@ -12,7 +12,6 @@ namespace Assets.Scripts.Classes.Pieces
         /// List of the Legal Moves for the Queen,here it's a readonly property .<remarks>it's been assigned here to avoid any  NullReferenceException</remarks>
         /// </summary>
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
-
         /// <summary>
         /// inspector-initialized field 
         /// </summary>

@@ -3,7 +3,7 @@
 namespace Assets.Scripts.Enums
 {
     /// <summary>
-    /// Represents the two sides in a chess game.
+    /// Represents the current state of the Game
     /// </summary>
     public enum GameState : ushort
     {

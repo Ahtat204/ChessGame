@@ -10,18 +10,14 @@ namespace Assets.Scripts.Classes.Pieces
     public class King : Piece
     {
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
-
-
         /// <summary>
         /// inspector-initialized field 
         /// </summary>
         [SerializeField] private PieceColor pieceColor;
-
         /// <summary>
         /// King has no value since it can't be captured, often given infinite value or zero
         /// </summary>
         public override uint Value => 0;
-
         public override PieceColor Color => pieceColor;
 
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
