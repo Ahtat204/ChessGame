@@ -12,6 +12,7 @@ namespace Assets.Scripts.Classes
     /// </summary>
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
+
     public abstract class Piece : MonoBehaviour
     {
         public abstract List<Vector2Int> PossibleMoves { get; }

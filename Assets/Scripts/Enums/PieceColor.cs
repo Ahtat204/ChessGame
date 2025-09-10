@@ -7,8 +7,4 @@ namespace Assets.Scripts.Enums
         White,
         Black
     }
-
-   
- 
- 
 }

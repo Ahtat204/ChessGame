@@ -27,9 +27,9 @@ namespace Assets.Scripts.Classes.Pieces
         public override PieceColor Color => pieceColor;
         protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
-            var legalMoves = new List<Vector2Int>();
+            var legalMoves = new List<Vector2Int>(14);
             var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);
-            for (var i = 0; i <= 8; i++)
+            for (var i = 0; i <= Board.Size; i++)
             {
                 legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y + i));
                 legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y - i));
