@@ -42,10 +42,10 @@ namespace Assets.Scripts.Classes.Pieces
             return filteredList;
         }
 
-        public override void Awake()
+        public  void Awake()
         {
-            base.Awake();
-            Debug.Log(pieceColor+gameObject.name+"position is "+Board.BoardInstance.Tilemap.WorldToCell(transform.position));
+            
+           
            
         }
     }

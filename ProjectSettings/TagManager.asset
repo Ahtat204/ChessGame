@@ -7,6 +7,8 @@ TagManager:
   - board
   - Tile
   - piece
+  - White
+  - Black
   layers:
   - Default
   - TransparentFX

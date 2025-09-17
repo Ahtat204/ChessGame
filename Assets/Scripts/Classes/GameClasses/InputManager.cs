@@ -15,10 +15,6 @@ namespace Assets.Scripts.Classes.GameClasses
             MousDirection = new Vector3();
         } 
 
-        private void Update()
-        {
-            MousDirection = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-            MousePosition = Board.BoardInstance.Tilemap.WorldToCell(MousePosition);
-        }
+        
     }
 }
