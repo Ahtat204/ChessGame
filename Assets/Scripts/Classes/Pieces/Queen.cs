@@ -12,19 +12,15 @@ namespace Assets.Scripts.Classes.Pieces
         /// List of the Legal Moves for the Queen,here it's a readonly property .<remarks>it's been assigned here to avoid any  NullReferenceException</remarks>
         /// </summary>
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
-        /// <summary>
-        /// inspector-initialized field 
-        /// </summary>
-        [SerializeField] private PieceColor pieceColor;
         public override uint Value => 9;
-        public override PieceColor Color => pieceColor;
-
+        [field: SerializeField]
+        public override PieceColor Color { get; protected set; }
         /// <summary>
         /// function will return all the legal moves the queen can do 
         /// </summary>
         /// <param name="position">this is will be the transform.position of the GameObject, The Queen</param>
         /// <returns>return a List of Vector2Int of all the possible moves</returns>
-        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(28);
             var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);

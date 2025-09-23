@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
@@ -26,7 +27,9 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         {
             //IsSelected = true;
             Status = SelectionStatus.Selected;
-            UtilityClass.DebugLog($"{gameObject.name}",2);
+            var o = gameObject;
+            var pos=Board.BoardInstance.Tilemap.WorldToCell(gameObject.transform.position);
+            UtilityClass.DebugLog($"{o.name}+{pos}",2);
         }
 
         public void OnDeselect()

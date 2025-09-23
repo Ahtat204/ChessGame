@@ -11,16 +11,13 @@ namespace Assets.Scripts.Classes.Pieces
     {
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         /// <summary>
-        /// inspector-initialized field 
-        /// </summary>
-        [SerializeField] private PieceColor pieceColor;
-        /// <summary>
         /// King has no value since it can't be captured, often given infinite value or zero
         /// </summary>
         public override uint Value => 0;
-        public override PieceColor Color => pieceColor;
+        [field: SerializeField]
+        public override PieceColor Color { get; protected set; }
 
-        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(8);
             var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);

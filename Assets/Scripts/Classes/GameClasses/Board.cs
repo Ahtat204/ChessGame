@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Assets.Scripts.Classes.Pieces;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Classes.GameClasses
     /// </summary>
     public class Board : MonoBehaviour
     {
+        
         public static readonly uint Size = 8;
         /// <summary>
         /// a tile map field
@@ -30,6 +32,7 @@ namespace Assets.Scripts.Classes.GameClasses
 
         private void Start()
         {
+           
             BoardInstance = this;
         }
     }

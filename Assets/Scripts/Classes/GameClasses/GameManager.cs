@@ -8,13 +8,17 @@ namespace Assets.Scripts.Classes.GameClasses
 {
     public class GameManager:MonoBehaviour
     {
-    
+
+        [SerializeField]private List<Piece> pieces;
         private GameState _gameState;
-        
         private MoveType _moveType;
         private Turn _turn;
         private Coordinates _coordinates;
 
-       
+
+        private void Start()
+        {
+            pieces = new (32);
+        }
     }
 }

@@ -8,11 +8,11 @@ namespace Assets.Scripts.Classes.Pieces
 {
     public class Knight : Piece
     {
-        [SerializeField] private PieceColor color;
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         public override uint Value => 3;
-        public override PieceColor Color => color;
-        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        [field: SerializeField]
+        public override PieceColor Color { get; protected set; }
+        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
          var legalMoves = new List<Vector2Int>(8);
          var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);

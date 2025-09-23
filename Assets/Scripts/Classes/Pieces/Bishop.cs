@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.BehaviorClasses;
 using Assets.Scripts.Classes.GameClasses;
@@ -20,12 +19,10 @@ namespace Assets.Scripts.Classes.Pieces
         /// in the chess community , it's known that a Bishop is stronger than a Knight , but for simplicity , we'll assume they're equal "in value"  
         /// </summary>
         public override uint Value => 3;
-
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
-
-        [SerializeField] private PieceColor pieceColor;
-        public override PieceColor Color => pieceColor;
-        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        [field: SerializeField]
+        public override PieceColor Color { get; protected set; }
+        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(14);
             var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);
@@ -40,13 +37,6 @@ namespace Assets.Scripts.Classes.Pieces
             legalMoves.Remove(positionCell);
             var filteredList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
             return filteredList;
-        }
-
-        public  void Awake()
-        {
-            
-           
-           
         }
     }
 }

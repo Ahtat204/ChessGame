@@ -17,13 +17,5 @@ namespace Assets.Scripts.Classes
             Debug.Log(m + item);
 #endif
         }
-
-
-
-        public static void NewPosition(this Rigidbody2D rb, Vector3Int target)
-        {
-            var pos= Board.BoardInstance.Tilemap.CellToWorld(target);
-            rb.AddForce(pos);
-        }
     }
 }

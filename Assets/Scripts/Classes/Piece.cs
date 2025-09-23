@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Classes.BehaviorClasses;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using UnityEngine;
@@ -12,13 +13,17 @@ namespace Assets.Scripts.Classes
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
 
+
     public abstract class Piece : MonoBehaviour
     {
+        /// <summary>
+        /// the possible moves the piece can make
+        /// </summary>
         public abstract List<Vector2Int> PossibleMoves { get; }
         /// <summary>
         /// this property represent the Piece color , and should be initialized from the inspector in derived classes
         /// </summary>
-        public abstract PieceColor Color { get; }
+        public abstract PieceColor Color { get; protected set; }
         /// <summary>
         /// a property that represent the Value of The piece 
         /// </summary>
@@ -29,6 +34,5 @@ namespace Assets.Scripts.Classes
         /// <param name="position">position is the current position of the Piece </param>
         /// <returns> a List of a 2D vector</returns>
         protected abstract List<Vector2Int> CalculateLegalMoves(Vector3 position);
-      
     }
 }

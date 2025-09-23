@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Classes.GameClasses;
+﻿using System;
+using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Classes;
 using UnityEngine;
@@ -6,7 +7,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.BehaviorClasses
 {
-    
     [RequireComponent(typeof(Rigidbody2D))]
     internal sealed class MovementManager : MonoBehaviour
     {
@@ -14,39 +14,38 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         private Piece _piece;
         private Rigidbody2D _rigidbody;
         private Vector3 _target;
+        public bool hasMoved;
+
         private void Awake()
         {
             _selectableDecorator = GetComponent<SelectableDecorator>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _piece = GetComponent<Piece>();
             _target = transform.position;
-            _target.x=(int)_target.x;
-            _target.y = (int)_target.y;
-            _target.z = 0;
+            hasMoved = false;
         }
-        public void MovePiece(Vector3Int destination)
+#if UNITY_STANDALONE_WIN || WINDOWS_UWP || UNITY_EDITOR
+        public void MovePiece()
         {
+            
             if (Input.GetMouseButtonDown(0) && _selectableDecorator.Status == SelectionStatus.Selected)
             {
-                var position = transform.position;
                 _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                _target.z = position.z;
+                _target.z = 0;
             }
-
-            var target = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(_target);
-            _rigidbody.MovePosition(_piece.PossibleMoves.Contains((Vector2Int)destination)?destination:_target );
+            var target = Board.BoardInstance.Tilemap.WorldToCell(_target);
+            var tar = Board.BoardInstance.Tilemap.GetCellCenterWorld(target);
+            _rigidbody.MovePosition(_piece.PossibleMoves.Contains((Vector2Int)target) ? tar : transform.position);
+          /* if (_piece.PossibleMoves.Contains((Vector2Int)target))
+            {
+              this.hasMoved = true;
+                _selectableDecorator.Status = SelectionStatus.UnSelected;
+            }*/
         }
-
+#endif
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && _selectableDecorator.Status == SelectionStatus.Selected)
-            {
-                _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                
-            }
-
-            var target = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(_target);
-            _rigidbody.MovePosition(_piece.PossibleMoves.Contains(target) ? _target : transform.position);
+            MovePiece();
         }
     }
 }

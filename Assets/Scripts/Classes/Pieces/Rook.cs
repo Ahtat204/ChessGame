@@ -13,21 +13,15 @@ namespace Assets.Scripts.Classes.Pieces
     public class Rook : Piece
     {
         /// <summary>
-        /// The color of this rook (white or black).
-        /// Serialized so it can be set in the Unity Inspector.
-        /// </summary>
-        [SerializeField] private PieceColor pieceColor;
-
-        /// <summary>
         /// Gets the list of legal moves available for this rook 
         /// from its current board position.
         /// </summary>
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
-
         /// <summary>
         /// Gets the color of this rook.
         /// </summary>
-        public override PieceColor Color => pieceColor;
+        [field: SerializeField]
+        public override PieceColor Color { get; protected set; }
 
         /// <summary>
         /// Calculates all legal moves for the rook based on the given world position.
@@ -36,7 +30,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// </summary>
         /// <param name="position">The rook's current world position in Unity space.</param>
         /// <returns>A filtered list of legal moves represented as <see cref="Vector2Int"/> positions.</returns>
-        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(14);
 

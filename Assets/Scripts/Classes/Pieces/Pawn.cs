@@ -10,14 +10,11 @@ namespace Assets.Scripts.Classes.Pieces
 {
     public class Pawn : Piece
     {
-        /// <summary>
-        /// inspector-initialized field 
-        /// </summary>
-        [SerializeField] private PieceColor pieceColor;
         public override List<Vector2Int> PossibleMoves=> CalculateLegalMoves(transform.position);
         public override uint Value => 1; 
-        public override PieceColor Color =>pieceColor;
-        protected override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        [field: SerializeField]
+        public override PieceColor Color { get; protected set; }
+        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves= new List<Vector2Int>(3);
             var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);
