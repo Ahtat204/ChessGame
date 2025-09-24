@@ -34,7 +34,7 @@ namespace Assets.Scripts.Classes.Pieces
         {
             var legalMoves = new List<Vector2Int>(14);
 
-            var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);
+            var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
 
             // Generate moves in all four directions (horizontal and vertical).
             for (var i = 0; i < Board.Size; i++)

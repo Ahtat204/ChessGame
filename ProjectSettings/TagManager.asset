@@ -9,6 +9,7 @@ TagManager:
   - piece
   - White
   - Black
+  - King
   layers:
   - Default
   - TransparentFX

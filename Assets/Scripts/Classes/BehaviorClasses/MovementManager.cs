@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Classes;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,35 +17,46 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         private Piece _piece;
         private Rigidbody2D _rigidbody;
         private Vector3 _target;
-        public bool hasMoved;
+        private List<MovementManager> _movementManagers= new (32);
+        public Vector3Int CurrPos{get; private set;}
+        public bool HasMoved { get; private set; }
 
         private void Awake()
         {
+            _movementManagers.Add(this);
             _selectableDecorator = GetComponent<SelectableDecorator>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _piece = GetComponent<Piece>();
             _target = transform.position;
-            hasMoved = false;
+            HasMoved = false;
+            
         }
-#if UNITY_STANDALONE_WIN || WINDOWS_UWP || UNITY_EDITOR
+
+        private void Start()
+        {
+            CurrPos=Board.BoardInstance.tilemap.WorldToCell(transform.position);
+        }
+
         public void MovePiece()
         {
-            
             if (Input.GetMouseButtonDown(0) && _selectableDecorator.Status == SelectionStatus.Selected)
             {
                 _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
                 _target.z = 0;
             }
-            var target = Board.BoardInstance.Tilemap.WorldToCell(_target);
-            var tar = Board.BoardInstance.Tilemap.GetCellCenterWorld(target);
+            var target = Board.BoardInstance.tilemap.WorldToCell(_target);
+            var tar = Board.BoardInstance.tilemap.GetCellCenterWorld(target);
             _rigidbody.MovePosition(_piece.PossibleMoves.Contains((Vector2Int)target) ? tar : transform.position);
-          /* if (_piece.PossibleMoves.Contains((Vector2Int)target))
-            {
-              this.hasMoved = true;
-                _selectableDecorator.Status = SelectionStatus.UnSelected;
-            }*/
+            HasMoved=CurrPos != target;
+            
+                 CurrPos = target;
+             if (HasMoved)
+             {
+                 _selectableDecorator.Status = SelectionStatus.UnSelected;
+             }
+             HasMoved = false;
         }
-#endif
+
         private void Update()
         {
             MovePiece();

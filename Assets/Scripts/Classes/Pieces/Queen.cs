@@ -23,7 +23,7 @@ namespace Assets.Scripts.Classes.Pieces
         protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(28);
-            var positionCell = (Vector2Int)Board.BoardInstance.Tilemap.WorldToCell(position);
+            var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
             for (var i = 1; i <= Board.Size; i++)
             {
                 #region Straight

@@ -12,6 +12,8 @@ namespace Assets.Scripts.Classes
     /// </summary>
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(SelectableDecorator))]
+    [RequireComponent(typeof(MovementManager))]
 
 
     public abstract class Piece : MonoBehaviour

@@ -11,29 +11,28 @@ namespace Assets.Scripts.Classes.BehaviorClasses
     
     public class CapturePiece : MonoBehaviour
     {
+        private MovementManager _movementManager;
         private Piece _piece;
         private BoxCollider2D _boxCollider;
         public bool canCapture;
+        private Rigidbody2D _rb;
 
         private void Awake()
         {
+            _rb = GetComponent<Rigidbody2D>();
+            _movementManager = GetComponent<MovementManager>();
             _piece = GetComponent<Piece>();
             _boxCollider = GetComponent<BoxCollider2D>();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            canCapture = !other.gameObject.CompareTag(gameObject.tag);
+            canCapture = !other.gameObject.CompareTag(gameObject.tag) && !other.gameObject.CompareTag("King");
+            Debug.Log(canCapture);
+            var rb = other.attachedRigidbody;
+            if (!canCapture) return;
+            if (rb is null) return;
+            Destroy(rb.velocity.magnitude > _rb.velocity.magnitude ? gameObject : other.gameObject);
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (canCapture)
-            {
-                Destroy(other.gameObject);
-            }
-        }
-
-       
     }
 }
