@@ -27,7 +27,8 @@ namespace Assets.Scripts.Classes.Pieces
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
             legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y+1*PawnDirection(Color)));
             legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y+2*PawnDirection(Color)));//only in first move
-            legalMoves.Add(new Vector2Int(positionCell.x+1, positionCell.y+1*PawnDirection(Color)));//en Passant,handled by Proxy classes
+            legalMoves.Add(new Vector2Int(positionCell.x+1, positionCell.y+1*PawnDirection(Color)));
+            legalMoves.Add(new Vector2Int(positionCell.x-1, positionCell.y+1*PawnDirection(Color)));//en Passant,handled by Proxy classes
             legalMoves.Remove(positionCell);
             var filteredMovesList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
             return filteredMovesList;
