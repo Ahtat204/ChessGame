@@ -25,7 +25,7 @@ namespace Assets.Scripts.Classes.GameClasses
             _gameState = GameState.WaitingForPlayer;
             _turn = Turn.WhitePlayer;
             _moveType=new MoveType();
-            _blackPieces= from piece in pieces where ; ;
+            
         }
 
         private void Update()
