@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Assets.Scripts.Classes.GameClasses;
+using UnityEngine;
 
 namespace Assets.Scripts.Classes.BehaviorClasses
 {
@@ -7,6 +9,25 @@ namespace Assets.Scripts.Classes.BehaviorClasses
     /// </summary>
     public class KingCastling : MonoBehaviour
     {
-        
+        private bool _canCastle;
+        private Vector3Int _castlePosition;
+
+        private void Start()
+        {
+            _castlePosition = Board.BoardInstance.tilemap.WorldToCell(transform.position);
+        }
+
+        private void Update()
+        {
+            if (_castlePosition!= Board.BoardInstance.tilemap.WorldToCell(transform.position))
+            {
+                _canCastle = false;
+            }
+        }
+
+        private void CastleKing()
+        {
+            if(_canCastle) return;
+        }
     }
 }

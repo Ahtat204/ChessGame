@@ -27,20 +27,28 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             _selectableDecorator = GetComponent<SelectableDecorator>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _piece = GetComponent<Piece>();
-            _target = transform.position;
+           
             HasMoved = false;
         }
 
         private void Start()
         {
+            _target = transform.position;
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
         }
 
         private void Update()
         {
             HandleInput();
-            MovePiece();
         }
+
+        private void FixedUpdate()
+        {
+              
+            MovePiece();
+            
+        }
+
         private void HandleInput()
         {
             if (Input.GetMouseButtonDown(0) && _selectableDecorator.Status == SelectionStatus.Selected)
@@ -62,6 +70,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 HasMoved = true;
                 _selectableDecorator.Status = SelectionStatus.UnSelected;  
             }
+            
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -69,10 +78,13 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             _canCapture = !other.gameObject.CompareTag(gameObject.tag) && !other.gameObject.CompareTag("King");
             var mom=other.GetComponent<MovementManager>(); //this was the critical line
             if (!_canCapture) return;
-            if (HasMoved && mom is not null && !mom.HasMoved)
+            if(mom is null) return;
+            if (HasMoved && !mom.HasMoved)
             {
                 Destroy(other.gameObject);
+                
             }
+
             HasMoved = false;
         }
     }
