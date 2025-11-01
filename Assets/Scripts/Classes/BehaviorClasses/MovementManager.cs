@@ -12,7 +12,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(SelectableDecorator))]
-    internal sealed class MovementManager : MonoBehaviour
+    public class MovementManager : MonoBehaviour
     {
         private SelectableDecorator _selectableDecorator;
         private Piece _piece;
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         private void OnTriggerEnter2D(Collider2D other)
         {
             _canCapture = !other.gameObject.CompareTag(gameObject.tag) && !other.gameObject.CompareTag("King");
-            var mom=other.GetComponent<MovementManager>(); //this was the critical line
+            var mom=other.GetComponent<MovementManager>();
             if (!_canCapture) return;
             if(mom is null) return;
             if (HasMoved && !mom.HasMoved)
@@ -84,7 +84,6 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 Destroy(other.gameObject);
                 
             }
-
             HasMoved = false;
         }
     }
