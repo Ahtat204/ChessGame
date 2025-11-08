@@ -1,6 +1,8 @@
 ﻿using System;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Classes.Pieces;
 using UnityEngine;
+
 
 namespace Assets.Scripts.Classes.BehaviorClasses
 {
@@ -9,12 +11,16 @@ namespace Assets.Scripts.Classes.BehaviorClasses
     /// </summary>
     public class KingCastling : MonoBehaviour
     {
-        private bool _canCastle;
+        private King _king;
+        public bool _canCastle;
         private Vector3Int _castlePosition;
+        private Vector3 _initialPosition;
 
         private void Start()
         {
-            _castlePosition = Board.BoardInstance.tilemap.WorldToCell(transform.position);
+            _initialPosition = transform.position;
+            _castlePosition = Board.BoardInstance.tilemap.WorldToCell(_initialPosition);
+            _king = GetComponentInParent<King>();
         }
 
         private void Update()
@@ -25,9 +31,13 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             }
         }
 
-        private void CastleKing()
+        
+
+        private void OnMouseDrag()
         {
-            if(_canCastle) return;
+            if(!_canCastle) return;
+            
         }
+        
     }
 }

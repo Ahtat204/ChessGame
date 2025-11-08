@@ -125,3 +125,5 @@ calculation logic.
 > This organized structure promotes maintainability and clarity, separating core game logic from Unity-specific behavior
 > and leveraging design patterns like **Singleton**, **Command**, and **Decorator** for robust and scalable development.
 
+## Thumbnail:
+<img src="Ressources/Thumbnail.png">
