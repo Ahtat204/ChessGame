@@ -1,4 +1,4 @@
-chessgame: A Unity Chess game Implementation ♟️
+## ChessGame :A Unity Chess game Implementation ♟️ ![Status](https://img.shields.io/badge/status-ongoing-green?style=for-the-badge)
 
 This repository, contains the core C\# scripts ,with other assets for a Chess game implemented using the **Unity** game
 engine. The design follows several object-oriented principles, utilizing an abstract base class for pieces,
