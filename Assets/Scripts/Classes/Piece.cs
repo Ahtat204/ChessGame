@@ -36,5 +36,6 @@ namespace Assets.Scripts.Classes
         /// <param name="position">position is the current position of the Piece </param>
         /// <returns> a List of a 2D vector</returns>
         protected abstract List<Vector2Int> CalculateLegalMoves(Vector3 position);
+        
     }
 }

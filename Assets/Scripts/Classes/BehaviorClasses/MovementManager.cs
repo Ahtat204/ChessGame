@@ -1,5 +1,8 @@
-﻿using Assets.Scripts.Classes.GameClasses;
+﻿using System;
+using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
+using Assets.Scripts.Classes;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.BehaviorClasses
@@ -15,14 +18,15 @@ namespace Assets.Scripts.Classes.BehaviorClasses
     public class MovementManager : MonoBehaviour
     {
         /// <summary>
-        /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
+        ///       this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
         /// </summary>
-        public bool CanMove{get; private set;}
-
+        private bool CanMove { get; set; }
         private SelectableDecorator _selectableDecorator;
-        private Piece _piece;
+        [SerializeField] private GameManager gameManager;
+        public Piece _piece{get; private set;}
         private Rigidbody2D _rigidbody;
         private Vector3 _target;
+        public event Action<MovementManager> OnMoveCompleted;
         private bool _canCapture;
         private Vector3 _destination;
         private Vector2 _currentPosition;
@@ -44,7 +48,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// </summary>
         private void Awake()
         {
-            CanMove = false;
+            CanMove = true;
             _difference = Vector3.zero;
             _selectableDecorator = GetComponent<SelectableDecorator>();
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -58,10 +62,30 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// </summary>
         private void Start()
         {
+            Singleton<GameManager>.Instance.RegisterPiece(this);
+            /*if(_piece is null) return;
+            if (this._piece.Color == PieceColor.White)
+            {
+                Singleton<GameManager>.Instance.whitePieces.Add(this);
+            }
+            else if (this._piece.Color == PieceColor.Black)
+            {
+                Singleton<GameManager>.Instance.blackPieces.Add(this);
+            }*/
             _target = transform.position;
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
         }
 
+
+        void FinishMovement()
+        {
+            if (!HasMoved)
+            {
+                HasMoved = true;
+                OnMoveCompleted?.Invoke(this);
+            }
+            Debug.Log(HasMoved);
+        }
         /// <summary>
         /// Called once per frame to handle input and update the piece’s position.
         /// </summary>
@@ -69,9 +93,20 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         {
             HandleInput();
             MovePiece();
+            
         }
 
-        public void SetCanMove(bool value)=>CanMove = value;
+
+        public void SwitchTurn(Turn turn)
+        {
+            if (!HasMoved) return;
+            if (turn != Singleton<GameManager>.Instance.turn)
+            {
+                Singleton<GameManager>.Instance.turn = turn;
+            }
+        }
+        public void SetCanMove(bool value) => CanMove = value;
+
         /// <summary>
         /// Handles mouse input when the piece is selected.
         /// Updates the target position based on the cursor location.
@@ -86,8 +121,8 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         }
 
         /// <summary>
-        /// Moves the piece to the target cell if it represents a valid move.
-        /// Updates the piece’s board position and movement status.
+        ///    1.  Moves the piece to the target cell if it represents a valid move.
+        ///      Updates the piece’s board position and movement status.
         /// </summary>
         private void MovePiece()
         {
@@ -95,17 +130,16 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(_target);
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(targetCell);
             if (!_piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
-
             _rigidbody.MovePosition(worldCellCenter);
-
             if (targetCell != CurrPos)
             {
                 CurrPos = targetCell;
-                HasMoved = true;
+                FinishMovement();
                 _selectableDecorator.Status = SelectionStatus.UnSelected;
+                HasMoved = false;
             }
+            
         }
-
         /// <summary>
         /// Captures the initial mouse offset relative to the piece’s position when clicked.
         /// </summary>
@@ -134,8 +168,8 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             if (!_piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
             if (_selectableDecorator.Status != SelectionStatus.UnSelected) return;
             if (!CanMove) return;
-                // transform.position = _destination;
-                _rigidbody.MovePosition(_destination);
+            // transform.position = _destination;
+            _rigidbody.MovePosition(_destination);
         }
 
         /// <summary>

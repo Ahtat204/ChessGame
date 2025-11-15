@@ -7,6 +7,6 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
     /// </summary>
     public class PieceMovementProxy : MonoBehaviour
     {
-        
+        public void CheckPath(){}
     }
 }
