@@ -21,9 +21,10 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         ///       this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
         /// </summary>
         private bool CanMove { get; set; }
+
         private SelectableDecorator _selectableDecorator;
         [SerializeField] private GameManager gameManager;
-        public Piece _piece{get; private set;}
+        public Piece _piece { get; private set; }
         private Rigidbody2D _rigidbody;
         private Vector3 _target;
         public event Action<MovementManager> OnMoveCompleted;
@@ -84,8 +85,8 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 HasMoved = true;
                 OnMoveCompleted?.Invoke(this);
             }
-            Debug.Log(HasMoved);
         }
+
         /// <summary>
         /// Called once per frame to handle input and update the piece’s position.
         /// </summary>
@@ -93,7 +94,6 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         {
             HandleInput();
             MovePiece();
-            
         }
 
 
@@ -105,6 +105,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 Singleton<GameManager>.Instance.turn = turn;
             }
         }
+
         public void SetCanMove(bool value) => CanMove = value;
 
         /// <summary>
@@ -136,10 +137,11 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 CurrPos = targetCell;
                 FinishMovement();
                 _selectableDecorator.Status = SelectionStatus.UnSelected;
-                HasMoved = false;
+                
             }
-            
+            HasMoved = false;
         }
+
         /// <summary>
         /// Captures the initial mouse offset relative to the piece’s position when clicked.
         /// </summary>
@@ -161,6 +163,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// Called when the mouse button is released.
         /// Finalizes the move if the target cell is valid.
         /// </summary>
+        
         private void OnMouseUp()
         {
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(_target);
@@ -181,14 +184,14 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         {
             _canCapture = !other.gameObject.CompareTag(gameObject.tag) && !other.gameObject.CompareTag("King");
             var mom = other.GetComponent<MovementManager>();
-            if (!_canCapture || mom is null) return;
-
+            if(mom is null) return;
+            if (!_canCapture ) return;
+            Debug.Log("(" + HasMoved + "\r" + gameObject.name + ")" + "and" + "(" + mom.gameObject.name + "" +
+                      mom.HasMoved);
             if (HasMoved && !mom.HasMoved)
             {
                 Destroy(other.gameObject);
             }
-
-            HasMoved = false;
         }
     }
 }

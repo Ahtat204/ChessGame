@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Classes.GameClasses
@@ -9,7 +8,7 @@ namespace Assets.Scripts.Classes.GameClasses
     /// </summary>
     internal sealed class MainMenuController : MonoBehaviour
     {
-      public  void Play()
+      public void Play()
         {
             SceneManager.LoadScene("GameScene");
         }
