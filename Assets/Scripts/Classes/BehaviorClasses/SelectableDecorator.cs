@@ -27,8 +27,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         {
             //IsSelected = true;
             Status = SelectionStatus.Selected;
-            var o = gameObject;
-            var pos=Board.BoardInstance.tilemap.WorldToCell(o.transform.position);
+          //  Debug.Log(Board.BoardInstance.tilemap.WorldToCell(transform.position)+gameObject.name);
         }
 
         public void OnDeselect()

@@ -3,86 +3,48 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Structs;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Classes.BehaviorClasses;
-
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Classes.GameClasses
 {
     public class GameManager : MonoBehaviour
     {
-        public List<MovementManager> blackPieces;
-        public List<MovementManager> whitePieces;
         private GameState _gameState;
         private MoveType _moveType;
-        public Turn turn { get; set; }
+        Dictionary<Vector2Int, MovementManager> _pieces;
+        private Turn _turn { get; set; }
         private Coordinates _coordinates;
         // private Scene _scene;
 
 
         private void Start()
         {
-            turn = Turn.WhitePlayer;
-            blackPieces = new(16);
-            whitePieces = new(16);
-            if (blackPieces is null || whitePieces is null) throw new NullReferenceException();
-        }
+            _pieces = new Dictionary<Vector2Int, MovementManager>();
+            foreach (var piece in FindObjectsOfType<MovementManager>())
+            {
+                _pieces.Add((Vector2Int)piece.CurrPos, piece);
+               // Debug.Log(piece.CurrPos);
+            }
 
-        public void RegisterPiece(MovementManager gObject)
-        {
-            var piece = gObject?._piece;
-            if (piece is null) return;
-            if (gObject._piece.Color == PieceColor.Black) blackPieces.Add(gObject);
-            else whitePieces.Add(gObject);
-            gObject.OnMoveCompleted += HandleMoveCompleted;
+            _turn = Turn.WhitePlayer;
         }
 
         private void Update()
         {
-            if (_gameState is GameState.Check && turn is Turn.WhitePlayer)
+            
+            if (_gameState is GameState.Check && _turn is Turn.WhitePlayer)
             {
             }
 
-            if (_gameState is GameState.Check && turn is Turn.BlackPlayer)
+            if (_gameState is GameState.Check && _turn is Turn.BlackPlayer)
             {
             }
 
             if (_moveType == MoveType.Castling)
             {
             }
-        }
-
-
-        void HandleMoveCompleted(MovementManager m)
-        {
-            SwitchTurn(m._piece.Color);
-        }
-
-
-        void TogglePieceScripts(List<MovementManager> pieces, bool enable)
-        {
-            if (pieces is null) return;
-            foreach (var p in pieces)
-            {
-                p.enabled = !enable;
-            }
-        }
-
-        void SwitchTurn(PieceColor color)
-        {
-            /*if(turn == Turn.WhitePlayer) turn = Turn.BlackPlayer;
-            else if(turn == Turn.BlackPlayer) turn = Turn.WhitePlayer;*/
-
-            if (color == PieceColor.Black)
-            {
-                turn = Turn.BlackPlayer;
-            }
-            else if (color == PieceColor.White)
-            {
-                turn = Turn.WhitePlayer;
-            }
-
-            TogglePieceScripts(blackPieces, color == PieceColor.Black);
-            TogglePieceScripts(whitePieces, color == PieceColor.White);
         }
     }
 }
