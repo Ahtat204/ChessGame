@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.BehaviorClasses
 {
-    
     [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Piece))]
+    [RequireComponent(typeof(MovementManager))]
     internal class SelectableDecorator : MonoBehaviour, ISelectable
     {
         //UInt32 for consistency across platforms, and hide in the inspector
@@ -17,8 +16,16 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         public SelectionStatus Status { get; set; }
         private static List<SelectableDecorator> MovableObjects => new();
 
+        public static SelectableDecorator Instance { get; private set; }
+
+        public delegate void OnPiece();
+
+        public event OnPiece OnPieceClicked;
+
+
         private void Awake()
         {
+            Instance = this;
             MovableObjects.Add(this);
             Status = SelectionStatus.UnSelected;
         }
@@ -27,7 +34,9 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         {
             //IsSelected = true;
             Status = SelectionStatus.Selected;
-          //  Debug.Log(Board.BoardInstance.tilemap.WorldToCell(transform.position)+gameObject.name);
+            
+
+            //  Debug.Log(Board.BoardInstance.tilemap.WorldToCell(transform.position)+gameObject.name);
         }
 
         public void OnDeselect()
@@ -38,6 +47,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
 
         private void OnMouseDown()
         {
+            
             //Piece.DebugLog("mouse button down",transform.position);
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
