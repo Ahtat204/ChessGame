@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.BehaviorClasses
@@ -16,29 +18,28 @@ namespace Assets.Scripts.Classes.BehaviorClasses
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(SelectableDecorator))]
-    public class MovementManager : MonoBehaviour,ICommand
+    public class MovementManager : MonoBehaviour, ICommand
     {
         /// <summary>
         /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
         /// </summary>
         bool CanMove { get; set; }
+
         private SelectableDecorator _selectableDecorator;
         public Piece _piece { get; private set; }
-        // private Rigidbody2D _rigidbody;
-        // public event Action<MovementManager> OnMoveCompleted;
         private Vector3 _target;
-        // private bool _canCapture;
-        // private Vector3 _destination;
         private Vector2 _currentPosition;
-        //   private Vector3 _difference;
+
         /// <summary>
         /// Gets or sets the current board position of the piece in grid coordinates.
         /// </summary>
         public Vector3Int CurrPos { get; private set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether the piece has moved during the current turn.
         /// </summary>
         public bool HasMoved { get; private set; }
+
         /// <summary>
         /// Called when the component is initialized.
         /// Initializes component references and default state values.
@@ -46,10 +47,10 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         private void Awake()
         {
             CanMove = true;
-            //_difference = Vector3.zero;
             _selectableDecorator = GetComponent<SelectableDecorator>();
             _piece = GetComponent<Piece>();
         }
+
         /// <summary>
         /// Called before the first frame update.
         /// Sets the initial target position and determines the piece’s current board cell.
@@ -61,15 +62,18 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance._pieces ??= new();
             GameManager.Instance._pieces.Add((Vector2Int)CurrPos, this);
-           // GameManager.Instance.OnPieceMovedEvent += Execute;
-           //  Debug.Log(CurrPos);
-          // SelectableDecorator.Instance.OnPieceClicked += Execute;
+            GameManager.Instance.OnExecute += Execute;
+            GameManager.Instance.OnExecute += SwitchScripts;
+            //GameManager.Instance.OnExecute?.Invoke();
+
+            //    GameManager.Instance.OnPieceMovedEvent += Execute;
         }
+
         /// <summary>
         /// Handles mouse input when the piece is selected.
         /// Updates the target position based on the cursor location.
         /// </summary>
-        public void HandleInput()
+        private void HandleInput()
         {
             if (Input.GetMouseButtonDown(0) && _selectableDecorator.Status == SelectionStatus.Selected)
             {
@@ -78,37 +82,81 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             }
         }
 
+       
         
+        public void SwitchScripts()
+        { /*
+            if (GameManager.Instance._turn is Turn.WhitePlayer)
+            {
+                if (_piece.Color == PieceColor.White)
+                {
+                    gameObject.SetActive(false);
+                }
+                if (_piece.Color == PieceColor.Black)
+                {
+                   gameObject.SetActive(true);
+                }
+            }
+            if (GameManager.Instance._turn is Turn.BlackPlayer )
+            {
+                if (_piece.Color == PieceColor.Black)
+                {
+                   // enabled=true;
+                   gameObject.SetActive(true);
+                }
+                if (_piece.Color == PieceColor.White)
+                {
+                   // enabled=false;
+                   gameObject.SetActive(false);
+                }
+            }*/
+            switch (GameManager.Instance._turn)
+            {
+                case Turn.WhitePlayer:
+                    
+                    break;
+                case Turn.BlackPlayer:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        //void switchTurn(Turn turn)=> turn = turn==Turn.WhitePlayer?Turn.BlackPlayer:Turn.WhitePlayer;
+            
         /// <summary>
         /// Moves the piece to the target cell if it represents a valid move.
         /// Updates the piece’s board position and movement status.
         /// </summary>
-        public void MovePiece(Dictionary<Vector2Int, MovementManager> pieces)
+        private void MovePiece(Dictionary<Vector2Int, MovementManager> pieces)
         {
+            
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(_target);
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(targetCell);
             if (!_piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
             var occupied = pieces.ContainsKey((Vector2Int)targetCell) ? pieces[(Vector2Int)targetCell] : null;
-            
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(_target, (Vector2)worldCellCenter, 10);
+                //switchTurn(GameManager.Instance._turn);
+              //  Debug.Log(GameManager.Instance._turn);
             }
 
-            
             if (occupied is not null)
             {
                 if (occupied._piece.Color == _piece.Color) return;
                 if (occupied._piece.Color != _piece.Color)
                 {
-                    if(occupied._piece is King) return;
+                    if (occupied._piece is King) return;
                     transform.position = Vector2.MoveTowards(_target, (Vector2)worldCellCenter, 10);
+                    
                     pieces.Remove((Vector2Int)targetCell);
                     pieces.Add((Vector2Int)targetCell, this);
-             //       SelectableDecorator.Instance.OnPieceClicked -= Execute;
+                    GameManager.Instance.OnExecute -= occupied.Execute;
                     Destroy(occupied.gameObject);
-                    
+                    //   switchTurn(GameManager.Instance._turn);
+                 //   Debug.Log(GameManager.Instance._turn);
+                    //  GameManager.Instance.OnPieceMovedEvent -= Execute;
                 }
             }
 
@@ -117,79 +165,18 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 pieces.Remove((Vector2Int)CurrPos);
                 CurrPos = targetCell;
                 pieces[(Vector2Int)targetCell] = this;
+                if(GameManager.Instance._turn is Turn.WhitePlayer) GameManager.Instance._turn=Turn.BlackPlayer;
+                if (GameManager.Instance._turn is Turn.BlackPlayer) GameManager.Instance._turn=Turn.WhitePlayer;
                 HasMoved = true;
                 _selectableDecorator.Status = SelectionStatus.UnSelected;
             }
-        }
-
-/*
-        /// <summary>
-        /// Captures the initial mouse offset relative to the piece’s position when clicked.
-        /// </summary>
-        private void OnMouseDown()
-        {
-            _difference = (Vector2)Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition) -
-                          (Vector2)transform.position;
-        }
-
-        /// <summary>
-        /// Updates the target position based on mouse drag.
-        /// </summary>
-        private void OnMouseDrag()
-        {
-            _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition) - _difference;
-        }
-
-        /// <summary>
-        /// Called when the mouse button is released.
-        /// Finalizes the move if the target cell is valid.
-        /// </summary>
-        private void OnMouseUp()
-        {
-            var targetCell = Board.BoardInstance.tilemap.WorldToCell(_target);
-            _destination = Board.BoardInstance.tilemap.GetCellCenterWorld(targetCell);
-            if (!_piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
-            if (_selectableDecorator.Status != SelectionStatus.UnSelected) return;
-            if (!CanMove) return;
-            // transform.position = _destination;
-            _rigidbody.MovePosition(_destination);
-        }
-
-
-        /// <summary>
-        /// Handles collision detection and piece capture logic.
-        /// If a valid opposing piece is detected, it is destroyed upon capture.
-        /// </summary>
-        /// <param name="other">The collider of the other game object.</param>
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            _canCapture = !other.gameObject.CompareTag(gameObject.tag) && !other.gameObject.CompareTag("King");
-            var mom = other.GetComponent<MovementManager>();
-            if (!_canCapture || mom is null) return;
-            /*Debug.Log(other.gameObject.name+mom.HasMoved);
-            Debug.Log(gameObject.name+HasMoved);
-                Destroy(other.gameObject);
-                Debug.Log(other.gameObject.name + mom.HasMoved);
-
-        }
-*/
-
-
-
-        private void Update()
-        {
-            //this is not efficient, planed to switch to EDD through delegate or events
-            /*
-            HandleInput();
-            MovePiece(GameManager.Instance._pieces);
-            */
         }
 
         public void Execute()
         {
             HandleInput();
             MovePiece(GameManager.Instance._pieces);
-            Debug.Log("Moved");
+           // Debug.Log("Moved");
         }
 
         public void Undo()
@@ -197,5 +184,4 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             throw new NotImplementedException();
         }
     }
-    
 }

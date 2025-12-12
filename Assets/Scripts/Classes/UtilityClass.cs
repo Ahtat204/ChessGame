@@ -21,9 +21,5 @@ namespace Assets.Scripts.Classes
             Debug.Log(m + item);
 #endif
         }
-
-         
-
-        
     }
 }
