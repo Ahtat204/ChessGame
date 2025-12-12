@@ -23,8 +23,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// <summary>
         /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
         /// </summary>
-        bool CanMove { get; set; }
-
+        public bool CanMove { get;  set; }
         private SelectableDecorator _selectableDecorator;
         public Piece _piece { get; private set; }
         private Vector3 _target;
@@ -46,9 +45,10 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// </summary>
         private void Awake()
         {
-            CanMove = true;
+            
             _selectableDecorator = GetComponent<SelectableDecorator>();
             _piece = GetComponent<Piece>();
+            CanMove=_piece.Color != PieceColor.Black;
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             _target = transform.position;
             HasMoved = false;
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
-            GameManager.Instance._pieces ??= new();
-            GameManager.Instance._pieces.Add((Vector2Int)CurrPos, this);
+            GameManager.Instance.Pieces ??= new();
+            GameManager.Instance.Pieces.Add((Vector2Int)CurrPos, this);
             GameManager.Instance.OnExecute += Execute;
             GameManager.Instance.OnExecute += SwitchScripts;
             //GameManager.Instance.OnExecute?.Invoke();
@@ -81,55 +81,52 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 _target.z = 0;
             }
         }
-
-       
-        
         public void SwitchScripts()
-        { /*
-            if (GameManager.Instance._turn is Turn.WhitePlayer)
+        {
+            /*
+                if (GameManager.Instance._turn is Turn.WhitePlayer)
+                {
+                    if (_piece.Color == PieceColor.White)
+                    {
+                        gameObject.SetActive(false);
+                    }
+                    if (_piece.Color == PieceColor.Black)
+                    {
+                       gameObject.SetActive(true);
+                    }
+                }
+                if (GameManager.Instance._turn is Turn.BlackPlayer )
+                {
+                    if (_piece.Color == PieceColor.Black)
+                    {
+                       // enabled=true;
+                       gameObject.SetActive(true);
+                    }
+                    if (_piece.Color == PieceColor.White)
+                    {
+                       // enabled=false;
+                       gameObject.SetActive(false);
+                    }
+                }*/
+            switch (GameManager.Instance.Turn)
             {
-                if (_piece.Color == PieceColor.White)
-                {
-                    gameObject.SetActive(false);
-                }
-                if (_piece.Color == PieceColor.Black)
-                {
-                   gameObject.SetActive(true);
-                }
-            }
-            if (GameManager.Instance._turn is Turn.BlackPlayer )
-            {
-                if (_piece.Color == PieceColor.Black)
-                {
-                   // enabled=true;
-                   gameObject.SetActive(true);
-                }
-                if (_piece.Color == PieceColor.White)
-                {
-                   // enabled=false;
-                   gameObject.SetActive(false);
-                }
-            }*/
-            switch (GameManager.Instance._turn)
-            {
-                case Turn.WhitePlayer:
-                    
+                case PlayerTurn.WhitePlayer:
+
                     break;
-                case Turn.BlackPlayer:
+                case PlayerTurn.BlackPlayer:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
         //void switchTurn(Turn turn)=> turn = turn==Turn.WhitePlayer?Turn.BlackPlayer:Turn.WhitePlayer;
-            
+
         /// <summary>
         /// Moves the piece to the target cell if it represents a valid move.
         /// Updates the piece’s board position and movement status.
         /// </summary>
         private void MovePiece(Dictionary<Vector2Int, MovementManager> pieces)
         {
-            
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(_target);
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(targetCell);
@@ -139,7 +136,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             {
                 transform.position = Vector2.MoveTowards(_target, (Vector2)worldCellCenter, 10);
                 //switchTurn(GameManager.Instance._turn);
-              //  Debug.Log(GameManager.Instance._turn);
+                //  Debug.Log(GameManager.Instance._turn);
             }
 
             if (occupied is not null)
@@ -149,34 +146,41 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 {
                     if (occupied._piece is King) return;
                     transform.position = Vector2.MoveTowards(_target, (Vector2)worldCellCenter, 10);
-                    
+
                     pieces.Remove((Vector2Int)targetCell);
                     pieces.Add((Vector2Int)targetCell, this);
                     GameManager.Instance.OnExecute -= occupied.Execute;
                     Destroy(occupied.gameObject);
-                    //   switchTurn(GameManager.Instance._turn);
-                 //   Debug.Log(GameManager.Instance._turn);
-                    //  GameManager.Instance.OnPieceMovedEvent -= Execute;
                 }
             }
+
 
             if (!targetCell.Equals(CurrPos))
             {
                 pieces.Remove((Vector2Int)CurrPos);
                 CurrPos = targetCell;
                 pieces[(Vector2Int)targetCell] = this;
-                if(GameManager.Instance._turn is Turn.WhitePlayer) GameManager.Instance._turn=Turn.BlackPlayer;
-                if (GameManager.Instance._turn is Turn.BlackPlayer) GameManager.Instance._turn=Turn.WhitePlayer;
                 HasMoved = true;
+                GameManager.Instance.Turn = GameManager.Instance.Turn switch
+                {
+                    PlayerTurn.WhitePlayer => PlayerTurn.BlackPlayer,
+                    PlayerTurn.BlackPlayer => PlayerTurn.WhitePlayer,
+                    _ => GameManager.Instance.Turn
+                };
+                //   Debug.Log(GameManager.Instance._turn);
                 _selectableDecorator.Status = SelectionStatus.UnSelected;
+                if (_piece.Color is PieceColor.White && GameManager.Instance.Turn is PlayerTurn.WhitePlayer)
+                {
+                    enabled = false;
+                }
             }
         }
 
         public void Execute()
         {
             HandleInput();
-            MovePiece(GameManager.Instance._pieces);
-           // Debug.Log("Moved");
+            MovePiece(GameManager.Instance.Pieces);
+            // Debug.Log("Moved");
         }
 
         public void Undo()

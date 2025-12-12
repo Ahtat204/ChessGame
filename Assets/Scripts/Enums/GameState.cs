@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enums
     /// <summary>
     /// enum representing who's turn is to play
     /// </summary>
-    public enum Turn : ushort
+    public enum PlayerTurn : ushort
     {
         WhitePlayer,
         BlackPlayer

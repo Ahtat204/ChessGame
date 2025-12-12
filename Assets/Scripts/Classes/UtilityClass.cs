@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using Assets.Scripts.Classes.BehaviorClasses;
-using Assets.Scripts.Classes.GameClasses;
-using Assets.Scripts.Enums;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes
