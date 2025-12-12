@@ -12,13 +12,10 @@ namespace Assets.Scripts.Classes.GameClasses
         private GameState _gameState;
         private MoveType _moveType;
         public static GameManager Instance { get; private set; }
-        public Dictionary<Vector2Int, MovementManager> _pieces;
-
-        public delegate void onMovePiece();
-
-        public event onMovePiece OnExecute;
-        public Turn _turn { get; set; }
-
+        public Dictionary<Vector2Int, MovementManager> Pieces;
+        public delegate void OnMovePiece();
+        public event OnMovePiece OnExecute;
+        public PlayerTurn Turn { get; set; }
         private void Awake()
         {
             if (Instance is not null && Instance != this)
@@ -31,26 +28,33 @@ namespace Assets.Scripts.Classes.GameClasses
             }
         }
 
-   
         private void Start()
         {
-            _pieces ??= new();
-            _turn = Turn.WhitePlayer;
-           // OnExecute += switchTurns;
+            Pieces ??= new();
+            Turn = PlayerTurn.WhitePlayer;
+        }
+
+        void ToggleScripts()
+        {
+            
         }
 
         private void Update()
         {
-            
             if (Input.GetMouseButtonDown(0))
             {
                 OnExecute?.Invoke();
+                foreach (var manager in Instance.Pieces)
+                {
+                    manager.Value.CanMove = !manager.Value.CanMove;
+                }
             }
-            if (_gameState is GameState.Check && _turn is Turn.WhitePlayer)
+
+            if (_gameState is GameState.Check && Turn is PlayerTurn.WhitePlayer)
             {
             }
 
-            if (_gameState is GameState.Check && _turn is Turn.BlackPlayer)
+            if (_gameState is GameState.Check && Turn is PlayerTurn.BlackPlayer)
             {
             }
 
