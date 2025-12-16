@@ -30,7 +30,7 @@ namespace Assets.Scripts.Classes.GameClasses
 
         private void Start()
         {
-            Pieces ??= new();
+            Pieces ??= new(32);
             Turn = PlayerTurn.WhitePlayer;
         }
 
