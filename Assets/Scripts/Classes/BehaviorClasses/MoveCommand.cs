@@ -1,29 +1,26 @@
 ﻿using System;
+using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Interfaces;
-using JetBrains.Annotations;
 using UnityEngine;
+
 
 namespace Assets.Scripts.Classes.BehaviorClasses
 {
-    internal class MoveCommand<T> : ICommand where T:Piece 
+    internal class MoveCommand : ICommand
     {
-        private readonly T _piece;
-        private readonly Vector3Int _destination;
-        private readonly Vector3Int _origin;
+        private readonly MovementManager _manager;
+        private readonly SelectableDecorator _decorator;
 
-        public MoveCommand([NotNull] T piece, Vector3Int destination, Vector3Int origin)
+        public MoveCommand(MovementManager manager, SelectableDecorator decorator)
         {
-            _piece = piece ?? throw new ArgumentNullException(nameof(piece));
-            _destination = destination;
-            _origin = origin;
+            _manager = manager;
+            _decorator = decorator;
         }
-        /// <summary>
-        /// this method used to move the piece
-        /// </summary>
-        /// <param name="to"> to is the square where the piece it should move to </param>
+
         public void Execute()
         {
-            throw new NotImplementedException();
+            _decorator.HandleInput();
+           _manager.MovePiece(GameManager.Instance.Pieces, _decorator._target);
         }
 
         public void Undo()

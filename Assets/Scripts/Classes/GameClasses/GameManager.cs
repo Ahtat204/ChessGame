@@ -1,8 +1,8 @@
 ﻿using Assets.Scripts.Enums;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Classes.BehaviorClasses;
+using Assets.Scripts.Interfaces;
 
 
 namespace Assets.Scripts.Classes.GameClasses
@@ -12,7 +12,8 @@ namespace Assets.Scripts.Classes.GameClasses
         private GameState _gameState;
         private MoveType _moveType;
         public static GameManager Instance { get; private set; }
-        public Dictionary<Vector2Int, MovementManager>(32) Pieces;
+        public Dictionary<Vector2Int, MovementManager> Pieces;
+        private readonly Stack<ICommand> _moveCommands;
         public delegate void OnMovePiece();
         public event OnMovePiece OnExecute;
         public PlayerTurn Turn { get; set; }
@@ -30,7 +31,7 @@ namespace Assets.Scripts.Classes.GameClasses
 
         private void Start()
         {
-            Pieces ??= new();
+            Pieces ??= new(32);
             Turn = PlayerTurn.WhitePlayer;
         }
 
