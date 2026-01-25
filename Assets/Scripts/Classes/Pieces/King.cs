@@ -30,8 +30,7 @@ namespace Assets.Scripts.Classes.Pieces
             legalMoves.Add(new Vector2Int(positionCell.x + 1, positionCell.y - 1));
             legalMoves.Add(new Vector2Int(positionCell.x + 1, positionCell.y - 1));
             legalMoves.Remove(positionCell);
-            var filteredMovesList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
-            return filteredMovesList;
+            return legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
         }
     }
 }

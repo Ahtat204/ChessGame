@@ -24,6 +24,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
         /// </summary>
         public bool CanMove { get;  set; }
+        public bool CanCastle { get;  private set; }
         private SelectableDecorator _selectableDecorator;
         public Piece _piece { get; private set; }
         private Vector3 _target;
@@ -45,7 +46,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// </summary>
         private void Awake()
         {
-            
+            CanCastle = true;
             _selectableDecorator = GetComponent<SelectableDecorator>();
             _piece = GetComponent<Piece>();
             CanMove=_piece.Color != PieceColor.Black;
@@ -63,10 +64,6 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             GameManager.Instance.Pieces ??= new();
             GameManager.Instance.Pieces.Add((Vector2Int)CurrPos, this);
             GameManager.Instance.OnExecute += Execute;
-            GameManager.Instance.OnExecute += SwitchScripts;
-            //GameManager.Instance.OnExecute?.Invoke();
-
-            //    GameManager.Instance.OnPieceMovedEvent += Execute;
         }
 
         /// <summary>
@@ -81,44 +78,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 _target.z = 0;
             }
         }
-        public void SwitchScripts()
-        {
-            /*
-                if (GameManager.Instance._turn is Turn.WhitePlayer)
-                {
-                    if (_piece.Color == PieceColor.White)
-                    {
-                        gameObject.SetActive(false);
-                    }
-                    if (_piece.Color == PieceColor.Black)
-                    {
-                       gameObject.SetActive(true);
-                    }
-                }
-                if (GameManager.Instance._turn is Turn.BlackPlayer )
-                {
-                    if (_piece.Color == PieceColor.Black)
-                    {
-                       // enabled=true;
-                       gameObject.SetActive(true);
-                    }
-                    if (_piece.Color == PieceColor.White)
-                    {
-                       // enabled=false;
-                       gameObject.SetActive(false);
-                    }
-                }*/
-            switch (GameManager.Instance.Turn)
-            {
-                case PlayerTurn.WhitePlayer:
 
-                    break;
-                case PlayerTurn.BlackPlayer:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
         //void switchTurn(Turn turn)=> turn = turn==Turn.WhitePlayer?Turn.BlackPlayer:Turn.WhitePlayer;
 
         /// <summary>
@@ -135,6 +95,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(_target, (Vector2)worldCellCenter, 10);
+                if(CanCastle) CanCastle = false;
                 //switchTurn(GameManager.Instance._turn);
                 //  Debug.Log(GameManager.Instance._turn);
             }
@@ -146,7 +107,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
                 {
                     if (occupied._piece is King) return;
                     transform.position = Vector2.MoveTowards(_target, (Vector2)worldCellCenter, 10);
-
+                    if(CanCastle) CanCastle = false;
                     pieces.Remove((Vector2Int)targetCell);
                     pieces.Add((Vector2Int)targetCell, this);
                     GameManager.Instance.OnExecute -= occupied.Execute;
@@ -180,7 +141,6 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         {
             HandleInput();
             MovePiece(GameManager.Instance.Pieces);
-            // Debug.Log("Moved");
         }
 
         public void Undo()
