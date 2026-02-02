@@ -18,12 +18,14 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
         /// <param name="end">the position where the piece intends to move to</param>
         /// <param name="permission">to avoid using one bool (which can be hard to debug if we forget to reset it to true after set it to false)</param>
         /// <remarks>we <c>return</c> instead of <c>break</c> to avoid entering another Loop or condition</remarks>
-        public void CheckPath(Dictionary<Vector2Int, MovementManager> pieces, Vector2Int start, Vector2Int end, out bool permission)
+        public static void CheckPath(Dictionary<Vector2Int, MovementManager> pieces, Vector2Int start, Vector2Int end,
+            out bool permission)
         {
-            if (end.x == start.x) //moving horizontally 
+            var dx = end.x - start.x;
+            var dy = end.y - start.y;
+            if (dx == 0) //moving horizontally 
             {
-                var direction = end.y - start.y;
-                if (direction > 0) //moving  to the right
+                if (dy > 0) //moving  to the right
                 {
                     foreach (var position in pieces.Keys.Where(
                                  key => key.x == end.x && key.y < end.y && key.y > start.y))
@@ -35,7 +37,8 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                         }
                     }
                 }
-                if (direction < 0) // moving to the left
+
+                if (dy < 0) // moving to the left
                 {
                     foreach (var position in pieces.Keys.Where(
                                  key => key.x == end.x && key.y > start.y && key.y < end.y))
@@ -51,8 +54,7 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
 
             if (end.y == start.y) //moving vertically
             {
-                var direction = end.x - start.x;
-                if (direction > 0) //moving to the Top
+                if (dx > 0) //moving to the Top
                 {
                     foreach (var position in pieces.Keys.Where(
                                  key => end.y == key.y && key.x < end.x && key.x > start.x))
@@ -65,7 +67,7 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     }
                 }
 
-                if (direction < 0) // move to the bottom
+                if (dx < 0) // move to the bottom
                 {
                     foreach (var position in pieces.Keys.Where(
                                  key => end.y == key.y && key.x < start.x && key.x > end.x))
@@ -76,6 +78,57 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                             return;
                         }
                     }
+                }
+            }
+
+            if (dy > 0 && dx > 0) //move up-right
+            {
+                foreach (var position in pieces.Keys.Where(key =>
+                             key.x > start.x && key.y > start.y && key.y < end.y && key.x < end.x))
+                {
+                    if (pieces[position] is not null)
+                    {
+                        permission = false;
+                        return;
+                    }
+                }
+            }
+
+            if (dx < 0 && dy > 0) //move Up-left
+            {
+                foreach (var position in pieces.Keys.Where(key =>
+                             key.x < start.x && key.x > end.x && key.y > start.y && key.y < end.y))
+                {
+                    if (pieces[position] is not null)
+                    {
+                        permission = false;
+                        return;
+                    }
+                }
+            }
+
+            if (dx > 0 && dy < 0) //move down-right
+            {
+                foreach (var position in pieces.Keys.Where(key =>
+                             key.x > start.x && key.x < end.x && key.y > end.y && key.y < start.y))
+                {
+                    if (pieces[position] is not null)
+                    {
+                        permission = false;
+                        return;
+                    }
+                }
+            }
+
+            if (dx < 0 && dy < 0) //move down left
+            {
+                foreach (var position in pieces.Keys.Where(key=>key.x>end.x && key.x <start.x && (key.y>end.y && key.y <start.y)))
+                {
+                    if (pieces[position] is not null)
+                    {
+                        permission = false;
+                        return;
+                    }   
                 }
             }
 
