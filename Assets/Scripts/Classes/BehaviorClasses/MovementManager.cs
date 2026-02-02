@@ -85,7 +85,7 @@ namespace Assets.Scripts.Classes.BehaviorClasses
         /// Moves the piece to the target cell if it represents a valid move.
         /// Updates the piece’s board position and movement status.
         /// </summary>
-        private void MovePiece(Dictionary<Vector2Int, MovementManager> pieces)
+        protected virtual void MovePiece(Dictionary<Vector2Int, MovementManager> pieces)
         {
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(_target);

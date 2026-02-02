@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Scripts.Classes.GameClasses;
+﻿using Assets.Scripts.Classes.GameClasses;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Enums;
