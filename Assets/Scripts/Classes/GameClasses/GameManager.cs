@@ -14,7 +14,7 @@ namespace Assets.Scripts.Classes.GameClasses
         public static GameManager Instance { get; private set; }
         public Dictionary<Vector2Int, PieceMovementComponent> Pieces;
         public delegate void OnMovePiece();
-        public event OnMovePiece OnExecute;
+      //  public event OnMovePiece OnExecute;
         public PlayerTurn Turn { get; set; }
         private void Awake()
         {

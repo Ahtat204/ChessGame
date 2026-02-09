@@ -5,18 +5,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Command
 {
-    public class MoveCommand : PieceCommand
+    public class ConcreteMoveCommand : AbstractPieceCommand
     {
-        public MoveCommand(IMove move) : base(move)
+        public ConcreteMoveCommand(IMove move) : base(move)
         {
          // for testing 
         }
 
-        public override void Execute()
+        public override void Execute(Vector2 target)
         {
-            _move.MovePiece(GameManager.Instance.Pieces, new Vector2(3.06f, 3.2f)); 
+            _move.MovePiece(GameManager.Instance.Pieces, target); 
         }
-
         public override void Undo()
         {
             throw new NotImplementedException();

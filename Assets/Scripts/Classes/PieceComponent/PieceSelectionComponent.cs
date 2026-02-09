@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
@@ -12,7 +13,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     [RequireComponent(typeof(Piece))]
     [RequireComponent(typeof(PieceMovementComponent))]
     
-    internal class PieceSelectionComponent : MonoBehaviour, ISelectable
+    public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
         //UInt32 for consistency across platforms, and hide in the inspector
         public SelectionStatus Status { get; set; }
@@ -63,6 +64,11 @@ namespace Assets.Scripts.Classes.PieceComponent
             {
                 obj.Status = SelectionStatus.UnSelected;
             }
+        }
+
+        private void Update()
+        {
+            HandleInput();
         }
     }
 
