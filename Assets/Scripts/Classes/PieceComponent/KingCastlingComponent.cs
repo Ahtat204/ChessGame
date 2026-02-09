@@ -1,15 +1,13 @@
-﻿using System;
-using Assets.Scripts.Classes.GameClasses;
+﻿using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.Pieces;
 using UnityEngine;
 
-
-namespace Assets.Scripts.Classes.BehaviorClasses
+namespace Assets.Scripts.Classes.PieceComponent
 {
     /// <summary>
     /// as the name suggests , this class is only responsible for allowing king to castle
     /// </summary>
-    public class KingCastling : MonoBehaviour
+    public class KingCastlingComponent : MonoBehaviour
     {
         private King _king;
         public bool _canCastle;

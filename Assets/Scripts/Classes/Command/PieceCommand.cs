@@ -15,7 +15,7 @@ namespace Assets.Scripts.Classes.Command
         public abstract void Execute();
         public abstract void Undo();
 
-        public static T create<T>(IMove move) where T : PieceCommand
+        public static T Create<T>(IMove move) where T : PieceCommand
         {
             return (T)Activator.CreateInstance(typeof(T), move);
         }

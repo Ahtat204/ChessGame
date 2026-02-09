@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Classes.BehaviorClasses;
+using Assets.Scripts.Classes.PieceComponent;
 
 
 namespace Assets.Scripts.Classes.GameClasses
@@ -12,7 +12,7 @@ namespace Assets.Scripts.Classes.GameClasses
         private GameState _gameState;
         private MoveType _moveType;
         public static GameManager Instance { get; private set; }
-        public Dictionary<Vector2Int, MovementManager> Pieces;
+        public Dictionary<Vector2Int, PieceMovementComponent> Pieces;
         public delegate void OnMovePiece();
         public event OnMovePiece OnExecute;
         public PlayerTurn Turn { get; set; }
