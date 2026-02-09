@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.Command;
+using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         private IMove _move;
         private ICommand _command;
         public Stack<ICommand> CommandStack = new();
-        readonly CommandInvoker _invoker = new ();
+        readonly CommandInvoker _invoker = new();
         private PieceSelectionComponent _pieceSelectionComponent;
 
         void Start()
@@ -23,9 +24,15 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            if(_pieceSelectionComponent.Status==SelectionStatus.UnSelected && !_pieceSelectionComponent._target.Equals(transform.position)) return;
-            _invoker.ExecuteCommand(_command);
+            if (_pieceSelectionComponent.Status == SelectionStatus.Selected)
+            {
+                Debug.Log(_pieceSelectionComponent.Status.ToString());
+                
+                {
+                    Debug.Log(Board.BoardInstance.tilemap.WorldToCell(_pieceSelectionComponent._target));
+                    _invoker.ExecuteCommand(_command);
+                }
+            }
         }
     }
-    
 }

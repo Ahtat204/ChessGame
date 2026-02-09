@@ -41,6 +41,7 @@ namespace Assets.Scripts.Classes.GameClasses
 
         private void Update()
         {
+            /*
             if (Input.GetMouseButtonDown(0))
             {
                 OnExecute?.Invoke();
@@ -49,7 +50,7 @@ namespace Assets.Scripts.Classes.GameClasses
                     manager.Value.CanMove = !manager.Value.CanMove;
                 }
             }
-
+*/
             if (_gameState is GameState.Check && Turn is PlayerTurn.WhitePlayer)
             {
             }

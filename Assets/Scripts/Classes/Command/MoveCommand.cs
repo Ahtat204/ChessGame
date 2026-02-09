@@ -14,7 +14,7 @@ namespace Assets.Scripts.Classes.Command
 
         public override void Execute()
         {
-            _move.MovePiece(GameManager.Instance.Pieces, new Vector2(2, 3)); 
+            _move.MovePiece(GameManager.Instance.Pieces, new Vector2(3.06f, 3.2f)); 
         }
 
         public override void Undo()
