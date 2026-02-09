@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Classes.BehaviorClasses;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using UnityEngine;
 
@@ -11,8 +11,8 @@ namespace Assets.Scripts.Classes.Pieces
     /// Bishop class
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(MovementManager))]
-    [RequireComponent(typeof(SelectableDecorator))]
+    [RequireComponent(typeof(PieceMovementComponent))]
+    [RequireComponent(typeof(PieceSelectionComponent))]
     public class Bishop : Piece
     {
         /// <summary>
