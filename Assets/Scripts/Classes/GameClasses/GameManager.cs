@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Classes.BehaviorClasses;
+using Assets.Scripts.Classes.PieceComponent;
 
 
 namespace Assets.Scripts.Classes.GameClasses
@@ -12,9 +12,9 @@ namespace Assets.Scripts.Classes.GameClasses
         private GameState _gameState;
         private MoveType _moveType;
         public static GameManager Instance { get; private set; }
-        public Dictionary<Vector2Int, MovementManager> Pieces;
+        public Dictionary<Vector2Int, PieceMovementComponent> Pieces;
         public delegate void OnMovePiece();
-        public event OnMovePiece OnExecute;
+      //  public event OnMovePiece OnExecute;
         public PlayerTurn Turn { get; set; }
         private void Awake()
         {
@@ -41,6 +41,7 @@ namespace Assets.Scripts.Classes.GameClasses
 
         private void Update()
         {
+            /*
             if (Input.GetMouseButtonDown(0))
             {
                 OnExecute?.Invoke();
@@ -49,7 +50,7 @@ namespace Assets.Scripts.Classes.GameClasses
                     manager.Value.CanMove = !manager.Value.CanMove;
                 }
             }
-
+*/
             if (_gameState is GameState.Check && Turn is PlayerTurn.WhitePlayer)
             {
             }
