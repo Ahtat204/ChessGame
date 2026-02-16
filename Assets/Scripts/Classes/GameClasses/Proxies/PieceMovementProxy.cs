@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Classes.BehaviorClasses;
+using Assets.Scripts.Classes.PieceComponent;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.GameClasses.Proxies
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
         /// <param name="end">the position where the piece intends to move to</param>
         /// <param name="permission">to avoid using one bool (which can be hard to debug if we forget to reset it to true after set it to false)</param>
         /// <remarks>we <c>return</c> instead of <c>break</c> to avoid entering another Loop or condition</remarks>
-        public static void CheckPath(Dictionary<Vector2Int, MovementManager> pieces, Vector2Int start, Vector2Int end,
+        public static void CheckPath(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start, Vector2Int end,
             out bool permission)
         {
             var dx = end.x - start.x;
