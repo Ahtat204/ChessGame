@@ -15,7 +15,6 @@ namespace Assets.Scripts.Classes.Pieces
         public override uint Value => 0;
         [field: SerializeField]
         public override PieceColor Color { get; protected set; }
-
         protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(8);

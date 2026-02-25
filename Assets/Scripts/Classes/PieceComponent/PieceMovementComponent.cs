@@ -33,7 +33,6 @@ namespace Assets.Scripts.Classes.PieceComponent
         Vector3Int CurrPos { get; set; }
 
         #endregion
-
         #region methods
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             GameManager.Instance.Pieces.Add((Vector2Int)CurrPos, this);
         }
         
-        #endregion
+       
 
         public void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
@@ -94,5 +93,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                 pieces[(Vector2Int)targetCell] = this;
             }
         }
+        #endregion
     }
 }

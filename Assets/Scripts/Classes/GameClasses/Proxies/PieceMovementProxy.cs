@@ -66,7 +66,6 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                         }
                     }
                 }
-
                 if (dx < 0) // move to the bottom
                 {
                     foreach (var position in pieces.Keys.Where(
@@ -80,7 +79,6 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     }
                 }
             }
-
             if (dy > 0 && dx > 0) //move up-right
             {
                 foreach (var position in pieces.Keys.Where(key =>
@@ -93,7 +91,6 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     }
                 }
             }
-
             if (dx < 0 && dy > 0) //move Up-left
             {
                 foreach (var position in pieces.Keys.Where(key =>
@@ -106,7 +103,6 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     }
                 }
             }
-
             if (dx > 0 && dy < 0) //move down-right
             {
                 foreach (var position in pieces.Keys.Where(key =>
@@ -119,7 +115,6 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     }
                 }
             }
-
             if (dx < 0 && dy < 0) //move down left
             {
                 foreach (var position in pieces.Keys.Where(key=>key.x>end.x && key.x <start.x && (key.y>end.y && key.y <start.y)))

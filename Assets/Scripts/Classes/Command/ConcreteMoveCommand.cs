@@ -12,10 +12,8 @@ namespace Assets.Scripts.Classes.Command
          // for testing 
         }
 
-        public override void Execute(Vector2 target)
-        {
-            _move.MovePiece(GameManager.Instance.Pieces, target); 
-        }
+        public override void Execute(Vector2 target)=>_move.MovePiece(GameManager.Instance.Pieces, target); 
+        
         public override void Undo()
         {
             throw new NotImplementedException();
