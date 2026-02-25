@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Classes.GameClasses.Proxies;
 using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
 
-        private Piece _piece;
+        protected Piece _piece;
 
         /// <summary>
         /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
@@ -60,10 +61,12 @@ namespace Assets.Scripts.Classes.PieceComponent
         
        
 
-        public void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
+        public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(targetPos);
+            bool checkPath=PieceMovementProxy.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);
+            if (!checkPath) return;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(targetCell);
             if (!_piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
             var occupied = pieces.ContainsKey((Vector2Int)targetCell) ? pieces[(Vector2Int)targetCell] : null;

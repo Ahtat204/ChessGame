@@ -6,6 +6,6 @@ namespace Assets.Scripts.Interfaces
 {
     public interface ICastle
     {
-        void CastleKing(King king);
+        void CastleKing(King king,Rook rook);
     }
 }
