@@ -1,4 +1,4 @@
-# Chess Game Frontend Documentation
+# Chess Game ![Status](https://img.shields.io/badge/status-ongoing-green?style=for-the-badge)
 
 This repository contains a Unity-based frontend implementation for a chess game. It leverages object-oriented principles and various design patterns, including Singleton, Command, and Decorator, to provide scalable and maintainable gameplay logic.
 
@@ -76,6 +76,3 @@ Common troubleshooting tips:
 - Ensure all dependencies (e.g., Unity Tilemap package) are installed.
 - Verify the Unity Editor version is compatible with the project.
 - Reimport assets if graphical issues occur.
-
----
-*Generated on March 1, 2026 at 6:40 PM*
