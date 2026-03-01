@@ -6,6 +6,57 @@ This repository contains a Unity-based frontend implementation for a chess game.
 
 The Chess Game frontend, developed using Unity and C#, focuses on delivering a highly interactive and intuitive user experience for playing chess. It incorporates dynamic gameplay features such as piece movement validation, game state management, and special moves like castling. The architecture emphasizes modularity and scalability, employing design patterns like Singleton for global state management, Command for encapsulating piece movements, and Decorator for extending functionality dynamically. The project's goal is to provide a robust chess simulation adhering to standard chess rules while remaining adaptable for future enhancements, including additional gameplay modes or AI integration.
 
+## 📂 Core Scripts Directory Structure
+
+The `Assets/Scripts` directory is organized into four main categories: `Classes`, `Enums`, `Interfaces`, and `Structs`.
+
+```
+└── Scripts/
+    ├── SelectedPiece.cs         
+    ├── Classes/
+    │   ├── PieceComponent/
+    │   │   ├── KingCastling.cs
+    │   │   ├── CommandManager.cs
+    │   │   ├── PieceMovementComponent.cs
+    │   │   └── PieceSelectionComponent.cs
+    |   ├── Command/
+    │   │   ├── AbstractPieceCommand.cs
+    │   │   ├── CommandInvoker.cs
+    │   │   ├── ConcreteMoveCommand.cs
+    │   ├── GameClasses/
+    │   │   ├── Board.cs
+    │   │   ├── GameManager.cs
+    │   │   ├── InputManager.cs
+    │   │   ├── MainMenuController.cs
+    │   │   └── Proxies/
+    │   │       ├── King.Proxy.cs
+    │   │       ├── Pawn.Proxy.cs
+    │   │       └── PieceMovementProxy.cs
+    │   ├── Pieces/
+    │   │   ├── Bishop.cs
+    │   │   ├── King.cs
+    │   │   ├── Knight.cs
+    │   │   ├── Pawn.cs
+    │   │   ├── Queen.cs
+    │   │   └── Rook.cs
+    │   ├── Piece.cs
+    │   └── UtilityClass.cs
+    ├── Enums/
+    │   ├── GameState.cs
+    │   ├── MoveType.cs
+    │   ├── PieceColor.cs
+    │   └── SelectionStatus.cs
+    ├── Interfaces/
+    │   ├── ICapturable.cs
+    │   ├── ICommand.cs
+    │   ├── IPromotable.cs
+    │   └── ISelectable.cs
+    └── Structs/
+        └── Coordinates.cs
+```
+
+-----
+
 ## Architecture Diagram
 
 ```mermaid
@@ -29,17 +80,80 @@ P --> R[Pawn.Proxy]
 P --> S[PieceMovementProxy]
 ```
 
-## Component Architecture
+## 🛠️ Key Components & Design
 
-The application has a modular component hierarchy designed for maintainability and scalability. Key components include:
+### **Classes**
 
-- **MainMenuController**: Handles navigation from the main menu to the game scene.
-- **GameManager**: Centralized control of game state, turn-based logic, and victory conditions.
-- **Board**: Provides a unified interface for tilemap and camera operations, enabling seamless world-to-cell coordinate conversion.
-- **Pieces**: Abstract `Piece` class and its concrete subclasses (`Bishop`, `King`, `Pawn`, `Queen`, `Rook`, `Knight`) encapsulate individual chess piece behavior, including movement logic.
-- **MovementManager**: Coordinates input detection and movement validation.
-- **Proxies**: Implements restrictions/modifications to piece movements under specific rules (e.g., `King.Proxy` prevents illegal moves into checked squares).
-- **Behavior Classes**: Enhance functionality dynamically, such as `SelectableDecorator` for selection handling and `MoveCommand` for encapsulating movements.
+| File               | Description                                                                                                                                                                 |
+|:-------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Piece.cs`         | **Abstract Base Class** for all chess pieces, defining essential properties like `PossibleMoves`, `Color`, and `Value`, and an abstract method for calculating legal moves. |
+| `UtilityClass.cs`  | Provides static utility methods, such as a conditional `DebugLog` for use in the Unity Editor.                                                                              |
+| `SelectedPiece.cs` | A **Singleton** MonoBehaviour used to track the currently selected chess piece, acting as a global selector/detector.                                                       |
+
+#### Behavior Classes
+
+| File                     | Description                                                                                                                                                                                                     |
+|:-------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `MovementManager.cs`     | Handles the **piece's movement logic**, input detection, and collision for capturing. It relies on the piece's `PossibleMoves` list.                                                                            |
+| `SelectableDecorator.cs` | Implements the `ISelectable` interface, handling **selection and deselection** logic for a piece, often decorated onto a `Piece` object.                                                                        |
+| `MoveCommand.cs`         | A generic class implementing `ICommand`, designed to encapsulate a piece movement as a command, allowing for **undo/redo functionality** (though `Execute()` and `Undo()` are currently not fully implemented). |
+| `KingCastling.cs`        | Dedicated class for handling the specific behavior of the **King's Castling** move.                                                                                                                             |
+
+#### Game Classes
+
+| File                            | Description                                                                                                                                                |
+|:--------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Board.cs`                      | A **Singleton** MonoBehaviour providing centralized access to the Unity `Tilemap` and the main `Camera`, simplifying world-to-cell coordinate conversions. |
+| `GameManager.cs`                | Manages the **overall game state**, including player turns (`Turn`), game conditions (`GameState`), and tracking the pieces on the board.                  |
+| `InputManager.cs`               | A **Singleton** class for centralizing input handling (e.g., mouse direction and position).                                                                |
+| `MainMenuController.cs`         | Handles scene management logic, specifically for loading the main "GameScene" from the **Main Menu**.                                                      |
+| `Proxies/`                      | Directory for classes implementing the **Proxy pattern** to restrict or modify piece movement under special game rules.                                    |
+| `Proxies/King.Proxy.cs`         | **Restricts the King's movement** to prevent it from moving into a threatened square (check).                                                              |
+| `Proxies/Pawn.Proxy.cs`         | (Planned) Likely for handling complex Pawn movements like **En Passant** or **Promotion**.                                                                 |
+| `Proxies/PieceMovementProxy.cs` | (Planned) Responsible for preventing pieces from moving through or occupying squares with friendly pieces.                                                 |
+
+#### Piece Subclasses
+
+Concrete implementations of the abstract `Piece` class for each chess piece, defining its specific `Value` and move
+calculation logic.
+
+* `Bishop.cs`
+* `King.cs`
+* `Knight.cs`
+* `Pawn.cs`
+* `Queen.cs`
+* `Rook.cs`
+
+-----
+
+### **Enums & Structs**
+
+* **Enums:**
+    * `GameState.cs`: Defines states like `WaitingForPlayer`, `Check`, `Checkmate`.
+    * `MoveType.cs`: Specifies move types like `Castling`.
+    * `PieceColor.cs`: Defines `White` and `Black`.
+    * `SelectionStatus.cs`: Defines `Selected` and `UnSelected` states for pieces.
+* **Structs:**
+    * `Coordinates.cs`: Used for board positions.
+
+-----
+
+### **Interfaces**
+
+| Interface        | Description                                                                                       |
+|:-----------------|:--------------------------------------------------------------------------------------------------|
+| `ICommand.cs`    | Standard interface for the **Command Pattern**, requiring `Execute()` and `Undo()` methods.       |
+| `ISelectable.cs` | Defines the behavior for objects that can be selected, requiring `OnSelect()` and `OnDeselect()`. |
+| `ICapturable.cs` | (Planned) Interface for pieces that can be captured.                                              |
+| `IPromotable.cs` | (Planned) Interface for pieces that can be promoted (Pawn).                                       |
+
+-----
+
+> This organized structure promotes maintainability and clarity, separating core game logic from Unity-specific behavior
+> and leveraging design patterns like **Singleton**, **Command**, and **Decorator** for robust and scalable development.
+
+## Thumbnail:
+<img src="Ressources/Thumbnail.png">
 
 ## State Management
 
