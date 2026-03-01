@@ -1,10 +1,10 @@
 # Chess Game ![Status](https://img.shields.io/badge/status-ongoing-green?style=for-the-badge)
 
-This repository contains a Unity-based frontend implementation for a chess game. It leverages object-oriented principles and various design patterns, including Singleton, Command, and Decorator, to provide scalable and maintainable gameplay logic.
+This repository contains a Unity-based  implementation for a chess game. It leverages object-oriented principles and various design patterns, including Singleton, Command, and Decorator, to provide scalable and maintainable gameplay logic.
 
 ## Overview
 
-The Chess Game frontend, developed using Unity and C#, focuses on delivering a highly interactive and intuitive user experience for playing chess. It incorporates dynamic gameplay features such as piece movement validation, game state management, and special moves like castling. The architecture emphasizes modularity and scalability, employing design patterns like Singleton for global state management, Command for encapsulating piece movements, and Decorator for extending functionality dynamically. The project's goal is to provide a robust chess simulation adhering to standard chess rules while remaining adaptable for future enhancements, including additional gameplay modes or AI integration.
+The Chess Game, developed using Unity and C#, focuses on delivering a highly interactive and intuitive user experience for playing chess. It incorporates dynamic gameplay features such as piece movement validation, game state management, and special moves like castling. The architecture emphasizes modularity and scalability, employing design patterns like Singleton for global state management, Command for encapsulating piece movements, and Decorator for extending functionality dynamically. The project's goal is to provide a robust chess simulation adhering to standard chess rules while remaining adaptable for future enhancements, including additional gameplay modes or AI integration.
 
 ## Architecture Diagram
 
@@ -54,7 +54,7 @@ The application utilizes Unity's Scene Management for routing. The `MainMenuCont
 
 ## Getting Started
 
-Follow these steps to set up and run the frontend locally:
+Follow these steps to set up and run the  locally:
 
 1. Clone the repository:
    
