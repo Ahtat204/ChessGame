@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.PieceComponent;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.GameClasses.Proxies
@@ -79,10 +80,9 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
 
             if (dy > 0 && dx > 0) //move up-right
             {
-                foreach (var position in pieces.Keys.Where(key =>
-                             key.x > start.x && key.y > start.y && key.y < end.y && key.x < end.x))
+                for (int x = 0; x < end.x; x++)
                 {
-                    if (pieces[position] is not null)
+                  
                     {
                         return false;
                     }
