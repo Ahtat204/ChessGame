@@ -16,6 +16,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     [RequireComponent(typeof(Piece))]
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(PieceSelectionComponent))]
     public class PieceMovementComponent : MonoBehaviour, IMove
     {
         #region fields&props
@@ -26,7 +27,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
         /// </summary>
         public bool CanMove { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the current board position of the piece in grid coordinates.
         /// </summary>
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         private void Awake()
         {
             _piece = GetComponent<Piece>();
-            //   _pieceSelectionComponent = GetComponent<PieceSelectionComponent>();
+         //   _pieceSelectionComponent = GetComponent<PieceSelectionComponent>();
             CanMove = _piece.Color != PieceColor.Black;
             CanMove = true;
         }
@@ -58,7 +59,8 @@ namespace Assets.Scripts.Classes.PieceComponent
             GameManager.Instance.Pieces ??= new();
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
         }
-
+        
+     
 
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
