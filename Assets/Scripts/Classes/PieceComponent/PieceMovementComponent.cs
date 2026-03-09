@@ -30,7 +30,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// <summary>
         /// Gets or sets the current board position of the piece in grid coordinates.
         /// </summary>
-        public Vector3Int CurrPos { get; set; }
+        public Vector3Int CurrPos { get;private set; }
 
         #endregion
 
@@ -96,6 +96,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                     CurrPos = targetCell;
                     pieces[(Vector2Int)targetCell] = this;
                 }
+                
             }
         }
 
