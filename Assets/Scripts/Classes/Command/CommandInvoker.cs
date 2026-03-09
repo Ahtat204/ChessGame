@@ -16,5 +16,7 @@ namespace Assets.Scripts.Classes.Command
         {
             command.Execute(_pieceSelectionComponent._target);
         }
+
+     
     }
 }

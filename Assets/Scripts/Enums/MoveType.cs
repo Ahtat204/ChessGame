@@ -14,4 +14,11 @@ namespace Assets.Scripts.Enums
         Promotion
     }
 
+    public enum CastlingType : ushort
+    {
+        LongCastle,
+        ShortCastle,
+    }
+    
+
 }

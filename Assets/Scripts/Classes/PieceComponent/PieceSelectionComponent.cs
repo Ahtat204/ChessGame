@@ -11,11 +11,10 @@ namespace Assets.Scripts.Classes.PieceComponent
     //: this class is working correctly
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Piece))]
-    [RequireComponent(typeof(PieceMovementComponent))]
+    
     
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
-        //UInt32 for consistency across platforms, and hide in the inspector
         public SelectionStatus Status { get; set; }
         private static readonly List<PieceSelectionComponent> MovableObjects = new();
         public Vector2 _target { get; private set; }
@@ -28,15 +27,6 @@ namespace Assets.Scripts.Classes.PieceComponent
             Status = SelectionStatus.UnSelected;
             
         }
-        private void HandleInput()
-        {
-            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
-            {
-                _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                Debug.Log("Mouse Clicked");
-            }
-        }
-
         private void Start()
         {
             _target = transform.position;
@@ -51,10 +41,6 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             Status = SelectionStatus.UnSelected;
         }
-
-     
-     
-
         private void OnMouseDown()
         {
             if (Status == SelectionStatus.Selected) OnDeselect();
@@ -68,7 +54,12 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            HandleInput();
+            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
+            {
+                _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+                var t=Board.BoardInstance.tilemap.WorldToCell(_target);
+                Debug.Log($"the position is \t :{t}");
+            }
         }
     }
 

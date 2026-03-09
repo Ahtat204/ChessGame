@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Scripts.Classes.GameClasses;
+﻿using Assets.Scripts.Classes.GameClasses;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Enums;
@@ -16,7 +15,6 @@ namespace Assets.Scripts.Classes.Pieces
         public override uint Value => 0;
         [field: SerializeField]
         public override PieceColor Color { get; protected set; }
-
         protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(8);
@@ -30,8 +28,7 @@ namespace Assets.Scripts.Classes.Pieces
             legalMoves.Add(new Vector2Int(positionCell.x + 1, positionCell.y - 1));
             legalMoves.Add(new Vector2Int(positionCell.x + 1, positionCell.y - 1));
             legalMoves.Remove(positionCell);
-            var filteredMovesList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
-            return filteredMovesList;
+            return legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
         }
     }
 }
