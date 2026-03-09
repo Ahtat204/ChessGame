@@ -11,7 +11,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     //: this class is working correctly
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Piece))]
-    [RequireComponent(typeof(PieceMovementComponent))]
+    
     
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {

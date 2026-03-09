@@ -16,7 +16,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     [RequireComponent(typeof(Piece))]
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(PieceSelectionComponent))]
+   
     public class PieceMovementComponent : MonoBehaviour, IMove
     {
         #region fields&props

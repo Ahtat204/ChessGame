@@ -13,7 +13,7 @@ namespace Assets.Scripts.Classes
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PieceSelectionComponent))]
-    [RequireComponent(typeof(PieceMovementComponent))]
+   
 
 
     public abstract class Piece : MonoBehaviour
