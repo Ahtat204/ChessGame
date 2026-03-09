@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Chess Game Frontend Documentation
 
 This repository contains a Unity-based frontend implementation for a chess game. It leverages object-oriented principles and various design patterns, including Singleton, Command, and Decorator, to provide scalable and maintainable gameplay logic.
@@ -12,13 +11,11 @@ This repository contains a Unity-based  implementation for a chess game. It leve
 ## Overview
 
 The Chess Game, developed using Unity and C#, focuses on delivering a highly interactive and intuitive user experience for playing chess. It incorporates dynamic gameplay features such as piece movement validation, game state management, and special moves like castling. The architecture emphasizes modularity and scalability, employing design patterns like Singleton for global state management, Command for encapsulating piece movements, and Decorator for extending functionality dynamically. The project's goal is to provide a robust chess simulation adhering to standard chess rules while remaining adaptable for future enhancements, including additional gameplay modes or AI integration.
->>>>>>> main
 
 The Chess Game frontend, developed using Unity and C#, focuses on delivering a highly interactive and intuitive user experience for playing chess. It incorporates dynamic gameplay features such as piece movement validation, game state management, and special moves like castling. The architecture emphasizes modularity and scalability, employing design patterns like Singleton for global state management, Command for encapsulating piece movements, and Decorator for extending functionality dynamically. The project's goal is to provide a robust chess simulation adhering to standard chess rules while remaining adaptable for future enhancements, including additional gameplay modes or AI integration.
 
 ## Architecture Diagram
 
-<<<<<<< HEAD
 ```mermaid
 graph TD
 A[MainMenuController] --> B[GameManager]
@@ -38,7 +35,6 @@ F --> O[KingCastling]
     P[Proxies Directory] --> Q[King.Proxy]
 P --> R[Pawn.Proxy]
 P --> S[PieceMovementProxy]
-=======
 ```
 └── Scripts/
     ├── SelectedPiece.cs         
@@ -82,12 +78,10 @@ P --> S[PieceMovementProxy]
     │   └── ISelectable.cs
     └── Structs/
         └── Coordinates.cs
->>>>>>> main
 ```
 
 ## Component Architecture
 
-<<<<<<< HEAD
 The application has a modular component hierarchy designed for maintainability and scalability. Key components include:
 =======
 ## Architecture Diagram
@@ -160,7 +154,6 @@ Common troubleshooting tips:
 - Verify the Unity Editor version is compatible with the project.
 - Reimport assets if graphical issues occur.
 
-<<<<<<< HEAD
 ---
 *Generated on March 1, 2026 at 6:40 PM*
 =======
