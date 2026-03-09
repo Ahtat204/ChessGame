@@ -30,7 +30,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// <summary>
         /// Gets or sets the current board position of the piece in grid coordinates.
         /// </summary>
-        Vector3Int CurrPos { get; set; }
+        public Vector3Int CurrPos { get; set; }
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance.Pieces ??= new();
-            GameManager.Instance.Pieces.Add((Vector2Int)CurrPos, this);
+            GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
         }
 
 
@@ -89,13 +89,13 @@ namespace Assets.Scripts.Classes.PieceComponent
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
+                Destroy(occupied.gameObject);
                 if (!targetCell.Equals(CurrPos))
                 {
                     pieces.Remove((Vector2Int)CurrPos);
                     CurrPos = targetCell;
                     pieces[(Vector2Int)targetCell] = this;
                 }
-                Destroy(occupied.gameObject);
             }
         }
 

@@ -77,12 +77,11 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     }
                 }
             }
-
+/* TODO:still need to implement diagonal check,I commented it out because it was incorrectly stopping Queen and bishop from moving
             if (dy > 0 && dx > 0) //move up-right
             {
                 for (int x = 0; x < end.x; x++)
                 {
-                  
                     {
                         return false;
                     }
@@ -124,7 +123,7 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     }
                 }
             }
-
+*/
             return true;
         }
     }
