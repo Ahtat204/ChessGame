@@ -21,17 +21,18 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
 
-        protected Piece _piece;
+        private Piece _piece;
+        public int Count{get; protected set;}
 
         /// <summary>
         /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
         /// </summary>
-        public bool CanMove { get; set; }
+        private bool CanMove { get; set; }
         
         /// <summary>
         /// Gets or sets the current board position of the piece in grid coordinates.
         /// </summary>
-        public Vector3Int CurrPos { get;private set; }
+        private Vector3Int CurrPos { get;set; }
 
         #endregion
 
@@ -47,6 +48,7 @@ namespace Assets.Scripts.Classes.PieceComponent
          //   _pieceSelectionComponent = GetComponent<PieceSelectionComponent>();
             CanMove = _piece.Color != PieceColor.Black;
             CanMove = true;
+            Count = 0;
         }
 
         /// <summary>
@@ -74,6 +76,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
+                Count = 1;
                 if (!targetCell.Equals(CurrPos))
                 {
                     pieces.Remove((Vector2Int)CurrPos);
@@ -91,6 +94,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
+                Count = 1;
                 Destroy(occupied.gameObject);
                 if (!targetCell.Equals(CurrPos))
                 {
