@@ -13,8 +13,6 @@ namespace Assets.Scripts.Classes.GameClasses
         private MoveType _moveType;
         public static GameManager Instance { get; private set; }
         public Dictionary<Vector2Int, PieceMovementComponent> Pieces;
-        public delegate void OnMovePiece();
-      //  public event OnMovePiece OnExecute;
         public PlayerTurn Turn { get; set; }
         private void Awake()
         {
@@ -33,24 +31,8 @@ namespace Assets.Scripts.Classes.GameClasses
             Pieces ??= new(32);
             Turn = PlayerTurn.WhitePlayer;
         }
-
-        void ToggleScripts()
-        {
-            
-        }
-
         private void Update()
         {
-            /*
-            if (Input.GetMouseButtonDown(0))
-            {
-                OnExecute?.Invoke();
-                foreach (var manager in Instance.Pieces)
-                {
-                    manager.Value.CanMove = !manager.Value.CanMove;
-                }
-            }
-*/
             if (_gameState is GameState.Check && Turn is PlayerTurn.WhitePlayer)
             {
             }
