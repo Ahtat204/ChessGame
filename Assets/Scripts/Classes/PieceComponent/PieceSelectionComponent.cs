@@ -16,8 +16,11 @@ namespace Assets.Scripts.Classes.PieceComponent
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
         public SelectionStatus Status { get; set; }
+
+        public Vector2 Target => _target;
+
         private static readonly List<PieceSelectionComponent> MovableObjects = new();
-        public Vector2 _target { get; private set; }
+        public Vector2 _target;
         public static PieceSelectionComponent Instance { get; private set; }
 
         private void Awake()

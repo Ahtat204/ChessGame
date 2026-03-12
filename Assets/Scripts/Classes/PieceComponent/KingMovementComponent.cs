@@ -21,7 +21,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             base.MovePiece(pieces, targetPos);
             // TODO:add path checking
-            if(Count>0) return;
+            if(Count>0 || !_canCastle) return;
             var position= transform.position;
             var gtar = Board.BoardInstance.tilemap.WorldToCell(targetPos);
             var gridTarget=(Vector2Int)gtar;

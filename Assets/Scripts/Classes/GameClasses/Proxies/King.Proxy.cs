@@ -7,6 +7,7 @@ using Assets.Scripts.Classes.Pieces;
 
 namespace Assets.Scripts.Classes.GameClasses.Proxies
 {
+    //TODO:this wasn't build correctly , because I don't do nested loops for something basic like this , I would say this is θ(n²),I know I can do better,because I hate allocation that's managed by a GC and not me
     public class KingProxy : MonoBehaviour
     {
         private King _king;

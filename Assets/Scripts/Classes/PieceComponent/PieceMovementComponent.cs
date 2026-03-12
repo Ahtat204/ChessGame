@@ -83,7 +83,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                     CurrPos = targetCell;
                     pieces[(Vector2Int)targetCell] = this;
                 }
-
                 return;
             }
 

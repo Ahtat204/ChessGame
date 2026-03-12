@@ -11,7 +11,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         private IMove _move;
         private ICommand _command;
         public Stack<ICommand> CommandStack = new();
-        private PieceSelectionComponent _pieceSelectionComponent;
+        private ISelectable _pieceSelectionComponent;
         private CommandInvoker _invoker;
 
         void Start()

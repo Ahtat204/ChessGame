@@ -5,16 +5,16 @@ namespace Assets.Scripts.Classes.Command
 {
     public class CommandInvoker
     {
-        private  PieceSelectionComponent _pieceSelectionComponent;
+        private  ISelectable _pieceSelectionComponent;
 
-        public CommandInvoker(PieceSelectionComponent pieceSelectionComponent)
+        public CommandInvoker(ISelectable pieceSelectionComponent)
         {
             _pieceSelectionComponent = pieceSelectionComponent;
         }
 
         public void ExecuteCommand(ICommand command)
         {
-            command.Execute(_pieceSelectionComponent._target);
+            command.Execute(_pieceSelectionComponent.Target);
         }
 
      
