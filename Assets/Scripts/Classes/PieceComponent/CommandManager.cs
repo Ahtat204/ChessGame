@@ -10,7 +10,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         private IMove _move;
         private ICommand _command;
-        public Stack<ICommand> CommandStack;
+        private Stack<ICommand> CommandStack;
         private ISelectable _pieceSelectionComponent;
         private CommandInvoker _invoker;
 
@@ -25,9 +25,11 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            if (_pieceSelectionComponent.Status != SelectionStatus.Selected) return;
+            if (_pieceSelectionComponent.Status != SelectionStatus.Selected && _pieceSelectionComponent.ClickCount!=1) return;
             _invoker.ExecuteCommand(_command);
-         //   _pieceSelectionComponent.Status = SelectionStatus.UnSelected;
+            _pieceSelectionComponent.ClickCount = 0;
+            CommandStack.Push(_command);
+         //   _pieceSelectionComponent.OnDeselect();
         }
     }
 }

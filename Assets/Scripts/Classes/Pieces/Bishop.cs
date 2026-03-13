@@ -14,10 +14,7 @@ namespace Assets.Scripts.Classes.Pieces
     [RequireComponent(typeof(PieceMovementComponent))]
     [RequireComponent(typeof(PieceSelectionComponent))]
     public class Bishop : Piece
-    {
-        /// <summary>
-        /// in the chess community , it's known that a Bishop is stronger than a Knight , but for simplicity , we'll assume they're equal "in value"  
-        /// </summary>
+    { 
         public override uint Value => 3;
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         [field: SerializeField]

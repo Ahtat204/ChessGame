@@ -5,6 +5,7 @@ using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Assets.Scripts.Classes.PieceComponent
 {
@@ -17,12 +18,11 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         public SelectionStatus Status { get; set; }
 
-        public Vector2 Target => _target;
-
+        public Vector2 Target => target;
+        public int ClickCount{ get; set; }
         private static readonly List<PieceSelectionComponent> MovableObjects = new();
-        public Vector2 _target;
+        public Vector2 target;
         public static PieceSelectionComponent Instance { get; private set; }
-
         private void Awake()
         {
             Instance = this;
@@ -32,14 +32,13 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
         private void Start()
         {
-            _target = transform.position;
+            target = transform.position;
+            ClickCount = 0;
         }
-
         public void OnSelect()
         {
             Status = SelectionStatus.Selected;
         }
-
         public void OnDeselect()
         {
             Status = SelectionStatus.UnSelected;
@@ -54,14 +53,13 @@ namespace Assets.Scripts.Classes.PieceComponent
                 obj.Status = SelectionStatus.UnSelected;
             }
         }
-
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
             {
-                _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                var t=Board.BoardInstance.tilemap.WorldToCell(_target);
-                Debug.Log($"the position is \t :{t}");
+                target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+             //   if( target.Equals(transform.position)) return;
+                ClickCount = 1;
             }
         }
     }
