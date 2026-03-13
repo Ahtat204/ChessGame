@@ -20,50 +20,25 @@ namespace Assets.Scripts.Classes.PieceComponent
     public class PieceMovementComponent : MonoBehaviour, IMove
     {
         #region fields&props
-
         private Piece _piece;
         public int Count{get; protected set;}
-
-        /// <summary>
-        /// this variable will prevent penetration , passing through pieces , either friendly or enemy pieces
-        /// </summary>
         private bool CanMove { get; set; }
-        
-        /// <summary>
-        /// Gets or sets the current board position of the piece in grid coordinates.
-        /// </summary>
         private Vector3Int CurrPos { get;set; }
-
         #endregion
-
         #region methods
-
-        /// <summary>
-        /// Called when the component is initialized.
-        /// Initializes component references and default state values.
-        /// </summary>
         private void Awake()
         {
             _piece = GetComponent<Piece>();
-         //   _pieceSelectionComponent = GetComponent<PieceSelectionComponent>();
             CanMove = _piece.Color != PieceColor.Black;
             CanMove = true;
             Count = 0;
         }
-
-        /// <summary>
-        /// Called before the first frame update.
-        /// Sets the initial target position and determines the piece’s current board cell.
-        /// </summary>
         private void Start()
         {
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance.Pieces ??= new();
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
         }
-        
-     
-
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
             if (!CanMove) return;

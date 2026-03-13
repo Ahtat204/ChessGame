@@ -10,13 +10,14 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         private IMove _move;
         private ICommand _command;
-        public Stack<ICommand> CommandStack = new();
-        private PieceSelectionComponent _pieceSelectionComponent;
+        public Stack<ICommand> CommandStack;
+        private ISelectable _pieceSelectionComponent;
         private CommandInvoker _invoker;
 
-        void Start()
+        private void Start()
         {
-            _pieceSelectionComponent = GetComponent<PieceSelectionComponent>();
+            CommandStack = new();
+            _pieceSelectionComponent = GetComponent<ISelectable>();
             _invoker = new CommandInvoker(_pieceSelectionComponent);
             _move = GetComponent<IMove>();
             _command = AbstractPieceCommand.Create<ConcreteMoveCommand>(_move);
@@ -24,12 +25,9 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            if (_pieceSelectionComponent.Status == SelectionStatus.Selected)
-            {
-                {
-                    _invoker.ExecuteCommand(_command);
-                }
-            }
+            if (_pieceSelectionComponent.Status != SelectionStatus.Selected) return;
+            _invoker.ExecuteCommand(_command);
+         //   _pieceSelectionComponent.Status = SelectionStatus.UnSelected;
         }
     }
 }

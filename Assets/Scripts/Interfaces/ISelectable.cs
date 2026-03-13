@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Enums;
+using UnityEngine;
 
 namespace Assets.Scripts.Interfaces
 {
@@ -7,5 +8,6 @@ namespace Assets.Scripts.Interfaces
         public void OnSelect();
         public void OnDeselect();
         public SelectionStatus Status { get;set; }
+        public Vector2 Target{ get; }
     }
 }
