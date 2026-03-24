@@ -14,12 +14,6 @@ namespace Assets.Scripts.Classes.Pieces
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         public override uint Value => 1;
         [field: SerializeField] public override PieceColor Color { get; protected set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
         private int Sign(PieceColor color) => color == PieceColor.White ? 1 : -1;
 
         protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)

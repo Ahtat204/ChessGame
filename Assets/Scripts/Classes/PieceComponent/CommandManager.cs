@@ -2,6 +2,7 @@
 using Assets.Scripts.Classes.Command;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.Classes.PieceComponent;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.PieceComponent
@@ -10,26 +11,31 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         private IMove _move;
         private ICommand _command;
-        public Stack<ICommand> CommandStack = new();
-        private PieceSelectionComponent _pieceSelectionComponent;
+        private Stack<ICommand> CommandStack;
+        private ISelectable _pieceSelectionComponent;
         private CommandInvoker _invoker;
-
-        void Start()
+        private void Start()
         {
-            _pieceSelectionComponent = GetComponent<PieceSelectionComponent>();
+            CommandStack = new();
+            _pieceSelectionComponent = GetComponent<ISelectable>();
             _invoker = new CommandInvoker(_pieceSelectionComponent);
             _move = GetComponent<IMove>();
             _command = AbstractPieceCommand.Create<ConcreteMoveCommand>(_move);
         }
-
+/*
         private void Update()
         {
-            if (_pieceSelectionComponent.Status == SelectionStatus.Selected)
-            {
-                {
-                    _invoker.ExecuteCommand(_command);
-                }
-            }
+            if (_pieceSelectionComponent.Status != SelectionStatus.Selected ) return;
+            DoWork();
+        }
+*/
+        public void OnEnable()=>PieceSelectionComponent.OnPieceSelected +=DoWork;
+        public void OnDisable()=>PieceSelectionComponent.OnPieceSelected -= DoWork;
+        
+        private void DoWork()
+        {
+            _invoker.ExecuteCommand(_command);
+            CommandStack.Push(_command);
         }
     }
 }
