@@ -13,7 +13,6 @@ namespace Assets.Scripts.Classes.PieceComponent
         private Stack<ICommand> CommandStack;
         private ISelectable _pieceSelectionComponent;
         private CommandInvoker _invoker;
-
         private void Start()
         {
             CommandStack = new();
@@ -25,11 +24,9 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            if (_pieceSelectionComponent.Status != SelectionStatus.Selected && _pieceSelectionComponent.ClickCount!=1) return;
+            if (_pieceSelectionComponent.Status != SelectionStatus.Selected ) return;
             _invoker.ExecuteCommand(_command);
-            _pieceSelectionComponent.ClickCount = 0;
             CommandStack.Push(_command);
-         //   _pieceSelectionComponent.OnDeselect();
         }
     }
 }

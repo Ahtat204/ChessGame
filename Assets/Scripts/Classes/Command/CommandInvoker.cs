@@ -16,11 +16,7 @@ namespace Assets.Scripts.Classes.Command
         public void ExecuteCommand(ICommand command)
         {
             command.Execute(_pieceSelectionComponent.Target);
-            
-          // 
-
+            _pieceSelectionComponent.OnDeselect();
         }
-
-     
     }
 }

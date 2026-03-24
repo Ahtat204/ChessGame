@@ -19,13 +19,12 @@ namespace Assets.Scripts.Classes.PieceComponent
         public SelectionStatus Status { get; set; }
 
         public Vector2 Target => target;
+        public int Count { get; set; }
         public int ClickCount{ get; set; }
         private static readonly List<PieceSelectionComponent> MovableObjects = new();
         public Vector2 target;
-        public static PieceSelectionComponent Instance { get; private set; }
         private void Awake()
         {
-            Instance = this;
             MovableObjects.Add(this);
             Status = SelectionStatus.UnSelected;
             
@@ -55,11 +54,9 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
+            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected && !target.Equals(transform.position))
             {
                 target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-             //   if( target.Equals(transform.position)) return;
-                ClickCount = 1;
             }
         }
     }
