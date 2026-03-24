@@ -16,7 +16,8 @@ namespace Assets.Scripts.Classes.PieceComponent
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
         public SelectionStatus Status { get; set; }
-
+        public delegate void onPieceSelected();
+        public static event onPieceSelected OnPieceSelected;
         public Vector2 Target => target;
         public int Count { get; set; }
        
@@ -34,6 +35,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
         public void OnSelect() {
             Status = SelectionStatus.Selected;
+            OnPieceSelected?.Invoke();
         }
         
         public void OnDeselect(){

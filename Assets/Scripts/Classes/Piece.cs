@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.Scripts.Classes.GameClasses;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using UnityEngine;

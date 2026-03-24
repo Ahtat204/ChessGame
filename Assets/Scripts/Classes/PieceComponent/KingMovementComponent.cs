@@ -16,6 +16,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             CurrentPosition = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance.Pieces ??= new();
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrentPosition, this);
+            SelectionComponent=GetComponent<PieceSelectionComponent>();
         }
         public override void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {

@@ -9,6 +9,6 @@ namespace Assets.Scripts.Interfaces
         public void OnDeselect();
         public SelectionStatus Status { get;set; }
         public Vector2 Target{ get; }
-    
+
     }
 }
