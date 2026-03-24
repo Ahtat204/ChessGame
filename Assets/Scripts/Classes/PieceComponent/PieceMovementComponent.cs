@@ -21,7 +21,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
         private Piece _piece;
-        public int Count{get; protected set;}
+        protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
         private Vector3Int CurrPos { get;set; }
         #endregion
@@ -31,13 +31,13 @@ namespace Assets.Scripts.Classes.PieceComponent
             _piece = GetComponent<Piece>();
             CanMove = _piece.Color != PieceColor.Black;
             CanMove = true;
-            Count = 0;
         }
         private void Start()
         {
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance.Pieces ??= new();
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
+            SelectionComponent=GetComponent<PieceSelectionComponent>();
         }
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
-                Count = 1;
+                SelectionComponent.OnDeselect();
                 if (!targetCell.Equals(CurrPos))
                 {
                     pieces.Remove((Vector2Int)CurrPos);
@@ -67,9 +67,9 @@ namespace Assets.Scripts.Classes.PieceComponent
             {
                 if (occupied._piece is King) return;
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
+                SelectionComponent.OnDeselect();
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
-                Count = 1;
                 Destroy(occupied.gameObject);
                 if (!targetCell.Equals(CurrPos))
                 {

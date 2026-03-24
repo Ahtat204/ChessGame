@@ -15,7 +15,7 @@ namespace Assets.Scripts.Structs
         /// <summary>
         /// Y coordinate property
         /// </summary>
-        public uint Y { get; }
+        public uint Y { get;  }
 
 
         /// <summary>

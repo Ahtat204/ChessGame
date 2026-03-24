@@ -1,11 +1,10 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Assets.Scripts.Classes.PieceComponent
 {
@@ -20,7 +19,7 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         public Vector2 Target => target;
         public int Count { get; set; }
-        public int ClickCount{ get; set; }
+       
         private static readonly List<PieceSelectionComponent> MovableObjects = new();
         public Vector2 target;
         private void Awake()
@@ -32,21 +31,20 @@ namespace Assets.Scripts.Classes.PieceComponent
         private void Start()
         {
             target = transform.position;
-            ClickCount = 0;
         }
-        public void OnSelect()
-        {
+        public void OnSelect() {
             Status = SelectionStatus.Selected;
         }
-        public void OnDeselect()
-        {
+        
+        public void OnDeselect(){
             Status = SelectionStatus.UnSelected;
         }
+        
         private void OnMouseDown()
         {
+            
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
-           
             foreach (var obj in MovableObjects.Where(obj => obj != this))
             {
                 obj.Status = SelectionStatus.UnSelected;
@@ -54,7 +52,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected && !target.Equals(transform.position))
+            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected )
             {
                 target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
             }
