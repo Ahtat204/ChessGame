@@ -37,10 +37,6 @@ namespace Assets.Scripts.Classes.GameClasses
         }
         private void Update()
         {
-            if (Turn == PlayerTurn.WhitePlayer)
-            {
-                
-            }
             if (_gameState is GameState.Check && Turn is PlayerTurn.WhitePlayer)
             {
                 
