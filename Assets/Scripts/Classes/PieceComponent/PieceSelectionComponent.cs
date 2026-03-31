@@ -14,33 +14,55 @@ namespace Assets.Scripts.Classes.PieceComponent
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
         public SelectionStatus Status { get; set; }
+
         public delegate void onPieceSelected();
+        
+        private int count = 0;
         public static event onPieceSelected OnPieceSelected;
         public Vector2 Target => target;
-        public int Count { get; set; }
         private static readonly List<PieceSelectionComponent> MovableObjects = new();
         public Vector2 target;
+        int choice = -1; // valid choices for this example are 0 and 1
+        /*void Start()
+        {
+            StartCoroutine(DoSomeLogic());
+        }*/
+        /*IEnumerator DoSomeLogic()
+        {
+            print("Starting..."); // print message to the console
+             // wait for player to press '0' or '1'
+            print("Continuing..."); // print message to the console
+        }*/
+        IEnumerator WaitForKeyDown()
+        {
+            while (!Input.GetMouseButtonDown(0))
+            {
+                yield return null; // yield return pauses the coroutine
+            }
 
-        private void Awake()
+            target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+        }
+    
+   
+
+        private void Start()
         {
             MovableObjects.Add(this);
             Status = SelectionStatus.UnSelected;
         }
 
-        private void Start()
-        {
-            target = transform.position;
-        }
-
         public void OnSelect()
         {
             Status = SelectionStatus.Selected;
+            Debug.Log($"{gameObject.name}: OnSelect");
+            count=1;
             OnPieceSelected?.Invoke();
         }
 
         public void OnDeselect()
         {
             Status = SelectionStatus.UnSelected;
+            count=0;
         }
 
         private void OnMouseDown()
@@ -55,9 +77,12 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
+            if (Status == SelectionStatus.Selected)
             {
-                target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+                {
+                    StartCoroutine(WaitForKeyDown());
+                    
+                }
             }
         }
     }

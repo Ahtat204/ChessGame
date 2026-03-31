@@ -31,7 +31,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             _piece = GetComponent<Piece>();
             CanMove = _piece.Color != PieceColor.Black;
             CanMove = true;
-            Count = 0;
+            
         }
         private void Start()
         {
@@ -71,7 +71,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                 SelectionComponent.OnDeselect();
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
-                Count = 1;
                 Destroy(occupied.gameObject);
                 if (!targetCell.Equals(CurrPos))
                 {
