@@ -16,12 +16,13 @@ namespace Assets.Scripts.Classes.PieceComponent
             CurrentPosition = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance.Pieces ??= new();
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrentPosition, this);
+            SelectionComponent=GetComponent<PieceSelectionComponent>();
         }
         public override void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
             base.MovePiece(pieces, targetPos);
             // TODO:add path checking
-            if(Count>0) return;
+        //    if(Count>0) return;
             var position= transform.position;
             var gtar = Board.BoardInstance.tilemap.WorldToCell(targetPos);
             var gridTarget=(Vector2Int)gtar;
@@ -34,7 +35,8 @@ namespace Assets.Scripts.Classes.PieceComponent
                     var rightWhiteRook = pieces[new Vector2Int(8, 1)];
                     rightWhiteRook?.MovePiece(pieces,Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(6, 1)) );
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
-                    Count = 1;
+                    SelectionComponent.OnDeselect();
+                  //  Count = 1;
                     _canCastle = false;
                     if (!gtar.Equals(CurrentPosition))
                     {
@@ -51,6 +53,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                     var leftWhiteRook = pieces[new Vector2Int(1, 1)];
                     leftWhiteRook.MovePiece(pieces, Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(4, 1)));
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
+                    SelectionComponent.OnDeselect();
                     _canCastle = false;
                     if (!gtar.Equals(CurrentPosition))
                     {
@@ -66,6 +69,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     var rightWhiteRook = pieces[new Vector2Int(8, 8)];
                     rightWhiteRook.MovePiece(pieces, Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(6, 8)));
+                    SelectionComponent.OnDeselect();
                     _canCastle = false;
                     if (!gtar.Equals(CurrentPosition))
                     {
@@ -81,6 +85,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     var leftWhiteRook = pieces[new Vector2Int(1, 8)];
                     leftWhiteRook.MovePiece(pieces, Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(4, 8)));
+                    SelectionComponent.OnDeselect();
                     _canCastle = false;
                     if (!gtar.Equals(CurrentPosition))
                     {

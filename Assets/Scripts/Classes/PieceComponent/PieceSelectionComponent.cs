@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
@@ -11,56 +10,58 @@ namespace Assets.Scripts.Classes.PieceComponent
     //: this class is working correctly
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Piece))]
-    
-    
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
         public SelectionStatus Status { get; set; }
-        private static readonly List<PieceSelectionComponent> MovableObjects = new();
-        public Vector2 _target { get; private set; }
-        public static PieceSelectionComponent Instance { get; private set; }
+        public int Count { private set; get; }
 
-        private void Awake()
-        {
-            Instance = this;
-            MovableObjects.Add(this);
-            Status = SelectionStatus.UnSelected;
-            
-        }
+        public delegate void onPieceSelected();
+
+        public static event onPieceSelected OnPieceSelected;
+        public Vector2 Target => target;
+        private static readonly List<PieceSelectionComponent> MovableObjects = new();
+        public Vector2 target;
+
         private void Start()
         {
-            _target = transform.position;
+            MovableObjects.Add(this);
+            Status = SelectionStatus.UnSelected;
         }
 
         public void OnSelect()
         {
             Status = SelectionStatus.Selected;
+            foreach (var obj in MovableObjects.Where(obj => obj != this))
+            {
+                obj.Status = SelectionStatus.UnSelected;
+            }
+
+            Count = 1;
         }
 
         public void OnDeselect()
         {
             Status = SelectionStatus.UnSelected;
+            Count = 0;
         }
+
         private void OnMouseDown()
         {
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
-           
-            foreach (var obj in MovableObjects.Where(obj => obj != this))
-            {
-                obj.Status = SelectionStatus.UnSelected;
-            }
         }
 
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
             {
-                _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                var t=Board.BoardInstance.tilemap.WorldToCell(_target);
-                Debug.Log($"the position is \t :{t}");
+                Count++;
+                target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+                if (Count > 1)
+                {
+                    OnPieceSelected?.Invoke();
+                }
             }
         }
     }
-
 }

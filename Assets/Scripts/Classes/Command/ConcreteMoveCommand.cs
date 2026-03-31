@@ -7,13 +7,13 @@ namespace Assets.Scripts.Classes.Command
 {
     public class ConcreteMoveCommand : AbstractPieceCommand
     {
+        
         public ConcreteMoveCommand(IMove move) : base(move)
         {
-         // for testing 
         }
-
         public override void Execute(Vector2 target)
         {
+          
             _move.MovePiece(GameManager.Instance.Pieces, target); 
         }
         public override void Undo()
