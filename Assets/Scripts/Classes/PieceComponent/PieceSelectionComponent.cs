@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
@@ -15,17 +14,20 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         public SelectionStatus Status { get; set; }
         public int Count { private set; get; }
+
         public delegate void onPieceSelected();
+
         public static event onPieceSelected OnPieceSelected;
         public Vector2 Target => target;
         private static readonly List<PieceSelectionComponent> MovableObjects = new();
         public Vector2 target;
-        public float maxDelay = 1.0f;
+
         private void Start()
         {
             MovableObjects.Add(this);
             Status = SelectionStatus.UnSelected;
         }
+
         public void OnSelect()
         {
             Status = SelectionStatus.Selected;
@@ -35,7 +37,6 @@ namespace Assets.Scripts.Classes.PieceComponent
             }
 
             Count = 1;
-            OnPieceSelected?.Invoke();
         }
 
         public void OnDeselect()
@@ -52,40 +53,14 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0)) // Left mouse button
+            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
             {
-                StartCoroutine(WaitForSecondClick());
-            }
-        }
-
-        private IEnumerator WaitForSecondClick()
-        {
-            Debug.Log("First click detected. Waiting for second click...");
-
-            float timer = 0f;
-            bool secondClick = false;
-
-            // Wait until second click or timeout
-            while (timer < maxDelay)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    secondClick = true;
-                    break;
-                }
-
-                timer += Time.deltaTime;
-                yield return null; // Wait for next frame
-            }
-
-            if (secondClick)
-            {
-                Debug.Log("Second click detected!");
+                Count++;
                 target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-            }
-            else
-            {
-                Debug.Log("Second click not detected in time.");
+                if (Count > 1)
+                {
+                    OnPieceSelected?.Invoke();
+                }
             }
         }
     }
