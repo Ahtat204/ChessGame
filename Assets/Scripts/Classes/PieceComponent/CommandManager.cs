@@ -29,8 +29,8 @@ namespace Assets.Scripts.Classes.PieceComponent
             DoWork();
         }
 */
-        public void OnEnable()=>PieceSelectionComponent.OnPieceSelected +=DoWork;
-        public void OnDisable()=>PieceSelectionComponent.OnPieceSelected -= DoWork;
+        public void OnEnable()=>PieceSelectionComponent.OnPieceSelectedEvent +=DoWork;
+        public void OnDisable()=>PieceSelectionComponent.OnPieceSelectedEvent -= DoWork;
         
         private void DoWork()
         {
