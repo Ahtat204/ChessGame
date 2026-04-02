@@ -20,11 +20,11 @@ namespace Assets.Scripts.Classes.Pieces
         {
             PossibleMoves.Clear();
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-            AddIfValid(positionCell.x, positionCell.y + (1 * Sign(Color)));
-            AddIfValid(positionCell.x, positionCell.y + (2 * Sign(Color))); //only in first move
-            AddIfValid(positionCell.x + 1, positionCell.y + (1 * Sign(Color)));
-            AddIfValid(positionCell.x - 1, positionCell.y + (1 * Sign(Color)));
-            AddIfValid(positionCell.x - 1, positionCell.y + (1 * Sign(Color))); //en Passant,handled by Proxy classes
+            PossibleMoves.AddIfValid(positionCell.x, positionCell.y + (1 * Sign(Color)));
+            PossibleMoves.AddIfValid(positionCell.x, positionCell.y + (2 * Sign(Color))); //only in first move
+            PossibleMoves.AddIfValid(positionCell.x + 1, positionCell.y + (1 * Sign(Color)));
+            PossibleMoves.AddIfValid(positionCell.x - 1, positionCell.y + (1 * Sign(Color)));
+            PossibleMoves.AddIfValid(positionCell.x - 1, positionCell.y + (1 * Sign(Color))); //en Passant,handled by Proxy classes
         }
     }
 }

@@ -21,16 +21,16 @@ namespace Assets.Scripts.Classes.Pieces
             for (var i = 1; i <= Board.Size; i++)
             {
                 #region Straight
-                AddIfValid(positionCell.x + i, positionCell.y);
-                AddIfValid(positionCell.x - i, positionCell.y);
-                AddIfValid(positionCell.x, positionCell.y + i);
-                AddIfValid(positionCell.x, positionCell.y - i);
+                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y);
+                PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y);
+                PossibleMoves.AddIfValid(positionCell.x, positionCell.y + i);
+                PossibleMoves.AddIfValid(positionCell.x, positionCell.y - i);
                 #endregion
                 #region Diagonal
-                AddIfValid(positionCell.x + i, positionCell.y + i);
-                AddIfValid(positionCell.x + i, positionCell.y - i);
-                AddIfValid(positionCell.x - i, positionCell.y + i);
-                AddIfValid(positionCell.x - i, positionCell.y - i);
+                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y + i);
+                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y - i);
+                PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y + i);
+                PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y - i);
                 #endregion
             }
         }

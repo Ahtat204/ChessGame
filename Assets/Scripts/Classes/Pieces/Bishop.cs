@@ -27,10 +27,10 @@ namespace Assets.Scripts.Classes.Pieces
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
             for (var i = 1; i <= Board.Size; i++)
             {
-                AddIfValid(positionCell.x + i, positionCell.y + i);
-                AddIfValid(positionCell.x + i, positionCell.y - i);
-                AddIfValid(positionCell.x - i, positionCell.y + i);
-               AddIfValid(positionCell.x - i, positionCell.y - i);
+                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y + i);
+                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y - i);
+                PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y + i);
+               PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y - i);
             }
         }
        

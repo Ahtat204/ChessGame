@@ -32,13 +32,6 @@ namespace Assets.Scripts.Classes
         /// <param name="position">position is the current position of the Piece </param>
         /// <returns> a List of a 2D vector</returns>
         public abstract void CalculateLegalMoves(Vector3 position);
-        protected void AddIfValid(int x, int y)
-        {
-            if (x is >= 1 and <= 8 && y is >= 1 and <= 8 )
-            {
-              PossibleMoves.Add(new Vector2Int(x, y));
-            }
-        }
         
     }
 }

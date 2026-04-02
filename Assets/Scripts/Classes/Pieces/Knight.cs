@@ -18,14 +18,14 @@ namespace Assets.Scripts.Classes.Pieces
         {
             PossibleMoves.Clear();
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-            AddIfValid(positionCell.x + 2, positionCell.y + 1);
-            AddIfValid(positionCell.x + 2, positionCell.y - 1);
-            AddIfValid(positionCell.x - 2, positionCell.y + 1);
-            AddIfValid(positionCell.x - 2, positionCell.y - 1);
-            AddIfValid(positionCell.x + 1, positionCell.y + 2);
-            AddIfValid(positionCell.x + 1, positionCell.y - 2);
-            AddIfValid(positionCell.x - 1, positionCell.y - 2);
-            AddIfValid(positionCell.x - 1, positionCell.y + 2);
+            PossibleMoves.AddIfValid(positionCell.x + 2, positionCell.y + 1);
+            PossibleMoves.AddIfValid(positionCell.x + 2, positionCell.y - 1);
+            PossibleMoves.AddIfValid(positionCell.x - 2, positionCell.y + 1);
+            PossibleMoves.AddIfValid(positionCell.x - 2, positionCell.y - 1);
+            PossibleMoves.AddIfValid(positionCell.x + 1, positionCell.y + 2);
+            PossibleMoves.AddIfValid(positionCell.x + 1, positionCell.y - 2);
+            PossibleMoves.AddIfValid(positionCell.x - 1, positionCell.y - 2);
+            PossibleMoves.AddIfValid(positionCell.x - 1, positionCell.y + 2);
         }
     }
 }

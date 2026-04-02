@@ -24,10 +24,10 @@ namespace Assets.Scripts.Classes.Pieces
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
             for (var i = 0; i < Board.Size; i++)
             {
-                AddIfValid(positionCell.x + i, positionCell.y);
-                AddIfValid(positionCell.x - i, positionCell.y);
-                AddIfValid(positionCell.x, positionCell.y + i);
-                AddIfValid(positionCell.x, positionCell.y - i);
+                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y);
+                PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y);
+                PossibleMoves.AddIfValid(positionCell.x, positionCell.y + i);
+                PossibleMoves.AddIfValid(positionCell.x, positionCell.y - i);
             }
         }
     }
