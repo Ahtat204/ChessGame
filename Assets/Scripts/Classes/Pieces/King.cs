@@ -7,22 +7,23 @@ namespace Assets.Scripts.Classes.Pieces
 {
     public sealed class King : Piece
     {
-        public override List<Vector2Int> PossibleMoves { get; } = new List<Vector2Int>(8);
+        private readonly List<Vector2Int> _possibleMoves  = new (8);
         public override uint Value => 0;
+        public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
         [field: SerializeField] public override PieceColor Color { get; protected set; }
 
         public override void CalculateLegalMoves(Vector3 position)
         {
-            PossibleMoves.Clear();
+            _possibleMoves.Clear();
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-            PossibleMoves.AddIfValid(positionCell.x, positionCell.y + 1);
-            PossibleMoves.AddIfValid(positionCell.x, positionCell.y - 1);
-            PossibleMoves.AddIfValid(positionCell.x - 1, positionCell.y);
-            PossibleMoves.AddIfValid(positionCell.x + 1, positionCell.y);
-            PossibleMoves.AddIfValid(positionCell.x - 1, positionCell.y - 1);
-            PossibleMoves.AddIfValid(positionCell.x - 1, positionCell.y + 1);
-            PossibleMoves.AddIfValid(positionCell.x + 1, positionCell.y - 1);
-            PossibleMoves.AddIfValid(positionCell.x + 1, positionCell.y - 1);
+            _possibleMoves.AddIfValid(positionCell.x, positionCell.y + 1);
+            _possibleMoves.AddIfValid(positionCell.x, positionCell.y - 1);
+            _possibleMoves.AddIfValid(positionCell.x - 1, positionCell.y);
+            _possibleMoves.AddIfValid(positionCell.x + 1, positionCell.y);
+            _possibleMoves.AddIfValid(positionCell.x - 1, positionCell.y - 1);
+            _possibleMoves.AddIfValid(positionCell.x - 1, positionCell.y + 1);
+            _possibleMoves.AddIfValid(positionCell.x + 1, positionCell.y - 1);
+            _possibleMoves.AddIfValid(positionCell.x + 1, positionCell.y - 1);
         }
     }
 }

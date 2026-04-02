@@ -13,26 +13,23 @@ namespace Assets.Scripts.Classes.Pieces
     [RequireComponent(typeof(PieceMovementComponent))]
     [RequireComponent(typeof(PieceSelectionComponent))]
     public sealed class Bishop : Piece
-    { 
+    {
         public override uint Value => 3;
-
         // 2. Property returns the SAME list every time
-        public override List<Vector2Int> PossibleMoves { get; } = new List<Vector2Int>(14);
-
-        [field: SerializeField]
-        public override PieceColor Color { get; protected set; }
-        public  override void CalculateLegalMoves(Vector3 position)
+        private readonly List<Vector2Int> _possibleMoves = new(14);
+        public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
+        [field: SerializeField] public override PieceColor Color { get; protected set; }
+        public override void CalculateLegalMoves(Vector3 position)
         {
-            PossibleMoves.Clear();
+            _possibleMoves.Clear();
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
             for (var i = 1; i <= Board.Size; i++)
             {
-                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y + i);
-                PossibleMoves.AddIfValid(positionCell.x + i, positionCell.y - i);
-                PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y + i);
-               PossibleMoves.AddIfValid(positionCell.x - i, positionCell.y - i);
+                _possibleMoves.AddIfValid(positionCell.x + i, positionCell.y + i);
+                _possibleMoves.AddIfValid(positionCell.x + i, positionCell.y - i);
+                _possibleMoves.AddIfValid(positionCell.x - i, positionCell.y + i);
+                _possibleMoves.AddIfValid(positionCell.x - i, positionCell.y - i);
             }
         }
-       
     }
 }

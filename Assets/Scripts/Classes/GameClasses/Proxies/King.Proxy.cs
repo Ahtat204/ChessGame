@@ -29,7 +29,7 @@ namespace Assets.Scripts.Classes.GameClasses.Proxies
                     _threatnedpositions.Add(move);
                 }  
             } 
-            _king.PossibleMoves.RemoveAll(move => _threatnedpositions.Contains(move));
+            // TODO: _king.PossibleMoves.RemoveAll(move => _threatnedpositions.Contains(move));
         }
     }
 }

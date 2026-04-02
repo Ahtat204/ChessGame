@@ -17,7 +17,7 @@ namespace Assets.Scripts.Classes
         /// <summary>
         /// the possible moves the piece can make
         /// </summary>
-        public abstract List<Vector2Int> PossibleMoves { get; }
+        public abstract IReadOnlyList<Vector2Int> PossibleMoves { get; }
         /// <summary>
         /// this property represent the Piece color , and should be initialized from the inspector in derived classes
         /// </summary>

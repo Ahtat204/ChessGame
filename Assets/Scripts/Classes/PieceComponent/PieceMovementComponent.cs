@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Proxies;
 using Assets.Scripts.Classes.Pieces;
