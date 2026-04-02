@@ -12,31 +12,23 @@ namespace Assets.Scripts.Classes.Pieces
     /// </summary>
     public sealed class Rook : Piece
     {
-     
-        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
+        public override uint Value => 5;
+        public override List<Vector2Int> PossibleMoves { get; }= new List<Vector2Int>(14);
+
         [field: SerializeField]
         public override PieceColor Color { get; protected set; }
-        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+
+        public override void CalculateLegalMoves(Vector3 position)
         {
-            var legalMoves = new List<Vector2Int>(14);
-
+            PossibleMoves.Clear();
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-
-            // Generate moves in all four directions (horizontal and vertical).
             for (var i = 0; i < Board.Size; i++)
             {
-                legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y));
-                legalMoves.Add(new Vector2Int(positionCell.x - i, positionCell.y));
-                legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y + i));
-                legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y - i));
+                AddIfValid(positionCell.x + i, positionCell.y);
+                AddIfValid(positionCell.x - i, positionCell.y);
+                AddIfValid(positionCell.x, positionCell.y + i);
+                AddIfValid(positionCell.x, positionCell.y - i);
             }
-            // Remove current position (rook cannot stay in place as a move).
-            legalMoves.Remove(positionCell);
-            // Filter out moves outside the 8x8 chessboard.
-            var filteredMovesList =
-                legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
-            return filteredMovesList;
         }
-        public override uint Value => 5;
     }
 }

@@ -11,24 +11,20 @@ namespace Assets.Scripts.Classes.Pieces
 {
     public sealed class Pawn : Piece
     {
-        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
+        public override List<Vector2Int> PossibleMoves { get; }= new List<Vector2Int>(5);
         public override uint Value => 1;
         [field: SerializeField] public override PieceColor Color { get; protected set; }
         private int Sign(PieceColor color) => color == PieceColor.White ? 1 : -1;
 
-        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        public  override void CalculateLegalMoves(Vector3 position)
         {
-            var legalMoves = new List<Vector2Int>(5);
+            PossibleMoves.Clear();
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-            legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y + (1 * Sign(Color))));
-            legalMoves.Add(new Vector2Int(positionCell.x, positionCell.y + (2 * Sign(Color)))); //only in first move
-            legalMoves.Add(new Vector2Int(positionCell.x + 1, positionCell.y + (1 * Sign(Color))));
-            legalMoves.Add(new Vector2Int(positionCell.x - 1, positionCell.y + (1 * Sign(Color))));
-            legalMoves.Add(new Vector2Int(positionCell.x - 1,
-                positionCell.y + (1 * Sign(Color)))); //en Passant,handled by Proxy classes
-            legalMoves.Remove(positionCell);
-            var filteredMovesList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
-            return filteredMovesList;
+            AddIfValid(positionCell.x, positionCell.y + (1 * Sign(Color)));
+            AddIfValid(positionCell.x, positionCell.y + (2 * Sign(Color))); //only in first move
+            AddIfValid(positionCell.x + 1, positionCell.y + (1 * Sign(Color)));
+            AddIfValid(positionCell.x - 1, positionCell.y + (1 * Sign(Color)));
+            AddIfValid(positionCell.x - 1, positionCell.y + (1 * Sign(Color))); //en Passant,handled by Proxy classes
         }
     }
 }

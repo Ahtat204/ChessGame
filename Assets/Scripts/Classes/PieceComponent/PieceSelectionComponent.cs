@@ -14,6 +14,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         public SelectionStatus Status { get; set; }
         public int Count { private set; get; }
+        private Piece piece;
 
         public delegate void onPieceSelected();
 
@@ -24,12 +25,14 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Start()
         {
+            piece = GetComponent<Piece>();
             MovableObjects.Add(this);
             Status = SelectionStatus.UnSelected;
         }
 
         public void OnSelect()
         {
+            piece.CalculateLegalMoves(transform.position);
             Status = SelectionStatus.Selected;
             foreach (var obj in MovableObjects.Where(obj => obj != this))
             {

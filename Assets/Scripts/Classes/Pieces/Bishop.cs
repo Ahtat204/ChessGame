@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
@@ -16,25 +15,24 @@ namespace Assets.Scripts.Classes.Pieces
     public sealed class Bishop : Piece
     { 
         public override uint Value => 3;
-        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
+
+        // 2. Property returns the SAME list every time
+        public override List<Vector2Int> PossibleMoves { get; } = new List<Vector2Int>(14);
+
         [field: SerializeField]
         public override PieceColor Color { get; protected set; }
-        protected  override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        public  override void CalculateLegalMoves(Vector3 position)
         {
-            var legalMoves = new List<Vector2Int>(14);
+            PossibleMoves.Clear();
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-            for (var i = 0; i <= Board.Size; i++)
+            for (var i = 1; i <= Board.Size; i++)
             {
-                legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y + i));
-                legalMoves.Add(new Vector2Int(positionCell.x + i, positionCell.y - i));
-                legalMoves.Add(new Vector2Int(positionCell.x - i, positionCell.y + i));
-                legalMoves.Add(new Vector2Int(positionCell.x - i, positionCell.y - i));
+                AddIfValid(positionCell.x + i, positionCell.y + i);
+                AddIfValid(positionCell.x + i, positionCell.y - i);
+                AddIfValid(positionCell.x - i, positionCell.y + i);
+               AddIfValid(positionCell.x - i, positionCell.y - i);
             }
-
-            legalMoves.Remove(positionCell);
-            var filteredList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
-            
-            return filteredList;
         }
+       
     }
 }
