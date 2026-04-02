@@ -8,26 +8,24 @@ namespace Assets.Scripts.Classes.Pieces
 {
     public sealed class Knight : Piece
     {
-        public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
-        public override uint Value => 3;
-        [field: SerializeField]
-        public override PieceColor Color { get; protected set; }
-        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
-        {
-         var legalMoves = new List<Vector2Int>(8);
-         var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-         legalMoves.Add(new Vector2Int(positionCell.x+2, positionCell.y+1));
-         legalMoves.Add(new Vector2Int(positionCell.x+2, positionCell.y-1));
-         legalMoves.Add(new Vector2Int(positionCell.x-2, positionCell.y+1));
-         legalMoves.Add(new Vector2Int(positionCell.x-2, positionCell.y-1));
-         legalMoves.Add(new Vector2Int(positionCell.x+1, positionCell.y+2));
-         legalMoves.Add(new Vector2Int(positionCell.x+1, positionCell.y-2));
-         legalMoves.Add(new Vector2Int(positionCell.x-1, positionCell.y-2));
-         legalMoves.Add(new Vector2Int(positionCell.x-1, positionCell.y+2));
-         legalMoves.Remove(positionCell);
-         var filteredMovesList=legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
-         return filteredMovesList;
+        public override List<Vector2Int> PossibleMoves { get; } =
+            new List<Vector2Int>(8);
 
+        public override uint Value => 3;
+        [field: SerializeField] public override PieceColor Color { get; protected set; }
+
+        public override void CalculateLegalMoves(Vector3 position)
+        {
+            PossibleMoves.Clear();
+            var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
+            AddIfValid(positionCell.x + 2, positionCell.y + 1);
+            AddIfValid(positionCell.x + 2, positionCell.y - 1);
+            AddIfValid(positionCell.x - 2, positionCell.y + 1);
+            AddIfValid(positionCell.x - 2, positionCell.y - 1);
+            AddIfValid(positionCell.x + 1, positionCell.y + 2);
+            AddIfValid(positionCell.x + 1, positionCell.y - 2);
+            AddIfValid(positionCell.x - 1, positionCell.y - 2);
+            AddIfValid(positionCell.x - 1, positionCell.y + 2);
         }
     }
 }
