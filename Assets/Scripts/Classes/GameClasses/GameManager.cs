@@ -9,7 +9,7 @@ using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Classes.GameClasses
 {
-    public class GameManager : MonoBehaviour
+    public sealed class GameManager : MonoBehaviour
     {
         private GameState _gameState;
         private MoveType _moveType;

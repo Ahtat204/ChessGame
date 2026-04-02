@@ -13,13 +13,13 @@ namespace Assets.Scripts.Classes.Pieces
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PieceMovementComponent))]
     [RequireComponent(typeof(PieceSelectionComponent))]
-    public class Bishop : Piece
+    public sealed class Bishop : Piece
     { 
         public override uint Value => 3;
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         [field: SerializeField]
         public override PieceColor Color { get; protected set; }
-        protected sealed override List<Vector2Int> CalculateLegalMoves(Vector3 position)
+        protected  override List<Vector2Int> CalculateLegalMoves(Vector3 position)
         {
             var legalMoves = new List<Vector2Int>(14);
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
@@ -33,6 +33,7 @@ namespace Assets.Scripts.Classes.Pieces
 
             legalMoves.Remove(positionCell);
             var filteredList = legalMoves.Where(pos => pos is { x: >= 1 and <= 8, y: >= 1 and <= 8 }).ToList();
+            
             return filteredList;
         }
     }

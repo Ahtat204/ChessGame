@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
 {
-    public class King : Piece
+    public sealed class King : Piece
     {
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         public override uint Value => 0;

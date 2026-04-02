@@ -10,10 +10,10 @@ namespace Assets.Scripts.Classes.GameClasses
     /// <summary>
     /// this class will be used to create a singleton instance of the TileMap and the camera to avoid multiple unnecessary instances
     /// </summary>
-    public class Board : MonoBehaviour
+    public sealed class Board : MonoBehaviour
     {
-        
-        public static readonly uint Size = 8;
+        public const uint Size = 8;
+
         /// <summary>
         /// a tile map field
         /// </summary>

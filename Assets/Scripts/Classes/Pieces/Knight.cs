@@ -6,7 +6,7 @@ using Assets.Scripts.Classes.GameClasses;
 
 namespace Assets.Scripts.Classes.Pieces
 {
-    public class Knight : Piece
+    public sealed class Knight : Piece
     {
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         public override uint Value => 3;

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Classes.Pieces
     /// Represents a rook chess piece.
     /// Can move horizontally or vertically across the board.
     /// </summary>
-    public class Rook : Piece
+    public sealed class Rook : Piece
     {
      
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);

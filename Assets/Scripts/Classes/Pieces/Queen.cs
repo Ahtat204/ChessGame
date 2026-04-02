@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
 {
-    public class Queen : Piece
+    public sealed class Queen : Piece
     {
         /// <summary>
         /// List of the Legal Moves for the Queen,here it's a readonly property .<remarks>it's been assigned here to avoid any  NullReferenceException</remarks>

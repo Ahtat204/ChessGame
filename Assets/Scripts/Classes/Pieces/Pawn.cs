@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
 {
-    public class Pawn : Piece
+    public sealed class Pawn : Piece
     {
         public override List<Vector2Int> PossibleMoves => CalculateLegalMoves(transform.position);
         public override uint Value => 1;
