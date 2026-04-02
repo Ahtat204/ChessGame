@@ -42,6 +42,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
+            _piece.CalculateLegalMoves(transform.position);
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(targetPos);
             bool checkPath = PieceMovementProxy.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);

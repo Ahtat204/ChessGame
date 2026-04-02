@@ -12,38 +12,33 @@ namespace Assets.Scripts.Classes.PieceComponent
     [RequireComponent(typeof(Piece))]
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
+        private static PieceSelectionComponent _selectedPiece;
         public SelectionStatus Status { get; set; }
-        public int Count { private set; get; }
-        private Piece piece;
-
-        public delegate void onPieceSelected();
-
-        public static event onPieceSelected OnPieceSelected;
+        private int Count {  set; get; }
+        public delegate void OnPieceSelected();
+        public static event OnPieceSelected OnPieceSelectedEvent;
         public Vector2 Target => target;
-        private static readonly List<PieceSelectionComponent> MovableObjects = new();
         public Vector2 target;
 
         private void Start()
         {
-            piece = GetComponent<Piece>();
-            MovableObjects.Add(this);
             Status = SelectionStatus.UnSelected;
         }
 
         public void OnSelect()
         {
-            piece.CalculateLegalMoves(transform.position);
-            Status = SelectionStatus.Selected;
-            foreach (var obj in MovableObjects.Where(obj => obj != this))
+            if (_selectedPiece is not null && _selectedPiece != this)
             {
-                obj.Status = SelectionStatus.UnSelected;
+                _selectedPiece.OnDeselect();
             }
-
+            
+            Status = SelectionStatus.Selected;
             Count = 1;
         }
 
         public void OnDeselect()
         {
+            if (_selectedPiece == this) _selectedPiece = null;
             Status = SelectionStatus.UnSelected;
             Count = 0;
         }
@@ -62,7 +57,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
                 if (Count > 1)
                 {
-                    OnPieceSelected?.Invoke();
+                    OnPieceSelectedEvent?.Invoke();
                 }
             }
         }
