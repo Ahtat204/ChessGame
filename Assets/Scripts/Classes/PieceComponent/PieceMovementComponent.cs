@@ -39,7 +39,6 @@ namespace Assets.Scripts.Classes.PieceComponent
             CanMove = piece.Color != PieceColor.Black;
             CanMove = true;
         }
-
         private void Start()
         {
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
@@ -50,7 +49,7 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
-            CanMove= SwitchTurn(GameManager.Instance.Turn);
+            
             piece.CalculateLegalMoves(transform.position);
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(targetPos);
@@ -62,7 +61,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
-               Switcher(GameManager.Instance.Turn);
+             Utility.Switcher();
                 SelectionComponent.OnDeselect();
                 if (!targetCell.Equals(CurrPos))
                 {
@@ -70,16 +69,14 @@ namespace Assets.Scripts.Classes.PieceComponent
                     CurrPos = targetCell;
                     pieces[(Vector2Int)targetCell] = this;
                 }
-
                 return;
             }
-
             if (occupied.piece.Color == piece.Color) return;
             if (occupied.piece.Color != piece.Color)
             {
                 if (occupied.piece is King) return;
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
-                Switcher(GameManager.Instance.Turn);
+                    Utility.Switcher();
                 SelectionComponent.OnDeselect();
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
@@ -93,41 +90,9 @@ namespace Assets.Scripts.Classes.PieceComponent
             }
         }
 
-        protected bool SwitchTurn(PlayerTurn turn)
-        {
-                if (turn == PlayerTurn.BlackPlayer)
-                {
-                    if (gameObject.tag.Equals("White"))
-                    {
-                        return false;
-                    }
+        
 
-                    if (gameObject.tag.Equals("Black"))
-                    {
-                        return true;
-                    }
-                }
-                if(turn==PlayerTurn.WhitePlayer)
-                {
-                    if (gameObject.tag.Equals("Black"))
-                    {
-                        return false;
-                    }
-                }
-                return true;
-        }
 
-        private void Switcher(PlayerTurn turn)
-        {
-            if (turn == PlayerTurn.BlackPlayer)
-            {
-                turn = PlayerTurn.WhitePlayer;
-            }
-            else
-            {
-                turn = PlayerTurn.BlackPlayer;
-            }
-        }
         #endregion
     }
 }

@@ -13,12 +13,14 @@ namespace Assets.Scripts.Classes.GameClasses
     {
         private GameState _gameState;
         private MoveType _moveType;
-        public static event Action OnSwitchTurn;
+        public Stack<ICommand> CommandStack;
+        public event Action OnSwitchTurn;
         public static GameManager Instance { get; private set; }
         public Dictionary<Vector2Int, PieceMovementComponent> Pieces;
         public PlayerTurn Turn;
         private void Awake()
         {
+            CommandStack = new(30);
             if (Instance is not null && Instance != this)
             {
                 Destroy(gameObject);

@@ -17,13 +17,19 @@ namespace Assets.Scripts.Classes.PieceComponent
         public SelectionStatus Status { get; set; }
         private int Count { set; get; }
 
+        public bool CanMove;
+
         public delegate void OnPieceSelected();
 
         public static event OnPieceSelected OnPieceSelectedEvent;
         public Vector2 Target => target;
         public Vector2 target;
 
-        private void Start() => Status = SelectionStatus.UnSelected;
+        private void Start()
+        {
+            Status = SelectionStatus.UnSelected;
+            CanMove= Utility.SwitchTurn(GameManager.Instance.Turn,gameObject);
+        }
 
         public void OnSelect()
         {
@@ -45,6 +51,7 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void OnMouseDown()
         {
+            if (!CanMove) return;
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
         }
@@ -53,6 +60,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
             {
+                CanMove = Utility.SwitchTurn(GameManager.Instance.Turn, gameObject);
                 Count++;
                 target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
                 if (Count > 1)
