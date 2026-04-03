@@ -14,11 +14,14 @@ namespace Assets.Scripts.Classes.Pieces
     [RequireComponent(typeof(PieceSelectionComponent))]
     public sealed class Bishop : Piece
     {
+        /// <inheritdoc/>
         public override uint Value => 3;
-        // 2. Property returns the SAME list every time
         private readonly List<Vector2Int> _possibleMoves = new(14);
+        /// <inheritdoc/>
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
+        /// <inheritdoc/>
         [field: SerializeField] public override PieceColor Color { get; protected set; }
+        /// <inheritdoc/>
         public override void CalculateLegalMoves(Vector3 position)
         {
             _possibleMoves.Clear();

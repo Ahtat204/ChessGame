@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
@@ -7,23 +5,25 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.PieceComponent
 {
-    //: this class is working correctly
-    [RequireComponent(typeof(BoxCollider2D))]
-    [RequireComponent(typeof(Piece))]
+    [
+        RequireComponent(typeof(BoxCollider2D)),
+        RequireComponent(typeof(Piece)),
+        RequireComponent(typeof(PieceMovementComponent)),
+        RequireComponent(typeof(CommandManager)),
+    ]
     public class PieceSelectionComponent : MonoBehaviour, ISelectable
     {
         private static PieceSelectionComponent _selectedPiece;
         public SelectionStatus Status { get; set; }
-        private int Count {  set; get; }
+        private int Count { set; get; }
+
         public delegate void OnPieceSelected();
+
         public static event OnPieceSelected OnPieceSelectedEvent;
         public Vector2 Target => target;
         public Vector2 target;
 
-        private void Start()
-        {
-            Status = SelectionStatus.UnSelected;
-        }
+        private void Start() => Status = SelectionStatus.UnSelected;
 
         public void OnSelect()
         {
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             {
                 _selectedPiece.OnDeselect();
             }
-            
+
             Status = SelectionStatus.Selected;
             Count = 1;
         }

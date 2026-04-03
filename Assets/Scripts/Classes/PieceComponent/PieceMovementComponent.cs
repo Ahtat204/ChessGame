@@ -11,36 +11,43 @@ namespace Assets.Scripts.Classes.PieceComponent
 {
     /// <summary>
     /// Manages movement and capture logic for a chess piece.
-    /// Handles player input, updates piece position, and resolves captures.
+    ///  updates piece position, and resolves captures.
     /// </summary>
     /// <!--this class is working correcly-->
-    [RequireComponent(typeof(Piece))]
-    [RequireComponent(typeof(BoxCollider2D))]
-    [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(PieceSelectionComponent))]
+    [
+        RequireComponent(typeof(Piece)),
+        RequireComponent(typeof(BoxCollider2D)),
+        RequireComponent(typeof(SpriteRenderer)),
+        RequireComponent(typeof(PieceSelectionComponent))
+    ]
     public class PieceMovementComponent : MonoBehaviour, IMove
     {
         #region fields&props
+
         private Piece _piece;
         protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
-        private Vector3Int CurrPos { get;set; }
+        private Vector3Int CurrPos { get; set; }
+
         #endregion
+
         #region methods
+
         private void Awake()
         {
             _piece = GetComponent<Piece>();
             CanMove = _piece.Color != PieceColor.Black;
             CanMove = true;
-            
         }
+
         private void Start()
         {
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance.Pieces ??= new();
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
-            SelectionComponent=GetComponent<PieceSelectionComponent>();
+            SelectionComponent = GetComponent<PieceSelectionComponent>();
         }
+
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
             _piece.CalculateLegalMoves(transform.position);
@@ -80,7 +87,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                     CurrPos = targetCell;
                     pieces[(Vector2Int)targetCell] = this;
                 }
-                
             }
         }
 
