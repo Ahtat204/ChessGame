@@ -13,10 +13,10 @@ namespace Assets.Scripts.Classes.GameClasses
     {
         private GameState _gameState;
         private MoveType _moveType;
-        public static event Action OnPieceSelected;
+        public static event Action OnSwitchTurn;
         public static GameManager Instance { get; private set; }
         public Dictionary<Vector2Int, PieceMovementComponent> Pieces;
-        private PlayerTurn Turn { get; set; }
+        public PlayerTurn Turn;
         private void Awake()
         {
             if (Instance is not null && Instance != this)
@@ -33,10 +33,19 @@ namespace Assets.Scripts.Classes.GameClasses
         {
             Pieces ??= new(32);
             Turn = PlayerTurn.WhitePlayer;
-            OnPieceSelected?.Invoke();
+            OnSwitchTurn?.Invoke();
         }
         private void Update()
         {
+            if (Turn == PlayerTurn.WhitePlayer)
+            {
+               
+            }
+
+            if (Turn == PlayerTurn.BlackPlayer)
+            {
+                
+            }
             if (_gameState is GameState.Check && Turn is PlayerTurn.WhitePlayer)
             {
                 

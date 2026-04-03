@@ -24,7 +24,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
 
-        private Piece _piece;
+        public Piece piece { get; private set; }
         protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
         private Vector3Int CurrPos { get; set; }
@@ -35,8 +35,8 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Awake()
         {
-            _piece = GetComponent<Piece>();
-            CanMove = _piece.Color != PieceColor.Black;
+            piece = GetComponent<Piece>();
+            CanMove = piece.Color != PieceColor.Black;
             CanMove = true;
         }
 
@@ -50,17 +50,19 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
-            _piece.CalculateLegalMoves(transform.position);
+            CanMove= SwitchTurn(GameManager.Instance.Turn);
+            piece.CalculateLegalMoves(transform.position);
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(targetPos);
             bool checkPath = PieceMovementProxy.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);
-            if (!checkPath && _piece is not Knight) return;
+            if (!checkPath && piece is not Knight) return;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(targetCell);
-            if (!_piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
+            if (!piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
             var occupied = pieces.ContainsKey((Vector2Int)targetCell) ? pieces[(Vector2Int)targetCell] : null;
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
+               Switcher(GameManager.Instance.Turn);
                 SelectionComponent.OnDeselect();
                 if (!targetCell.Equals(CurrPos))
                 {
@@ -72,11 +74,12 @@ namespace Assets.Scripts.Classes.PieceComponent
                 return;
             }
 
-            if (occupied._piece.Color == _piece.Color) return;
-            if (occupied._piece.Color != _piece.Color)
+            if (occupied.piece.Color == piece.Color) return;
+            if (occupied.piece.Color != piece.Color)
             {
-                if (occupied._piece is King) return;
+                if (occupied.piece is King) return;
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
+                Switcher(GameManager.Instance.Turn);
                 SelectionComponent.OnDeselect();
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
@@ -90,6 +93,41 @@ namespace Assets.Scripts.Classes.PieceComponent
             }
         }
 
+        protected bool SwitchTurn(PlayerTurn turn)
+        {
+                if (turn == PlayerTurn.BlackPlayer)
+                {
+                    if (gameObject.tag.Equals("White"))
+                    {
+                        return false;
+                    }
+
+                    if (gameObject.tag.Equals("Black"))
+                    {
+                        return true;
+                    }
+                }
+                if(turn==PlayerTurn.WhitePlayer)
+                {
+                    if (gameObject.tag.Equals("Black"))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+        }
+
+        private void Switcher(PlayerTurn turn)
+        {
+            if (turn == PlayerTurn.BlackPlayer)
+            {
+                turn = PlayerTurn.WhitePlayer;
+            }
+            else
+            {
+                turn = PlayerTurn.BlackPlayer;
+            }
+        }
         #endregion
     }
 }
