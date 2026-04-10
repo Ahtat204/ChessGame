@@ -42,12 +42,10 @@ namespace Assets.Scripts
             if (GameManager.Instance.Turn == PlayerTurn.BlackPlayer)
             {
                GameManager.Instance.Turn = PlayerTurn.WhitePlayer;
-               return;
             }
             else if(GameManager.Instance.Turn == PlayerTurn.WhitePlayer)
             {
                 GameManager.Instance.Turn = PlayerTurn.BlackPlayer;
-                return;
             }
            
         }

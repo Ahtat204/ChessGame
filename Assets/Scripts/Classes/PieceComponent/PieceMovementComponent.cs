@@ -24,7 +24,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
 
-        public Piece piece { get; private set; }
+        private Piece piece { get;  set; }
         protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
         private Vector3Int CurrPos { get; set; }
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
-             Utility.Switcher();
+           
                 SelectionComponent.OnDeselect();
                 if (!targetCell.Equals(CurrPos))
                 {
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             {
                 if (occupied.piece is King) return;
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
-                    Utility.Switcher();
+                 
                 SelectionComponent.OnDeselect();
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);

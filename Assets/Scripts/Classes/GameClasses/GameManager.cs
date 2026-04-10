@@ -13,13 +13,14 @@ namespace Assets.Scripts.Classes.GameClasses
     {
         private GameState _gameState;
         private MoveType _moveType;
-        public Stack<ICommand> CommandStack;
+        public Stack<Vector2Int> CommandStack;
         public event Action OnSwitchTurn;
         public static GameManager Instance { get; private set; }
         public Dictionary<Vector2Int, PieceMovementComponent> Pieces;
-        public PlayerTurn Turn;
+        public  PlayerTurn Turn;
         private void Awake()
         {
+            Turn = PlayerTurn.WhitePlayer;
             CommandStack = new(30);
             if (Instance is not null && Instance != this)
             {
@@ -34,7 +35,7 @@ namespace Assets.Scripts.Classes.GameClasses
         private void Start()
         {
             Pieces ??= new(32);
-            Turn = PlayerTurn.WhitePlayer;
+            
             OnSwitchTurn?.Invoke();
         }
         private void Update()

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Classes.Command;
-using Assets.Scripts.Classes.GameClasses;
+﻿using Assets.Scripts.Classes.Command;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
@@ -10,7 +8,6 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         private IMove _move;
         private ICommand _command;
-       
         private ISelectable _pieceSelectionComponent;
         private CommandInvoker _invoker;
         private void Start()
@@ -26,7 +23,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         private void DoWork()
         {
             _invoker.ExecuteCommand(_command);
-            GameManager.Instance.CommandStack.Push(_command);
+           
         }
     }
 }

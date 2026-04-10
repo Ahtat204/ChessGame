@@ -1,3 +1,4 @@
+using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
@@ -17,8 +18,10 @@ namespace Assets.Scripts.Classes.PieceComponent
         public SelectionStatus Status { get; set; }
         private int Count { set; get; }
 
+        private Piece _piece;
         public bool CanMove;
 
+        private Vector3Int clickedCell;
         public delegate void OnPieceSelected();
 
         public static event OnPieceSelected OnPieceSelectedEvent;
@@ -27,12 +30,15 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Start()
         {
+            clickedCell = Board.BoardInstance.tilemap.WorldToCell(target);
             Status = SelectionStatus.UnSelected;
+            _piece = GetComponent<Piece>();
             CanMove= Utility.SwitchTurn(GameManager.Instance.Turn,gameObject);
         }
 
         public void OnSelect()
         {
+            if (!CanMove) return;
             if (_selectedPiece is not null && _selectedPiece != this)
             {
                 _selectedPiece.OnDeselect();
@@ -51,7 +57,7 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void OnMouseDown()
         {
-            if (!CanMove) return;
+            
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
         }
@@ -60,12 +66,13 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
             {
-                CanMove = Utility.SwitchTurn(GameManager.Instance.Turn, gameObject);
                 Count++;
                 target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                if (Count > 1)
+                clickedCell = Board.BoardInstance.tilemap.WorldToCell(target);
+                if (Count > 1 )
                 {
                     OnPieceSelectedEvent?.Invoke();
+                    CanMove = Utility.SwitchTurn(GameManager.Instance.Turn, gameObject);
                 }
             }
         }
