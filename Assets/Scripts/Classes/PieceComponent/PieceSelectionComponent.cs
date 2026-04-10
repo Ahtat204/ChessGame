@@ -53,11 +53,9 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         public static event OnPieceSelected OnPieceSelectedEvent;
 
-        /// <summary>
-        /// The world-space coordinates of the movement destination.
-        /// </summary>
+        /// <inheritdoc />
         public Vector2 Target => target;
-        
+
         [SerializeField] private Vector2 target;
 
         private void Start()
@@ -65,14 +63,12 @@ namespace Assets.Scripts.Classes.PieceComponent
             _clickedCell = Board.BoardInstance.tilemap.WorldToCell(target);
             Status = SelectionStatus.UnSelected;
             _piece = GetComponent<Piece>();
-            
+
             // Initialization-time turn validation
             CanMove = Utility.SwitchTurn(GameManager.Instance.Turn, gameObject);
         }
 
-        /// <summary>
-        /// Transitions the piece to the Selected state and releases any previously held selection.
-        /// </summary>
+        /// <inheritdoc />
         public void OnSelect()
         {
             if (!CanMove) return;
@@ -87,10 +83,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             Status = SelectionStatus.Selected;
             Count = 1;
         }
-
-        /// <summary>
-        /// Resets the piece to an idle, unselected state.
-        /// </summary>
+        /// <inheritdoc />
         public void OnDeselect()
         {
             if (_selectedPiece == this) _selectedPiece = null;
@@ -116,7 +109,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
             {
                 Count++;
-                
+
                 // Vector Quantization: Transform screen touch to world coordinates
                 target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
                 _clickedCell = Board.BoardInstance.tilemap.WorldToCell(target);
@@ -125,7 +118,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 {
                     // Fire movement instruction event
                     OnPieceSelectedEvent?.Invoke();
-                    
+
                     // Re-evaluate turn status post-action
                     CanMove = Utility.SwitchTurn(GameManager.Instance.Turn, gameObject);
                 }

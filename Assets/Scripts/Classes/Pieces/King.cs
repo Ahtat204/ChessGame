@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Classes.Pieces
     /// The King's move-set is defined by a Moore neighborhood of range 1. 
     /// Its survival is the mandatory win-condition for both factions.
     /// </remarks>
+    [RequireComponent(typeof(PieceMovementComponent), typeof(PieceSelectionComponent), typeof(CommandManager))]
     public sealed class King : Piece
     {
         /// <summary>
@@ -30,7 +32,7 @@ namespace Assets.Scripts.Classes.Pieces
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
 
         /// <inheritdoc/>
-        [field: SerializeField] 
+        [field: SerializeField]
         public override PieceColor Color { get; protected set; }
 
         /// <summary>
