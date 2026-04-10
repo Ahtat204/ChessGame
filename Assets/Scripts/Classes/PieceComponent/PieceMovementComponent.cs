@@ -46,7 +46,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
             SelectionComponent = GetComponent<PieceSelectionComponent>();
         }
-
+        /// <inheritdoc />
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
             

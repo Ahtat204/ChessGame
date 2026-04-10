@@ -6,8 +6,13 @@ using UnityEngine;
 namespace Assets.Scripts.Classes
 {
     /// <summary>
-    /// Base class of all Chess pieces
+    /// The fundamental abstraction for all Chess entities within the simulation.
+    /// Manages physical presence, movement logic, and value heuristics.
     /// </summary>
+    /// <remarks>
+    /// This class enforces a "Composition over Inheritance" model by requiring 
+    /// specific components for selection and movement handling.
+    /// </remarks>
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PieceSelectionComponent))]
@@ -15,23 +20,33 @@ namespace Assets.Scripts.Classes
     public abstract class Piece : MonoBehaviour
     {
         /// <summary>
-        /// the possible moves the piece can make
+        /// Gets the collection of directional vectors or relative offsets 
+        /// representing the piece's move-set template.
         /// </summary>
         public abstract IReadOnlyList<Vector2Int> PossibleMoves { get; }
+
         /// <summary>
-        /// this property represent the Piece color , and should be initialized from the inspector in derived classes
+        /// Defines the piece's faction. Must be assigned during instantiation 
+        /// or via the Unity Inspector.
         /// </summary>
+        /// <value>The <see cref="PieceColor"/> representing White or Black.</value>
+        [field: SerializeField]
         public abstract PieceColor Color { get; protected set; }
+
         /// <summary>
-        /// a property that represent the Value of The piece 
+        /// The relative material worth of the piece used for AI evaluation 
+        /// and game-state weighting.
         /// </summary>
         public abstract uint Value { get; }
+
         /// <summary>
-        /// this method used to calculate the legal moves for the piece , 
+        /// Evaluates the board state and populates the legal move-set for the piece.
         /// </summary>
-        /// <param name="position">position is the current position of the Piece </param>
-        /// <returns> a List of a 2D vector</returns>
+        /// <param name="position">The current world or grid coordinates of the entity.</param>
+        /// <remarks>
+        /// This method should account for board boundaries, collision with 
+        /// allied pieces, and checkmate-prevention logic.
+        /// </remarks>
         public abstract void CalculateLegalMoves(Vector3 position);
-        
     }
 }
