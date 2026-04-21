@@ -36,19 +36,14 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// Delegate for broadcast notifications when a valid movement target is finalized.
         /// </summary>
         public int canMove;
-
         private Vector3Int CurrentPosition { get; set; }
-
         /// <summary>
         /// Global event triggered when a piece selection lifecycle completes a movement instruction.
         /// </summary>
         public static event Utility.OnPieceSelected OnPieceSelectedEvent;
-
         /// <inheritdoc />
-        public Vector2Int Target => target;
-
+        public Vector2Int Target { get => target;set => target = value; }
         [SerializeField] private Vector2Int target;
-
         private void Start()
         {
             _piece = GetComponent<Piece>();
@@ -100,6 +95,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 target = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(_target);
                 if (target.x == CurrentPosition.x && target.y == CurrentPosition.y) return;
                 {
+                    Target = target;
                     // Fire movement instruction event
                     OnPieceSelectedEvent?.Invoke();
 

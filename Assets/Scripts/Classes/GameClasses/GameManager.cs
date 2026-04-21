@@ -62,10 +62,7 @@ namespace Assets.Scripts.Classes.GameClasses
             if (_gameState is GameState.Check && Turn is PlayerTurn.BlackPlayer)
             {
             }
-
-            if (_moveType == MoveType.Castling)
-            {
-            }
+            
         }
 
         private void SwitchPlayerTurn()

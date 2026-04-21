@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.PieceComponent;
+using Assets.Scripts.Classes.Pieces;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.GameClasses.Validators
@@ -8,7 +9,7 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
     /// <summary>
     /// this is class is responsible for preventing a piece from overtake a friendly piece or take its place
     /// </summary>
-    public class PieceMovementValidator
+    public static class PieceMovementValidator
     {
         /// <summary>
         /// 
@@ -16,15 +17,18 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
         /// <param name="pieces">this is the single source of truth of the positions of all the 32 pieces</param>
         /// <param name="start">the position of the piece</param>
         /// <param name="end">the position where the piece intends to move to</param>
-        /// <param name="permission">to avoid using one bool (which can be hard to debug if we forget to reset it to true after set it to false)</param>
         /// <remarks>we <c>return</c> instead of <c>break</c> to avoid entering another Loop or condition</remarks>
-        public static bool CheckPath(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
+        public static bool ValidatePath(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end)
         {
+            var piece = pieces[start].piece;
+            if (piece is Knight) return true;
             var dx = end.x - start.x;
             var dy = end.y - start.y;
+
             if (dx == 0) //moving horizontally 
             {
+                if (piece is Bishop) return true;
                 if (dy > 0) //moving  to the right
                 {
                     foreach (var position in pieces.Keys.Where(
@@ -52,6 +56,7 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
 
             if (end.y == start.y) //moving vertically
             {
+                if (piece is Bishop ) return true;
                 if (dx > 0) //moving to the Top
                 {
                     foreach (var position in pieces.Keys.Where(
@@ -76,53 +81,50 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
                     }
                 }
             }
-/* TODO:still need to implement diagonal check,I commented it out because it was incorrectly stopping Queen and bishop from moving
+
+// TODO:still need to implement diagonal check,I commented it out because it was incorrectly stopping Queen and bishop from moving
+            if (piece is Rook) return true;
             if (dy > 0 && dx > 0) //move up-right
             {
-                for (int x = 0; x < end.x; x++)
+                for (int i = 1; i < end.y-1; i++)
                 {
-                    {
-                        return false;
-                    }
+                    var pos = new Vector2Int(start.x + i, start.y + i);
+                    var found = pieces.ContainsKey(pos);
+                    if (found) return false;
                 }
             }
 
             if (dx < 0 && dy > 0) //move Up-left
             {
-                foreach (var position in pieces.Keys.Where(key =>
-                             key.x < start.x && key.x > end.x && key.y > start.y && key.y < end.y))
+                for (int i = 1; i < end.y-1; i++)
                 {
-                    if (pieces[position] is not null)
-                    {
-                        return false;
-                    }
+                    var pos = new Vector2Int(start.x - i, start.y + i);
+                    var found = pieces.ContainsKey(pos);
+                    if (found) return false;
                 }
             }
 
             if (dx > 0 && dy < 0) //move down-right
             {
-                foreach (var position in pieces.Keys.Where(key =>
-                             key.x > start.x && key.x < end.x && key.y > end.y && key.y < start.y))
+                for (int i = 1; i < end.x-1; i++)
                 {
-                    if (pieces[position] is not null)
-                    {
-                        return false;
-                    }
+                    var pos = new Vector2Int(start.x + i, start.y - i);
+                    var found = pieces.ContainsKey(pos);
+                    if (found) return false;
                 }
             }
 
             if (dx < 0 && dy < 0) //move down left
             {
-                foreach (var position in pieces.Keys.Where(key =>
-                             key.x > end.x && key.x < start.x && (key.y > end.y && key.y < start.y)))
+                for (int i = start.x-1; i > 0; i--)
                 {
-                    if (pieces[position] is not null)
-                    {
-                        return false;
-                    }
+                    var pos = new Vector2Int(start.x - i, start.y - i);
+                    var found = pieces.ContainsKey(pos);
+                    if (found) return false;
                 }
             }
-*/
+
+
             return true;
         }
     }

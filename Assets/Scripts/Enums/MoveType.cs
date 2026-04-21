@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 
 namespace Assets.Scripts.Enums
 {
@@ -10,16 +11,11 @@ namespace Assets.Scripts.Enums
         None = 0,
         Normal,
         Capture,
-        Castling,
+        LongCastle,
+        ShortCastle,
         EnPassant,
         Promotion
     }
 
-    public enum CastlingType : ushort
-    {
-        LongCastle,
-        ShortCastle,
-    }
-    
 
 }

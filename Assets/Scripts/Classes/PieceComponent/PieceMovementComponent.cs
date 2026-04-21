@@ -24,7 +24,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
 
-        private Piece piece { get; set; }
+        public Piece piece { get; private set; }
         protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
         private Vector3Int CurrPos { get; set; }
@@ -50,15 +50,17 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// <inheritdoc />
         public virtual MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
-            piece.CalculateLegalMoves(transform.position);
+            var position = transform.position;
+            CurrPos = Board.BoardInstance.tilemap.WorldToCell(position);
+            piece.CalculateLegalMoves(position);
             if (!CanMove) return 0;
-            Vector3Int pos=new Vector3Int(targetPos.x,targetPos.y,0);
+            Vector3Int pos = new Vector3Int(targetPos.x, targetPos.y, 0);
             var targetCell = targetPos;
-            bool checkPath = PieceMovementValidator.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);
-            if (!checkPath && piece is not Knight) return 0;
+            bool checkPath = PieceMovementValidator.ValidatePath(pieces, (Vector2Int)CurrPos, targetCell);
+            if (!checkPath) return 0;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
-            if (!piece.PossibleMoves.Contains((Vector2Int)targetCell)) return 0;
-            var occupied = pieces.ContainsKey((Vector2Int)targetCell) ? pieces[(Vector2Int)targetCell] : null;
+            if (!piece.PossibleMoves.Contains(targetCell)) return 0;
+            var occupied = pieces.ContainsKey(targetCell) ? pieces[targetCell] : null;
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
@@ -81,17 +83,19 @@ namespace Assets.Scripts.Classes.PieceComponent
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
 
                 SelectionComponent.OnDeselect();
-                pieces.Remove((Vector2Int)targetCell);
-                pieces.Add((Vector2Int)targetCell, this);
+                pieces.Remove(targetCell);
+                pieces.Add(targetCell, this);
                 Destroy(occupied.gameObject);
                 if (!pos.Equals(CurrPos))
                 {
                     pieces.Remove((Vector2Int)CurrPos);
                     CurrPos = pos;
-                    pieces[(Vector2Int)targetCell] = this;
+                    pieces[targetCell] = this;
                 }
+
                 return MoveType.Capture;
             }
+
             return 0;
         }
 

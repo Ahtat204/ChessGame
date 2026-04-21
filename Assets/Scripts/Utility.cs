@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Classes;
-using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using UnityEngine;
 
@@ -39,24 +39,23 @@ namespace Assets.Scripts
             }
             return true;
         }
-        public static void Switcher()
-        {
-            if (GameManager.Instance.Turn == PlayerTurn.BlackPlayer)
-            {
-               GameManager.Instance.Turn = PlayerTurn.WhitePlayer;
-            }
-            else if(GameManager.Instance.Turn == PlayerTurn.WhitePlayer)
-            {
-                GameManager.Instance.Turn = PlayerTurn.BlackPlayer;
-            }
-           
-        }
+ 
 
         public static int Mapper(PieceColor color, PlayerTurn turn)
         {
             if(turn == PlayerTurn.BlackPlayer && color == PieceColor.Black) return 1;
             if(turn == PlayerTurn.WhitePlayer && color == PieceColor.White) return 1;
             return 0;
+        }
+
+        public static MoveType InCheck(Vector2Int opponentPosition,Vector2Int  kingPosition)
+        {
+            throw new NotImplementedException();
+        }
+        public static void SwitchPlayerTurn(PlayerTurn playerTurn)
+        {
+            playerTurn = playerTurn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
+            Debug.Log($"this {playerTurn} turn");
         }
     }
 }
