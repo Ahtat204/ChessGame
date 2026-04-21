@@ -56,8 +56,6 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (!CanMove) return 0;
             Vector3Int pos = new Vector3Int(targetPos.x, targetPos.y, 0);
             var targetCell = targetPos;
-            bool checkPath = PieceMovementValidator.ValidatePath(pieces, (Vector2Int)CurrPos, targetCell);
-            if (!checkPath) return 0;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
             if (!piece.PossibleMoves.Contains(targetCell)) return 0;
             var occupied = pieces.ContainsKey(targetCell) ? pieces[targetCell] : null;

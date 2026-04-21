@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
@@ -95,7 +96,10 @@ namespace Assets.Scripts.Classes.PieceComponent
                 target = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(_target);
                 if (target.x == CurrentPosition.x && target.y == CurrentPosition.y) return;
                 {
+                    
                     Target = target;
+                    bool checkPath = PieceMovementValidator.ValidatePath(GameManager.Instance.Pieces, (Vector2Int)CurrentPosition, Target);
+                    if (!checkPath) return ;
                     // Fire movement instruction event
                     OnPieceSelectedEvent?.Invoke();
 
