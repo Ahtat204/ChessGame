@@ -1,5 +1,6 @@
 ﻿
 
+using Assets.Scripts.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Interfaces
@@ -9,6 +10,7 @@ namespace Assets.Scripts.Interfaces
     /// </summary>
     public interface ICommand
     {
+        public MoveType MoveType { get; }
         public void Execute(Vector2Int target);
         public void Undo();
     }

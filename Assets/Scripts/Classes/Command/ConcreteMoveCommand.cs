@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ namespace Assets.Scripts.Classes.Command
         public ConcreteMoveCommand(IMove move) : base(move)
         {
         }
+
+        public override MoveType MoveType { get; }
+
         public override void Execute(Vector2Int target)
         {
           

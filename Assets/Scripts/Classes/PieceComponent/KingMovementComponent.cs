@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.GameClasses;
-
+using Assets.Scripts.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.PieceComponent
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
         
         /// <inheritdoc />
-        public override void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
+        public override MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             base.MovePiece(pieces, targetPos);
             // TODO:add path checking
@@ -70,7 +70,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                         CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
-                    return;
+                    return MoveType.Castling;
                     
                 }
 
@@ -87,7 +87,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                         CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
-                    return;
+                    return MoveType.Castling;
                     
                 }
                 if (gridTarget.Equals(new Vector2Int(7, 8)))
@@ -103,7 +103,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                         CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
-                    return;
+                    return MoveType.Castling;
                 }
 
                 if (gridTarget.Equals(new Vector2Int(3, 8)))
@@ -119,9 +119,11 @@ namespace Assets.Scripts.Classes.PieceComponent
                         CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
-                    return;
+                    return MoveType.Castling;
                 }
             }
+
+            return 0;
         }
         
     }

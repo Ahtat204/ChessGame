@@ -48,16 +48,16 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         /// <inheritdoc />
-        public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
+        public virtual MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             piece.CalculateLegalMoves(transform.position);
-            if (!CanMove) return;
+            if (!CanMove) return 0;
             Vector3Int pos=new Vector3Int(targetPos.x,targetPos.y,0);
             var targetCell = targetPos;
             bool checkPath = PieceMovementValidator.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);
-            if (!checkPath && piece is not Knight) return;
+            if (!checkPath && piece is not Knight) return 0;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
-            if (!piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
+            if (!piece.PossibleMoves.Contains((Vector2Int)targetCell)) return 0;
             var occupied = pieces.ContainsKey((Vector2Int)targetCell) ? pieces[(Vector2Int)targetCell] : null;
             if (occupied is null)
             {
@@ -68,16 +68,16 @@ namespace Assets.Scripts.Classes.PieceComponent
                 {
                     pieces.Remove((Vector2Int)CurrPos);
                     CurrPos = pos;
-                    pieces[(Vector2Int)targetCell] = this;
+                    pieces[targetCell] = this;
                 }
 
-                return;
+                return MoveType.Normal;
             }
 
-            if (occupied.piece.Color == piece.Color) return;
+            if (occupied.piece.Color == piece.Color) return 0;
             if (occupied.piece.Color != piece.Color)
             {
-                if (occupied.piece is King) return;
+                if (occupied.piece is King) return 0;
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
 
                 SelectionComponent.OnDeselect();
@@ -90,7 +90,9 @@ namespace Assets.Scripts.Classes.PieceComponent
                     CurrPos = pos;
                     pieces[(Vector2Int)targetCell] = this;
                 }
+                return MoveType.Capture;
             }
+            return 0;
         }
 
         #endregion

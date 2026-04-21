@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.GameClasses.Validators
 {
-    public class Validator : MonoBehaviour
+    public class KingValidator : MonoBehaviour
     {
         private King _king;
         private Piece[] _enemyPieces;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.PieceComponent;
+using Assets.Scripts.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Interfaces
@@ -17,13 +18,13 @@ namespace Assets.Scripts.Interfaces
         /// Executes a movement or interaction sequence based on a target spatial coordinate.
         /// </summary>
         /// <param name="pieces">A reference to the global spatial index containing all active piece components.</param>
-        /// <param name="targetPos">The world-space vector representing the intended destination.</param>
+        /// <param name="targetPos">The grid-space vector representing the intended destination.</param>
         /// <remarks>
         /// Implementations should handle:
         /// 1. Path-finding/Collision validation.
         /// 2. Capture logic (destruction of opponent entities).
         /// 3. Internal state updates (e.g., updating current grid-cell cache).
         /// </remarks>
-        void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos);
+        MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos);
     }
 }

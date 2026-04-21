@@ -7,6 +7,7 @@ namespace Assets.Scripts.Enums
     /// </summary>
     public enum MoveType : ushort
     {
+        None = 0,
         Normal,
         Capture,
         Castling,
