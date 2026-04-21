@@ -1,4 +1,4 @@
-# Chess Game ![Status](https://img.shields.io/badge/status-ongoing-green?style=for-the-badge)
+# Chess ![Status](https://img.shields.io/badge/status-ongoing-green?style=for-the-badge)
 
 This repository contains a Unity-based  implementation for a chess game. It leverages object-oriented principles and various design patterns, including Singleton, Command, and Decorator, to provide scalable and maintainable gameplay logic.
 
@@ -87,17 +87,16 @@ P --> S[PieceMovementProxy]
 | File               | Description                                                                                                                                                                 |
 |:-------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `Piece.cs`         | **Abstract Base Class** for all chess pieces, defining essential properties like `PossibleMoves`, `Color`, and `Value`, and an abstract method for calculating legal moves. |
-| `UtilityClass.cs`  | Provides static utility methods, such as a conditional `DebugLog` for use in the Unity Editor.                                                                              |
+| `UtilityClass.cs`  | Provides static utility methods, such as a conditional `Mapper` for use to check the Player's turn.                                                                              |
 | `SelectedPiece.cs` | A **Singleton** MonoBehaviour used to track the currently selected chess piece, acting as a global selector/detector.                                                       |
 
 #### Behavior Classes
 
 | File                     | Description                                                                                                                                                                                                     |
 |:-------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `MovementManager.cs`     | Handles the **piece's movement logic**, input detection, and collision for capturing. It relies on the piece's `PossibleMoves` list.                                                                            |
-| `SelectableDecorator.cs` | Implements the `ISelectable` interface, handling **selection and deselection** logic for a piece, often decorated onto a `Piece` object.                                                                        |
-| `MoveCommand.cs`         | A generic class implementing `ICommand`, designed to encapsulate a piece movement as a command, allowing for **undo/redo functionality** (though `Execute()` and `Undo()` are currently not fully implemented). |
-| `KingCastling.cs`        | Dedicated class for handling the specific behavior of the **King's Castling** move.                                                                                                                             |
+| `PieceMovementComponent.cs`     | Implements IMove and Handles the **piece's movement logic** and  capturing. It relies on the piece's `PossibleMoves` list and the GameManager Dictionnary                                                                             |
+| `PieceSelectionComponent.cs` | Implements the `ISelectable` interface, handling **selection and deselection** logic for a piece, often decorated onto a `Piece` object.                                                                        |
+| `MoveCommand.cs`         |  Implementing the `ICommand`, this class is designed to encapsulate a piece movement as a command, allowing for **undo/redo functionality** ( `Undo()` is currently not  implemented yet). |
 
 #### Game Classes
 
@@ -107,10 +106,9 @@ P --> S[PieceMovementProxy]
 | `GameManager.cs`                | Manages the **overall game state**, including player turns (`Turn`), game conditions (`GameState`), and tracking the pieces on the board.                  |
 | `InputManager.cs`               | A **Singleton** class for centralizing input handling (e.g., mouse direction and position).                                                                |
 | `MainMenuController.cs`         | Handles scene management logic, specifically for loading the main "GameScene" from the **Main Menu**.                                                      |
-| `Proxies/`                      | Directory for classes implementing the **Proxy pattern** to restrict or modify piece movement under special game rules.                                    |
-| `Proxies/King.Proxy.cs`         | **Restricts the King's movement** to prevent it from moving into a threatened square (check).                                                              |
-| `Proxies/Pawn.Proxy.cs`         | (Planned) Likely for handling complex Pawn movements like **En Passant** or **Promotion**.                                                                 |
-| `Proxies/PieceMovementProxy.cs` | (Planned) Responsible for preventing pieces from moving through or occupying squares with friendly pieces.                                                 |
+| `Validators/`                   | Directory for classes implementing Move Validation Like path  ** to restrict or modify piece movement under special game rules.                            |
+| `PieceMovementValidator.cs`     | Path Validation for Bishop , Rook and Queen to prevent Penetration.
+                |
 
 #### Piece Subclasses
 
@@ -146,6 +144,7 @@ calculation logic.
 | `ISelectable.cs` | Defines the behavior for objects that can be selected, requiring `OnSelect()` and `OnDeselect()`. |
 | `ICapturable.cs` | (Planned) Interface for pieces that can be captured.                                              |
 | `IPromotable.cs` | (Planned) Interface for pieces that can be promoted (Pawn).                                       |
+| `IMove.cs`       | define the bahvaior of object that can move .                                                     |
 
 -----
 
