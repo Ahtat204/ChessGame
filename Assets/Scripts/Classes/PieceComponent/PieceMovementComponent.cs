@@ -24,7 +24,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
 
-        private Piece piece { get;  set; }
+        private Piece piece { get; set; }
         protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
         private Vector3Int CurrPos { get; set; }
@@ -36,9 +36,9 @@ namespace Assets.Scripts.Classes.PieceComponent
         private void Awake()
         {
             piece = GetComponent<Piece>();
-            CanMove = piece.Color != PieceColor.Black;
             CanMove = true;
         }
+
         private void Start()
         {
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
@@ -46,10 +46,10 @@ namespace Assets.Scripts.Classes.PieceComponent
             GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
             SelectionComponent = GetComponent<PieceSelectionComponent>();
         }
+
         /// <inheritdoc />
         public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
         {
-            
             piece.CalculateLegalMoves(transform.position);
             if (!CanMove) return;
             var targetCell = Board.BoardInstance.tilemap.WorldToCell(targetPos);
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
-           
+
                 SelectionComponent.OnDeselect();
                 if (!targetCell.Equals(CurrPos))
                 {
@@ -69,14 +69,16 @@ namespace Assets.Scripts.Classes.PieceComponent
                     CurrPos = targetCell;
                     pieces[(Vector2Int)targetCell] = this;
                 }
+
                 return;
             }
+
             if (occupied.piece.Color == piece.Color) return;
             if (occupied.piece.Color != piece.Color)
             {
                 if (occupied.piece is King) return;
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
-                 
+
                 SelectionComponent.OnDeselect();
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
@@ -89,9 +91,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                 }
             }
         }
-
-        
-
 
         #endregion
     }

@@ -1,32 +1,55 @@
-﻿using System;
-using System.Drawing;
-using Assets.Scripts.Classes.Pieces;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts.Classes.GameClasses
 {
     /// <summary>
-    /// this class will be used to create a singleton instance of the TileMap and the camera to avoid multiple unnecessary instances
+    /// Acts as the Central Authority and Spatial Provider for the chess simulation.
     /// </summary>
+    /// <remarks>
+    /// Implements a Singleton pattern to provide global, high-performance access to 
+    /// shared engine resources like the Tilemap and the Main Camera. 
+    /// This prevents redundant expensive lookups (e.g., Camera.main) across the entity stack.
+    /// </remarks>
     public sealed class Board : MonoBehaviour
     {
+        /// <summary>
+        /// The fixed dimension of the chess grid (8x8).
+        /// </summary>
         public const uint Size = 8;
 
         /// <summary>
-        /// a tile map field
+        /// The primary grid system used for world-to-cell coordinate quantization.
         /// </summary>
-        [field:SerializeField] public Tilemap tilemap { get; private set; } // Assign in Inspector
+        /// <value>Assigned via the Unity Inspector.</value>
+        [field: SerializeField] 
+        public Tilemap tilemap { get; private set; }
+
         /// <summary>
-        /// to avoid overusing Camera.main , better centralize it <remarks>assign in the inspector</remarks> 
+        /// Cached reference to the primary rendering camera.
         /// </summary>
-        [field:SerializeField] public Camera MainCamera { get; private set; }
+        /// <remarks>
+        /// Centralizing this reference bypasses the overhead associated with the 
+        /// <c>Camera.main</c> property, which performs a tag-based search.
+        /// </remarks>
+        [field: SerializeField] 
+        public Camera MainCamera { get; private set; }
 
-        public static Board BoardInstance;
+        /// <summary>
+        /// Global access point for the Board singleton.
+        /// </summary>
+        public static Board BoardInstance { get; private set; }
 
+        /// <summary>
+        /// Establishes the singleton instance on component initialization.
+        /// </summary>
         private void Awake()
         {
+            if (BoardInstance != null && BoardInstance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
             BoardInstance = this;
         }
     }

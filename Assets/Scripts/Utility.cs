@@ -14,7 +14,7 @@ namespace Assets.Scripts
                 pieces.Add(new Vector2Int(x, y));
             }
         }
-        public static bool SwitchTurn(PlayerTurn turn,GameObject gameObject )
+        public static bool SwitchTurn(ref PlayerTurn turn,GameObject gameObject )
         {
             if (turn == PlayerTurn.BlackPlayer)
             {
