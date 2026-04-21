@@ -14,7 +14,7 @@ namespace Assets.Scripts.Classes.Command
             _move = move;
         }
 
-        public abstract void Execute(Vector2 target);
+        public abstract void Execute(Vector2Int target);
         public abstract void Undo();
 
         public static T Create<T>(IMove move) where T : AbstractPieceCommand

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Classes.Command;
-using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
@@ -13,6 +12,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     /// It listens for global selection events and routes them through a 
     /// <see cref="CommandInvoker"/> to maintain a clean history and execution flow.
     /// </remarks>
+    /// <inheritdoc cref="MonoBehaviour"/>
     public class CommandManager : MonoBehaviour
     {
         #region Private Dependencies

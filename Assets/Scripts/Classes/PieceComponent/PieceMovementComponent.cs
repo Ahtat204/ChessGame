@@ -48,14 +48,15 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         /// <inheritdoc />
-        public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
+        public virtual void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             piece.CalculateLegalMoves(transform.position);
             if (!CanMove) return;
-            var targetCell = Board.BoardInstance.tilemap.WorldToCell(targetPos);
+            Vector3Int pos=new Vector3Int(targetPos.x,targetPos.y,0);
+            var targetCell = targetPos;
             bool checkPath = PieceMovementProxy.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);
             if (!checkPath && piece is not Knight) return;
-            var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(targetCell);
+            var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
             if (!piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;
             var occupied = pieces.ContainsKey((Vector2Int)targetCell) ? pieces[(Vector2Int)targetCell] : null;
             if (occupied is null)
@@ -63,10 +64,10 @@ namespace Assets.Scripts.Classes.PieceComponent
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
 
                 SelectionComponent.OnDeselect();
-                if (!targetCell.Equals(CurrPos))
+                if (!pos.Equals(CurrPos))
                 {
                     pieces.Remove((Vector2Int)CurrPos);
-                    CurrPos = targetCell;
+                    CurrPos = pos;
                     pieces[(Vector2Int)targetCell] = this;
                 }
 
@@ -83,10 +84,10 @@ namespace Assets.Scripts.Classes.PieceComponent
                 pieces.Remove((Vector2Int)targetCell);
                 pieces.Add((Vector2Int)targetCell, this);
                 Destroy(occupied.gameObject);
-                if (!targetCell.Equals(CurrPos))
+                if (!pos.Equals(CurrPos))
                 {
                     pieces.Remove((Vector2Int)CurrPos);
-                    CurrPos = targetCell;
+                    CurrPos = pos;
                     pieces[(Vector2Int)targetCell] = this;
                 }
             }

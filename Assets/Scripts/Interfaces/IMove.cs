@@ -24,6 +24,6 @@ namespace Assets.Scripts.Interfaces
         /// 2. Capture logic (destruction of opponent entities).
         /// 3. Internal state updates (e.g., updating current grid-cell cache).
         /// </remarks>
-        void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos);
+        void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos);
     }
 }

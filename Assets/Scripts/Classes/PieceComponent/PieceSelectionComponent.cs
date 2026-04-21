@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
@@ -28,47 +29,38 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// <inheritdoc cref="ISelectable.Status"/>
         public SelectionStatus Status { get; set; }
 
-        /// <summary>
-        /// Internal state counter used to distinguish between the 'Selection' click 
-        /// and the 'Targeting' click.
-        /// </summary>
-        private int Count { get; set; }
-
+        private Vector2 _target;
         private Piece _piece;
-
-        /// <summary>
-        /// Determines if the piece is allowed to act based on the current <see cref="GameManager.Turn"/>.
-        /// </summary>
-        public bool CanMove;
-        
 
         /// <summary>
         /// Delegate for broadcast notifications when a valid movement target is finalized.
         /// </summary>
-        public delegate void OnPieceSelected();
+        public int canMove;
+
+        private Vector3Int CurrentPosition { get; set; }
 
         /// <summary>
         /// Global event triggered when a piece selection lifecycle completes a movement instruction.
         /// </summary>
-        public static event OnPieceSelected OnPieceSelectedEvent;
+        public static event Utility.OnPieceSelected OnPieceSelectedEvent;
 
         /// <inheritdoc />
-        public Vector2 Target => target;
+        public Vector2Int Target => target;
 
-        [SerializeField] private Vector2 target;
+        [SerializeField] private Vector2Int target;
 
         private void Start()
         {
-            Status = SelectionStatus.UnSelected;
             _piece = GetComponent<Piece>();
-            CanMove = _piece.Color != PieceColor.Black;
+            Status = SelectionStatus.UnSelected;
+            canMove = Utility.Mapper(_piece.Color, GameManager.Instance.Turn);
         }
 
         /// <inheritdoc />
         public void OnSelect()
         {
-          //  if (!CanMove) return;
-
+            //  if (!CanMove) return;
+            CurrentPosition = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             // Enforce Single Selection Policy
             if (_selectedPiece is not null && _selectedPiece != this)
             {
@@ -77,14 +69,13 @@ namespace Assets.Scripts.Classes.PieceComponent
 
             _selectedPiece = this;
             Status = SelectionStatus.Selected;
-            Count = 1;
         }
+
         /// <inheritdoc />
         public void OnDeselect()
         {
             if (_selectedPiece == this) _selectedPiece = null;
             Status = SelectionStatus.UnSelected;
-            Count = 0;
         }
 
         /// <summary>
@@ -92,6 +83,8 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void OnMouseDown()
         {
+            canMove = Utility.Mapper(_piece.Color, GameManager.Instance.Turn);
+            if(canMove == 0) return;
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
         }
@@ -101,20 +94,16 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void Update()
         {
-            // Only process secondary clicks if this specific piece is the active selection
             if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
             {
-                Count=1;
-                // Vector Quantization: Transform screen touch to world coordinates
-                target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-             
-                Count = 2;
-                if (Count > 1)
+                _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+                target = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(_target);
+                if (target.x == CurrentPosition.x && target.y == CurrentPosition.y) return;
                 {
                     // Fire movement instruction event
                     OnPieceSelectedEvent?.Invoke();
+
                     // Re-evaluate turn status post-action
-                   
                 }
             }
         }

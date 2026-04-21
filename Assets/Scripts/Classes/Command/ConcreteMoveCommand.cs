@@ -11,7 +11,7 @@ namespace Assets.Scripts.Classes.Command
         public ConcreteMoveCommand(IMove move) : base(move)
         {
         }
-        public override void Execute(Vector2 target)
+        public override void Execute(Vector2Int target)
         {
           
             _move.MovePiece(GameManager.Instance.Pieces, target); 

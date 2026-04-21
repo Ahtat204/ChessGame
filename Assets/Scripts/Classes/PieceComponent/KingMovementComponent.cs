@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.PieceComponent
 {
+    /// <inheritdoc/>
     /// <summary>
     /// Specialized movement controller for the King entity, facilitating complex multi-piece maneuvers.
     /// </summary>
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     /// It orchestrates the simultaneous coordinate transformation of both the King 
     /// and the corresponding Rook based on specific grid-target triggers.
     /// </remarks>
+    
     public class KingMovementComponent:PieceMovementComponent
     {
         /// <summary>
@@ -41,13 +43,14 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
         
         /// <inheritdoc />
-        public override void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2 targetPos)
+        public override void MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             base.MovePiece(pieces, targetPos);
             // TODO:add path checking
         //    if(Count>0) return;
             var position= transform.position;
-            var gtar = Board.BoardInstance.tilemap.WorldToCell(targetPos);
+            var gtar = targetPos;
+            var threInt=new Vector3Int(gtar.x,gtar.y,0);
             var gridTarget=(Vector2Int)gtar;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(gridTarget.x,gridTarget.y,0));
             pieces.TryGetValue(gridTarget, out var occupied);
@@ -56,15 +59,15 @@ namespace Assets.Scripts.Classes.PieceComponent
                 if (gridTarget.Equals(new Vector2Int(7, 1)))
                 {
                     var rightWhiteRook = pieces[new Vector2Int(8, 1)];
-                    rightWhiteRook?.MovePiece(pieces,Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(6, 1)) );
+                    rightWhiteRook?.MovePiece(pieces,(new Vector2Int(6, 1) ));
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     SelectionComponent.OnDeselect();
                   //  Count = 1;
                     _canCastle = false;
-                    if (!gtar.Equals(CurrentPosition))
+                    if (!threInt.Equals(CurrentPosition))
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
-                        CurrentPosition = gtar;
+                        CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
                     return;
@@ -74,14 +77,14 @@ namespace Assets.Scripts.Classes.PieceComponent
                 if (gridTarget.Equals(new Vector2Int(3, 1)))
                 {
                     var leftWhiteRook = pieces[new Vector2Int(1, 1)];
-                    leftWhiteRook.MovePiece(pieces, Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(4, 1)));
+                    leftWhiteRook.MovePiece(pieces, (new Vector2Int(4, 1)));
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     SelectionComponent.OnDeselect();
                     _canCastle = false;
-                    if (!gtar.Equals(CurrentPosition))
+                    if (!threInt.Equals(CurrentPosition))
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
-                        CurrentPosition = gtar;
+                        CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
                     return;
@@ -91,13 +94,13 @@ namespace Assets.Scripts.Classes.PieceComponent
                 {
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     var rightWhiteRook = pieces[new Vector2Int(8, 8)];
-                    rightWhiteRook.MovePiece(pieces, Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(6, 8)));
+                    rightWhiteRook.MovePiece(pieces, new Vector2Int(6, 8));
                     SelectionComponent.OnDeselect();
                     _canCastle = false;
-                    if (!gtar.Equals(CurrentPosition))
+                    if (!threInt.Equals(CurrentPosition))
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
-                        CurrentPosition = gtar;
+                        CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
                     return;
@@ -107,13 +110,13 @@ namespace Assets.Scripts.Classes.PieceComponent
                 {
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     var leftWhiteRook = pieces[new Vector2Int(1, 8)];
-                    leftWhiteRook.MovePiece(pieces, Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(4, 8)));
+                    leftWhiteRook.MovePiece(pieces, new Vector2Int(4, 8));
                     SelectionComponent.OnDeselect();
                     _canCastle = false;
-                    if (!gtar.Equals(CurrentPosition))
+                    if (!threInt.Equals(CurrentPosition))
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
-                        CurrentPosition = gtar;
+                        CurrentPosition = threInt;
                         pieces[(Vector2Int)gtar] = this;
                     }
                     return;
