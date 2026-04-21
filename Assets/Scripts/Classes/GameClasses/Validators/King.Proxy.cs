@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using Assets.Scripts.Classes.Pieces;
+using UnityEngine;
 
-
-namespace Assets.Scripts.Classes.GameClasses.Proxies
+namespace Assets.Scripts.Classes.GameClasses.Validators
 {
-    public class KingProxy : MonoBehaviour
+    public class Validator : MonoBehaviour
     {
         private King _king;
         private Piece[] _enemyPieces;

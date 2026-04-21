@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
-using Assets.Scripts.Classes.GameClasses.Proxies;
+using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (!CanMove) return;
             Vector3Int pos=new Vector3Int(targetPos.x,targetPos.y,0);
             var targetCell = targetPos;
-            bool checkPath = PieceMovementProxy.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);
+            bool checkPath = PieceMovementValidator.CheckPath(pieces, (Vector2Int)CurrPos, (Vector2Int)targetCell);
             if (!checkPath && piece is not Knight) return;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
             if (!piece.PossibleMoves.Contains((Vector2Int)targetCell)) return;

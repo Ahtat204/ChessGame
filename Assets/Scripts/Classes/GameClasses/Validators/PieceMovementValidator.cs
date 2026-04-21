@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Classes.PieceComponent;
-using Unity.Mathematics;
 using UnityEngine;
 
-namespace Assets.Scripts.Classes.GameClasses.Proxies
+namespace Assets.Scripts.Classes.GameClasses.Validators
 {
     /// <summary>
     /// this is class is responsible for preventing a piece from overtake a friendly piece or take its place
     /// </summary>
-    public class PieceMovementProxy
+    public class PieceMovementValidator
     {
         /// <summary>
         /// 

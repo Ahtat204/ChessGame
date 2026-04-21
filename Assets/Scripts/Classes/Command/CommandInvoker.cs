@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Classes.PieceComponent;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Interfaces;
+﻿using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Classes.Command
 {

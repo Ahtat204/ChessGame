@@ -2,9 +2,8 @@
 using Assets.Scripts.Enums;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Classes.PieceComponent;
-using Assets.Scripts.Interfaces;
+
 
 
 namespace Assets.Scripts.Classes.GameClasses
