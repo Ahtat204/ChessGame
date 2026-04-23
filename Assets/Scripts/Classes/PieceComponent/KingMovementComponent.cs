@@ -48,21 +48,18 @@ namespace Assets.Scripts.Classes.PieceComponent
         public override MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             base.MovePiece(pieces, targetPos);
-            // TODO:add path checking
-            //    if(Count>0) return;
             var position = transform.position;
-            var gtar = targetPos;
-            var threInt = new Vector3Int(gtar.x, gtar.y, 0);
-            var gridTarget = (Vector2Int)gtar;
+            var threInt = new Vector3Int(targetPos.x, targetPos.y, 0);
             var worldCellCenter =
-                Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(gridTarget.x, gridTarget.y, 0));
-            pieces.TryGetValue(gridTarget, out var occupied);
+                Board.BoardInstance.tilemap.GetCellCenterWorld(new Vector3Int(targetPos.x, targetPos.y, 0));
+            pieces.TryGetValue(targetPos, out var occupied);
+            if (!_canCastle) return MoveType.None;
             if (occupied is null)
             {
-                if (gridTarget.Equals(new Vector2Int(7, 1)))
+                if (targetPos.Equals(Board.BoardInstance.WhiteKingShortCastlePosition))
                 {
-                    var rightWhiteRook = pieces[new Vector2Int(8, 1)];
-                    rightWhiteRook?.MovePiece(pieces, (new Vector2Int(6, 1)));
+                    var rightWhiteRook = pieces[Board.BoardInstance.WhiteRightRook];
+                    rightWhiteRook?.MovePiece(pieces, Board.BoardInstance.WhiteRightRookAfterShortCastlePosition);
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     SelectionComponent.OnDeselect();
                     //  Count = 1;
@@ -71,17 +68,17 @@ namespace Assets.Scripts.Classes.PieceComponent
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
                         CurrentPosition = threInt;
-                        pieces[gtar] = this;
-                       
+                        pieces[targetPos] = this;
+                        _canCastle = false;
                     }
 
                     return MoveType.ShortCastle;
                 }
 
-                if (gridTarget.Equals(new Vector2Int(3, 1)))
+                if (targetPos.Equals(Board.BoardInstance.WhiteKingLongCastlePosition))
                 {
-                    var leftWhiteRook = pieces[new Vector2Int(1, 1)];
-                    leftWhiteRook.MovePiece(pieces, (new Vector2Int(4, 1)));
+                    var leftWhiteRook = pieces[Board.BoardInstance. WhiteLeftRook];
+                    leftWhiteRook.MovePiece(pieces, Board.BoardInstance.WhiteLeftRookAfterLongCastlePosition);
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     SelectionComponent.OnDeselect();
                     _canCastle = false;
@@ -89,44 +86,44 @@ namespace Assets.Scripts.Classes.PieceComponent
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
                         CurrentPosition = threInt;
-                        pieces[gtar] = this;
-                       
+                        pieces[targetPos] = this;
+                        _canCastle = false;
                     }
 
                     return MoveType.LongCastle;
                 }
 
-                if (gridTarget.Equals(new Vector2Int(7, 8)))
+                if (targetPos.Equals(Board.BoardInstance.BlackKingShortCastlePosition))
                 {
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
-                    var rightWhiteRook = pieces[new Vector2Int(8, 8)];
-                    rightWhiteRook.MovePiece(pieces, new Vector2Int(6, 8));
+                    var rightWhiteRook = pieces[Board.BoardInstance.BlackRightRook];
+                    rightWhiteRook.MovePiece(pieces, Board.BoardInstance.BlackRightRookAfterShortCastlePosition);
                     SelectionComponent.OnDeselect();
                     _canCastle = false;
                     if (!threInt.Equals(CurrentPosition))
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
                         CurrentPosition = threInt;
-                        pieces[gtar] = this;
-                       
+                        pieces[targetPos] = this;
+                        _canCastle = false;
                     }
 
                     return MoveType.ShortCastle;
                 }
 
-                if (gridTarget.Equals(new Vector2Int(3, 8)))
+                if (targetPos.Equals(Board.BoardInstance.BlackKingLongCastlePosition))
                 {
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
-                    var leftWhiteRook = pieces[new Vector2Int(1, 8)];
-                    leftWhiteRook.MovePiece(pieces, new Vector2Int(4, 8));
+                    var leftWhiteRook = pieces[Board.BoardInstance.BlackLeftRook];
+                    leftWhiteRook.MovePiece(pieces,Board.BoardInstance.BlackLeftRookAfterLongCastlePosition );
                     SelectionComponent.OnDeselect();
                     _canCastle = false;
                     if (!threInt.Equals(CurrentPosition))
                     {
                         pieces.Remove((Vector2Int)CurrentPosition);
                         CurrentPosition = threInt;
-                        pieces[gtar] = this;
-                       
+                        pieces[targetPos] = this;
+                        _canCastle = false;
                     }
 
                     return MoveType.LongCastle;
