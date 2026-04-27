@@ -82,7 +82,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                 {
                     // Execute the pre-configured command (typically a ConcreteMoveCommand)
                     _invoker.ExecuteCommand(_command);
-
                     Debug.Log($"{nameof(DoWork)}");
                 }
           
