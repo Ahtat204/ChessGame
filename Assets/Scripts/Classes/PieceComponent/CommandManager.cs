@@ -77,9 +77,12 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void DoWork()
         {
-            // Execute the pre-configured command (typically a ConcreteMoveCommand)
-            _invoker.ExecuteCommand(_command);
-            Debug.Log($"{nameof(DoWork)} executed");
+            {
+                if (PieceSelectionComponent.SelectedPiece == (PieceSelectionComponent)_pieceSelectionComponent)
+                    // Execute the pre-configured command (typically a ConcreteMoveCommand)
+                    _invoker.ExecuteCommand(_command);
+                Debug.Log($"{nameof(DoWork)} executed");
+            }
         }
 
         #endregion

@@ -25,7 +25,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// Global reference to the currently active selection. 
         /// Ensures mutual exclusivity of piece selection across the board.
         /// </summary>
-        private static PieceSelectionComponent _selectedPiece;
+        public static PieceSelectionComponent SelectedPiece;
 
         /// <inheritdoc cref="ISelectable.Status"/>
         public SelectionStatus Status { get; set; }
@@ -58,19 +58,19 @@ namespace Assets.Scripts.Classes.PieceComponent
             //  if (!CanMove) return;
             CurrentPosition = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             // Enforce Single Selection Policy
-            if (_selectedPiece is not null && _selectedPiece != this)
+            if (SelectedPiece is not null && SelectedPiece != this)
             {
-                _selectedPiece.OnDeselect();
+                SelectedPiece.OnDeselect();
             }
 
-            _selectedPiece = this;
+            SelectedPiece = this;
             Status = SelectionStatus.Selected;
         }
 
         /// <inheritdoc />
         public void OnDeselect()
         {
-            if (_selectedPiece == this) _selectedPiece = null;
+            if (SelectedPiece == this) SelectedPiece = null;
             Status = SelectionStatus.UnSelected;
         }
 
