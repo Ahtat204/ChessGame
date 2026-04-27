@@ -23,8 +23,8 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
         {
             var piece = pieces[start].piece;
             if (piece is Knight) return true;
-            var dx = end.x - start.x;
-            var dy = end.y - start.y;
+            int dx = end.x - start.x; //difference between int the current position's x and target position's x 
+            int dy = end.y - start.y; //difference between int the current position's y and target position's y 
 
             if (dx == 0) //moving horizontally 
             {
@@ -84,9 +84,10 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
 
 // TODO:still need to implement diagonal check,I commented it out because it was incorrectly stopping Queen and bishop from moving
             if (piece is Rook) return true;
-            if (dy > 0 && dx > 0) //move up-right
+            if (dy > 1 && dx > 1) //move up-right (fixed)
             {
-                for (int i = 1; i < end.y-1; i++)
+                Debug.Log("dy > 0 && dx > 0");
+                for (int i = 2; i < end.y-1; i++)
                 {
                     var pos = new Vector2Int(start.x + i, start.y + i);
                     var found = pieces.ContainsKey(pos);
@@ -94,9 +95,10 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
                 }
             }
 
-            if (dx < 0 && dy > 0) //move Up-left
+            if (dx < 1 && dy > 1) //move Up-left
             {
-                for (int i = 1; i < end.y-1; i++)
+                Debug.Log("dy > 0 && dx < 0");
+                for (int i = 2; i < end.y-1; i++)
                 {
                     var pos = new Vector2Int(start.x - i, start.y + i);
                     var found = pieces.ContainsKey(pos);
@@ -106,7 +108,8 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
 
             if (dx > 0 && dy < 0) //move down-right
             {
-                for (int i = 1; i < end.x-1; i++)
+                Debug.Log("dy < 0 && dx > 0");
+                for (int i = 2; i < end.x-1; i++)
                 {
                     var pos = new Vector2Int(start.x + i, start.y - i);
                     var found = pieces.ContainsKey(pos);
@@ -114,9 +117,10 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
                 }
             }
 
-            if (dx < 0 && dy < 0) //move down left
+            if (dx < 1 && dy < 1) //move down left
             {
-                for (int i = start.x-1; i > 0; i--)
+                Debug.Log("dy < 0 && dx < 0");
+                for (int i = 2; i <end.x-1; i++)
                 {
                     var pos = new Vector2Int(start.x - i, start.y - i);
                     var found = pieces.ContainsKey(pos);
