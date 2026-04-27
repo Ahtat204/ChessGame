@@ -68,7 +68,7 @@ namespace Assets.Scripts.Classes.GameClasses
         private void SwitchPlayerTurn()
         {
             Turn = Turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
-            Debug.Log($"this {Turn} turn");
+            Debug.Log($"this {Turn} turn and  {nameof(SwitchPlayerTurn)} executed");
         }
     }
 }

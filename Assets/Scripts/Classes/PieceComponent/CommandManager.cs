@@ -13,7 +13,7 @@ namespace Assets.Scripts.Classes.PieceComponent
     /// <see cref="CommandInvoker"/> to maintain a clean history and execution flow.
     /// </remarks>
     /// <inheritdoc cref="MonoBehaviour"/>
-    public class CommandManager : MonoBehaviour
+    public sealed class CommandManager : MonoBehaviour
     {
         #region Private Dependencies
 
@@ -79,6 +79,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             // Execute the pre-configured command (typically a ConcreteMoveCommand)
             _invoker.ExecuteCommand(_command);
+            Debug.Log($"{nameof(DoWork)} executed");
         }
 
         #endregion
