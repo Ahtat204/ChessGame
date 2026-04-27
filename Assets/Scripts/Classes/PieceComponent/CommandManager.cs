@@ -36,7 +36,6 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// The execution wrapper that triggers the command lifecycle.
         /// </summary>
         private CommandInvoker _invoker;
-
         #endregion
 
         #region Lifecycle Methods
@@ -46,6 +45,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void Start()
         {
+          
             // Resolve interface-based dependencies from the current GameObject
             _pieceSelectionComponent = GetComponent<ISelectable>();
             _move = GetComponent<IMove>();
@@ -77,9 +77,16 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void DoWork()
         {
-            // Execute the pre-configured command (typically a ConcreteMoveCommand)
-            _invoker.ExecuteCommand(_command);
-            Debug.Log($"{nameof(DoWork)} executed");
+            {
+                if (ReferenceEquals(PieceSelectionComponent.SelectedPiece, _pieceSelectionComponent))
+                {
+                    // Execute the pre-configured command (typically a ConcreteMoveCommand)
+                    _invoker.ExecuteCommand(_command);
+
+                    Debug.Log($"{nameof(DoWork)}");
+                }
+          
+            }
         }
 
         #endregion
