@@ -27,7 +27,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         public Piece piece { get; private set; }
         protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
-        private Vector3Int CurrPos { get; set; }
+        public Vector3Int CurrPos { get;private set; }
 
         #endregion
 
