@@ -2,7 +2,6 @@
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
-using Classes.PieceComponent;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces

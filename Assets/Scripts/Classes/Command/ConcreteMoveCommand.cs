@@ -1,11 +1,10 @@
 ﻿using System;
-using Assets.Scripts.Classes.Command;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
-namespace Classes.Command
+namespace Assets.Scripts.Classes.Command
 {
     public class ConcreteMoveCommand : AbstractPieceCommand
     {
@@ -14,12 +13,12 @@ namespace Classes.Command
         {
         }
 
-        public override MoveType MoveType { get; }
+        public override MoveType moveType { get; set; }
 
         public override void Execute(Vector2Int target)
         {
           
-            _move.MovePiece(GameManager.Instance.Pieces, target); 
+            moveType=_move.MovePiece(GameManager.Instance.Pieces, target); 
         }
         public override void Undo()
         {

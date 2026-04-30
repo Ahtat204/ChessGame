@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using NUnit.Framework;
@@ -83,12 +84,16 @@ namespace Tests.PlayMode
             var move10 = blackDarkBishop.MovePiece(pieces, new Vector2Int(5, 7));
             Assert.AreEqual(new Vector2Int(5, 7), (Vector2Int)blackDarkBishop.CurrPos);
             Assert.AreEqual(move10, MoveType.Normal);
-            //// testing that the queen at (4,1) cannot go to neither to (3,2) nor to (2,3) nor to (5,2) nor to (6,3)
+            //// Edge case testing that the queen at (4,1) cannot go to neither to (3,2) nor to (2,3) nor to (5,2) nor to (6,3)
             var whiteQueen = pieces[new Vector2Int(4, 1)];
             Assert.IsNotNull(whiteQueen);
-            var move11 = whiteQueen.MovePiece(pieces, new Vector2Int(3, 2));
+            var canMove = pieces.ValidatePath(new Vector2Int(4, 1), new Vector2Int(3, 2));
+            Assert.IsTrue(canMove);
+            canMove= pieces.ValidatePath(new Vector2Int(4, 1), new Vector2Int(2, 3));
+            Assert.IsFalse(canMove);
+            canMove = pieces.ValidatePath(new Vector2Int(2, 3), new Vector2Int(5, 2));
+            Assert.IsFalse(canMove);
             Assert.AreEqual(new Vector2Int(4, 1), (Vector2Int)whiteQueen.CurrPos);
-            Assert.AreEqual(move11,MoveType.None);
         }
     }
 }

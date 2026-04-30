@@ -10,7 +10,7 @@ namespace Assets.Scripts.Interfaces
     /// </summary>
     public interface ICommand
     {
-        public MoveType MoveType { get; }
+        public MoveType moveType {  get;  set; }
         public void Execute(Vector2Int target);
         public void Undo();
     }
