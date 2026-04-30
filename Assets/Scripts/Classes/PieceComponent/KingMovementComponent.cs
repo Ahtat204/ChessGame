@@ -25,10 +25,6 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </remarks>
         private bool _canCastle;
 
-        /// <summary>
-        /// Cache of the King's current tilemap coordinates to manage dictionary updates.
-        /// </summary>
-        private Vector3Int _currentPosition;
 
         /// <summary>
         /// Initializes the component, registers the King in the global piece tracker, 
@@ -38,9 +34,9 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             _canCastle =
                 true; //TODO:improve this condition with a function that scans dictionary and see if the Rook has moved 
-            _currentPosition = Board.BoardInstance.tilemap.WorldToCell(transform.position);
+            CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
             GameManager.Instance.Pieces ??= new();
-            GameManager.Instance.Pieces?.Add((Vector2Int)_currentPosition, this);
+            GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
             SelectionComponent = GetComponent<PieceSelectionComponent>();
         }
 
@@ -114,10 +110,10 @@ namespace Assets.Scripts.Classes.PieceComponent
             Vector2Int targetPos,
             Vector3Int newPosition)
         {
-            if (!newPosition.Equals(_currentPosition))
+            if (!newPosition.Equals(CurrPos))
             {
-                pieces.Remove((Vector2Int)_currentPosition);
-                _currentPosition = newPosition;
+                pieces.Remove((Vector2Int)CurrPos);
+                CurrPos = newPosition;
                 pieces[targetPos] = this;
                 _canCastle = false;
             }
