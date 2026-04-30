@@ -1,8 +1,10 @@
 ﻿using Assets.Scripts.Classes.Command;
+using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Interfaces;
+using Classes.Command;
 using UnityEngine;
 
-namespace Assets.Scripts.Classes.PieceComponent
+namespace Classes.PieceComponent
 {
     /// <summary>
     /// Orchestrates the instantiation and execution of movement commands for a specific piece.

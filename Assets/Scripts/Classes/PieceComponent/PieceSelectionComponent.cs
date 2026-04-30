@@ -3,6 +3,7 @@ using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
+using Classes.PieceComponent;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.PieceComponent
