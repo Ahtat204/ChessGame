@@ -15,7 +15,7 @@ namespace Tests.PlayMode
         // `yield return null;` to skip a frame.
         // this test will simulate a Chess Game Match (Ruy Lopez opening,Morphy Defense)
         [UnityTest]
-        public IEnumerator PenetrationTestsWithEnumeratorPasses()
+        public IEnumerator TestRuyLopezOpening()
         {
             
             SceneManager.LoadScene("GameScene");
@@ -40,17 +40,35 @@ namespace Tests.PlayMode
             Assert.IsNotNull(whiteRightKnight);
             whiteRightKnight.MovePiece(pieces,new Vector2Int(6,3));
             Assert.AreEqual(new Vector2Int(6,3),(Vector2Int) whiteRightKnight.CurrPos);
-            ////Nf6
+            ////Nc6
             var blackLeftKnight = pieces[new Vector2Int(2,8)] ;
             Assert.IsNotNull(blackLeftKnight);
             blackLeftKnight.MovePiece(pieces,new Vector2Int(3,6));
             Assert.AreEqual(new Vector2Int(3,6),(Vector2Int) blackLeftKnight.CurrPos);
             ////Bb5
-            var whiteLighBishop = pieces[new Vector2Int(6,1)] ;
-            Assert.IsNotNull(whiteLighBishop);
-            whiteLighBishop.MovePiece(pieces,new Vector2Int(2,5));
-            Assert.AreEqual(new Vector2Int(2,5),(Vector2Int) whiteLighBishop.CurrPos);
-            
+            var whiterighBishop = pieces[new Vector2Int(6,1)] ;
+            Assert.IsNotNull(whiterighBishop);
+            whiterighBishop.MovePiece(pieces,new Vector2Int(2,5));
+            Assert.AreEqual(new Vector2Int(2,5),(Vector2Int) whiterighBishop.CurrPos);
+            ////a6
+            var a7pawn = pieces[new Vector2Int(1,7)] ;
+            Assert.IsNotNull(a7pawn);
+            a7pawn.MovePiece(pieces,new Vector2Int(1,6));
+            Assert.AreEqual(new Vector2Int(1,6),(Vector2Int) a7pawn.CurrPos);
+            //// Ba4
+            whiterighBishop.MovePiece(pieces,new Vector2Int(1,4));
+            Assert.AreEqual(new Vector2Int(1, 4), ((Vector2Int)whiterighBishop.CurrPos));
+            ////Nf6
+            var blackRightKnight2 = pieces[new Vector2Int(7,8)];
+            Assert.IsNotNull(blackRightKnight2);
+            blackRightKnight2.MovePiece(pieces,new Vector2Int(6,6));
+            Assert.AreEqual(new Vector2Int(6,6),(Vector2Int) blackRightKnight2.CurrPos);
+            ////O-0
+            var whiteKing = pieces[new Vector2Int(5,1)];
+            Assert.IsNotNull(whiteKing);
+            whiteKing.MovePiece(pieces,new Vector2Int(7,1));
+            Assert.AreEqual(new Vector2Int(7,1),(Vector2Int) whiteKing.CurrPos);
+
         }
     }
 }
