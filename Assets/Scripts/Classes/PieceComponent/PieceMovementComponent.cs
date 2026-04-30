@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
@@ -48,6 +49,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         /// <inheritdoc />
+        
         public virtual MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             var position = transform.position;
