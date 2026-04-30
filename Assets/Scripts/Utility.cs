@@ -44,8 +44,7 @@ namespace Assets.Scripts
             {
                 if (dy > 0) //moving  to the right
                 {
-                    foreach (var position in pieces.Keys.Where(
-                                 key => key.x == end.x && key.y < end.y && key.y > start.y))
+                    foreach (var position in pieces.Keys.Where(key => key.x == end.x && key.y < end.y && key.y > start.y))
                     {
                         if (pieces[position] is not null)
                         {
@@ -102,7 +101,6 @@ namespace Assets.Scripts
         {
             if (dy > 1 && dx > 1) //move up-right (fixed)
             {
-                Debug.Log("dy > 0 && dx > 0");
                 for (int i = 2; i < end.y - 1; i++)
                 {
                     var pos = new Vector2Int(start.x + i, start.y + i);
@@ -113,7 +111,7 @@ namespace Assets.Scripts
 
             if (dx < 1 && dy > 1) //move Up-left
             {
-                Debug.Log("dy > 0 && dx < 0");
+               
                 for (int i = 2; i < end.y - 1; i++)
                 {
                     var pos = new Vector2Int(start.x - i, start.y + i);
@@ -124,7 +122,7 @@ namespace Assets.Scripts
 
             if (dx > 0 && dy < 0) //move down-right
             {
-                Debug.Log("dy < 0 && dx > 0");
+               
                 for (int i = 2; i < end.x - 1; i++)
                 {
                     var pos = new Vector2Int(start.x + i, start.y - i);
@@ -135,7 +133,7 @@ namespace Assets.Scripts
 
             if (dx < 1 && dy < 1) //move down left
             {
-                Debug.Log("dy < 0 && dx < 0");
+               
                 for (int i = 2; i < end.x - 1; i++)
                 {
                     var pos = new Vector2Int(start.x - i, start.y - i);

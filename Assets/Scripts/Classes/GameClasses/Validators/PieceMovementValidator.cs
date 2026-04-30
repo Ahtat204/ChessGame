@@ -19,7 +19,7 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
         /// <param name="start">the position of the piece</param>
         /// <param name="end">the position where the piece intends to move to</param>
         /// <remarks>we <c>return</c> instead of <c>break</c> to avoid entering another Loop or condition</remarks>
-        public static bool ValidatePath(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
+        public static bool ValidatePath(this Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end)
         {
             var piece = pieces[start].piece;
