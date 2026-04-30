@@ -22,12 +22,13 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
         public static bool ValidatePath(this Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end)
         {
-            var piece = pieces[start].piece;
+            pieces.TryGetValue(start, out var component);
+            var piece=component?.piece;
             int dx = Math.Abs(end.x -
                               start.x); //difference between int the current position's x and target position's x 
             int dy = Math.Abs(end.y -
                               start.y); //difference between int the current position's y and target position's y 
-            if (dx == 1 || dy == 1) return true;
+           
             return piece switch
             {
                 Pawn => PawnValidator(pieces, start, end, dx, dy),

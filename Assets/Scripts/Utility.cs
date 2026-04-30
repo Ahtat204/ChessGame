@@ -31,6 +31,7 @@ namespace Assets.Scripts
         public static bool QueenValidator(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end, int dx, int dy)
         {
+            if (dx == 1 || dy == 1) return true;
             RookValidator(pieces, start, end, dx, dy);
             BishopValidator(pieces, start, end, dx, dy);
             return true;
@@ -40,6 +41,8 @@ namespace Assets.Scripts
         public static bool RookValidator(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end, int dx, int dy)
         {
+            
+            if (dx == 1 || dy == 1) return true;
             if (dx == 0) //moving horizontally 
             {
                 if (dy > 0) //moving  to the right
@@ -99,6 +102,7 @@ namespace Assets.Scripts
         public static bool BishopValidator(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end, int dx, int dy)
         {
+            if (dx == 1 || dy == 1) return true;
             if (dy > 1 && dx > 1) //move up-right (fixed)
             {
                 for (int i = 2; i < end.y - 1; i++)

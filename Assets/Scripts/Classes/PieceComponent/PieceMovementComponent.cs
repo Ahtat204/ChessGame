@@ -60,7 +60,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             var targetCell = targetPos;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
             if (!piece.PossibleMoves.Contains(targetCell)) return 0;
-            var occupied = pieces.ContainsKey(targetCell) ? pieces[targetCell] : null;
+            var occupied = pieces.GetValueOrDefault(targetCell);
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
