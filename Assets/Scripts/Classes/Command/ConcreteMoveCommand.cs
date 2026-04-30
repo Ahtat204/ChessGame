@@ -1,10 +1,11 @@
 ﻿using System;
+using Assets.Scripts.Classes.Command;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.Classes.Command
+namespace Classes.Command
 {
     public class ConcreteMoveCommand : AbstractPieceCommand
     {
