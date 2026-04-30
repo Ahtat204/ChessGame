@@ -98,7 +98,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 {
                     
                     Target = target;
-                    bool checkPath = PieceMovementValidator.ValidatePath(GameManager.Instance.Pieces, (Vector2Int)CurrentPosition, Target);
+                    bool checkPath = GameManager.Instance.Pieces.ValidatePath((Vector2Int)CurrentPosition, Target);
                     if (!checkPath) return ;
                     // Fire movement instruction event
                     OnPieceSelectedEvent?.Invoke();
