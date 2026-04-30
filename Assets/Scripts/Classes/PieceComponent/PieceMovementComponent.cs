@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         public Piece piece { get; private set; }
         protected PieceSelectionComponent SelectionComponent;
         private bool CanMove { get; set; }
-        private Vector3Int CurrPos { get; set; }
+        public Vector3Int CurrPos { get;protected set; }
 
         #endregion
 
@@ -48,6 +49,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         /// <inheritdoc />
+        
         public virtual MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             var position = transform.position;
@@ -58,7 +60,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             var targetCell = targetPos;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
             if (!piece.PossibleMoves.Contains(targetCell)) return 0;
-            var occupied = pieces.ContainsKey(targetCell) ? pieces[targetCell] : null;
+            var occupied = pieces.GetValueOrDefault(targetCell);
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);

@@ -13,12 +13,12 @@ namespace Assets.Scripts.Classes.Command
         {
         }
 
-        public override MoveType MoveType { get; }
+        public override MoveType moveType { get; set; }
 
         public override void Execute(Vector2Int target)
         {
           
-            _move.MovePiece(GameManager.Instance.Pieces, target); 
+            moveType=_move.MovePiece(GameManager.Instance.Pieces, target); 
         }
         public override void Undo()
         {

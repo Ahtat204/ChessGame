@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using static Assets.Scripts.Utility;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Enums;
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// <summary>
         /// Global event triggered when a piece selection lifecycle completes a movement instruction.
         /// </summary>
-        public static event Utility.OnPieceSelected OnPieceSelectedEvent;
+        public static event OnPieceSelected OnPieceSelectedEvent;
         /// <inheritdoc />
         public Vector2Int Target { get => target;set => target = value; }
         [SerializeField] private Vector2Int target;
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         {
             _piece = GetComponent<Piece>();
             Status = SelectionStatus.UnSelected;
-            canMove = Utility.Mapper(_piece.Color, GameManager.Instance.Turn);
+            canMove = Mapper(_piece.Color, GameManager.Instance.Turn);
         }
 
         /// <inheritdoc />
@@ -79,7 +79,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void OnMouseDown()
         {
-            canMove = Utility.Mapper(_piece.Color, GameManager.Instance.Turn);
+            canMove = Mapper(_piece.Color, GameManager.Instance.Turn);
             if(canMove == 0) return;
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
@@ -98,7 +98,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 {
                     
                     Target = target;
-                    bool checkPath = PieceMovementValidator.ValidatePath(GameManager.Instance.Pieces, (Vector2Int)CurrentPosition, Target);
+                    bool checkPath = GameManager.Instance.Pieces.ValidatePath((Vector2Int)CurrentPosition, Target);
                     if (!checkPath) return ;
                     // Fire movement instruction event
                     OnPieceSelectedEvent?.Invoke();
