@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Interfaces
         /// 2. Capture logic (destruction of opponent entities).
         /// 3. Internal state updates (e.g., updating current grid-cell cache).
         /// </remarks>
+        [Pure]
         public MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos);
     }
 }
