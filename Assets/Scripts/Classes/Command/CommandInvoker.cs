@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Interfaces;
+﻿using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Classes.Command
 {
@@ -9,6 +10,10 @@ namespace Assets.Scripts.Classes.Command
         public CommandInvoker(ISelectable pieceSelectionComponent) =>
             _pieceSelectionComponent = pieceSelectionComponent;
 
-        public void ExecuteCommand(ICommand command) => command.Execute(_pieceSelectionComponent.Target);
+        public void ExecuteCommand(ICommand command)
+        {
+            command.Execute(_pieceSelectionComponent.Target);
+            
+        }
     }
 }
