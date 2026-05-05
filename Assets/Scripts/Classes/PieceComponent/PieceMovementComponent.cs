@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
-using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
@@ -79,7 +77,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (occupied is null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
-
+                GameManager.Instance.CommandStack.Push(targetPos);
                 SelectionComponent.OnDeselect();
                 if (!pos.Equals(CurrPos))
                 {
@@ -96,7 +94,7 @@ namespace Assets.Scripts.Classes.PieceComponent
             {
                 if (occupied.piece is King) return 0;
                 transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
-
+                GameManager.Instance.CommandStack.Push(targetPos);
                 SelectionComponent.OnDeselect();
                 pieces.Remove(targetCell);
                 pieces.Add(targetCell, this);

@@ -37,14 +37,23 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// Delegate for broadcast notifications when a valid movement target is finalized.
         /// </summary>
         public int canMove;
+
         private Vector3Int CurrentPosition { get; set; }
+
         /// <summary>
         /// Global event triggered when a piece selection lifecycle completes a movement instruction.
         /// </summary>
         public static event OnPieceSelected OnPieceSelectedEvent;
+
         /// <inheritdoc />
-        public Vector2Int Target { get => target;set => target = value; }
+        public Vector2Int Target
+        {
+            get => target;
+            set => target = value;
+        }
+
         [SerializeField] private Vector2Int target;
+
         private void Start()
         {
             _piece = GetComponent<Piece>();
@@ -80,7 +89,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         private void OnMouseDown()
         {
             canMove = Mapper(_piece.Color, GameManager.Instance.Turn);
-            if(canMove == 0) return;
+            if (canMove == 0) return;
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
         }
@@ -90,21 +99,18 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && Status == SelectionStatus.Selected)
+            if (!Input.GetMouseButtonDown(0) || Status != SelectionStatus.Selected) return;
+            _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            target = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(_target);
+            if (target.x == CurrentPosition.x && target.y == CurrentPosition.y) return;
             {
-                _target = Board.BoardInstance.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                target = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(_target);
-                if (target.x == CurrentPosition.x && target.y == CurrentPosition.y) return;
-                {
-                    
-                    Target = target;
-                    bool checkPath = GameManager.Instance.Pieces.ValidatePath((Vector2Int)CurrentPosition, Target);
-                    if (!checkPath) return ;
-                    // Fire movement instruction event
-                    OnPieceSelectedEvent?.Invoke();
-
-                    // Re-evaluate turn status post-action
-                }
+                Target = target;
+                bool checkPath = GameManager.Instance.Pieces.ValidatePath((Vector2Int)CurrentPosition, Target);
+                if (!checkPath) return;
+                // Fire movement instruction event
+                OnPieceSelectedEvent?.Invoke();
+               
+                // Re-evaluate turn status post-action
             }
         }
     }
