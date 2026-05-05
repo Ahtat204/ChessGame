@@ -25,10 +25,26 @@ namespace Assets.Scripts.Classes.PieceComponent
     {
         #region fields&props
 
+        /// <summary>
+        /// reference to the <see cref="Assets.Scripts.Classes.Piece"/>  attached to this <c>gameObject</c>
+        /// </summary>
         public Piece piece { get; private set; }
+
+        /// <summary>
+        /// reference to the <see cref="Assets.Scripts.Classes.PieceComponent.PieceSelectionComponent"/> attached to this <c>gameObject</c>
+        /// </summary>
         protected PieceSelectionComponent SelectionComponent;
+
+        /// <summary>
+        /// a boolean flag that act as a switch and permission to prevent/allow piece to move
+        /// <remarks>this condition will combine many validations such as :if this piece is pinned to the King by another piece : <code>CanMove=false</code></remarks>
+        /// </summary>
         private bool CanMove { get; set; }
-        public Vector3Int CurrPos { get;protected set; }
+
+        /// <summary>
+        /// this field caches the position of the game object to avoid calling <c>tranform.position</c> multiple times
+        /// </summary>
+        public Vector3Int CurrPos { get; protected set; }
 
         #endregion
 
@@ -49,7 +65,6 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         /// <inheritdoc />
-        
         public virtual MoveType MovePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int targetPos)
         {
             var position = transform.position;
