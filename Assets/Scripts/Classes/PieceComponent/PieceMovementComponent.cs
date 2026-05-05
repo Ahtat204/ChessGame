@@ -70,46 +70,66 @@ namespace Assets.Scripts.Classes.PieceComponent
             piece.CalculateLegalMoves(position);
             if (!CanMove) return 0;
             Vector3Int pos = new Vector3Int(targetPos.x, targetPos.y, 0);
-            var targetCell = targetPos;
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
-            if (!piece.PossibleMoves.Contains(targetCell)) return 0;
-            var occupied = pieces.GetValueOrDefault(targetCell);
-            if (occupied is null)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, worldCellCenter, 10);
-                GameManager.Instance.CommandStack.Push(targetPos);
-                SelectionComponent.OnDeselect();
-                if (!pos.Equals(CurrPos))
-                {
-                    pieces.Remove((Vector2Int)CurrPos);
-                    CurrPos = pos;
-                    pieces[targetCell] = this;
-                }
-
-                return MoveType.Normal;
-            }
-
-            if (occupied.piece.Color == piece.Color) return 0;
+            if (!piece.PossibleMoves.Contains(targetPos)) return 0;
+            var occupied = pieces.GetValueOrDefault(targetPos);
+            if (occupied is null) return MoveToEmptySquare(pieces, targetPos, worldCellCenter, pos, position);
+            if (occupied.piece.Color == piece.Color) return MoveType.None;
             if (occupied.piece.Color != piece.Color)
             {
                 if (occupied.piece is King) return 0;
-                transform.position = Vector2.MoveTowards(targetPos, worldCellCenter, 10);
-                GameManager.Instance.CommandStack.Push(targetPos);
-                SelectionComponent.OnDeselect();
-                pieces.Remove(targetCell);
-                pieces.Add(targetCell, this);
-                Destroy(occupied.gameObject);
-                if (!pos.Equals(CurrPos))
-                {
-                    pieces.Remove((Vector2Int)CurrPos);
-                    CurrPos = pos;
-                    pieces[targetCell] = this;
-                }
-
-                return MoveType.Capture;
+                return CapturePiece(pieces, targetPos, worldCellCenter, pos, position, occupied);
             }
 
-            return 0;
+            return MoveType.None;
+        }
+
+        /// <summary>
+        /// a helper method to manage NormalMove(no capture,just move a piece to an empty square) ,avoiding sacking everything in one method
+        /// </summary>
+        /// <param name="pieces">reference to the Hashtable representing a key-value pair of every piece with its current position </param>
+        /// <param name="targetSquare">the precise <c>Vector3</c> position converted from the <c>Vector2Int targetSquare</c> parameter</param>
+        /// <param name="targetPos">the grid square that the player clicked to move the piece to</param>
+        /// <param name="pos"></param>
+        /// <param name="currentPos">cached Current position to avoid calling <code>transform.position</code> again</param>
+        /// <returns></returns>
+        private MoveType MoveToEmptySquare(Dictionary<Vector2Int, PieceMovementComponent> pieces,
+            Vector2Int targetSquare, Vector3 targetPos, Vector3Int pos, Vector3 currentPos)
+        {
+            transform.position = Vector2.MoveTowards(currentPos, targetPos, 10);
+            GameManager.Instance.CommandStack.Push(targetSquare);
+            SelectionComponent.OnDeselect();
+            if (!pos.Equals(CurrPos))
+            {
+                pieces.Remove((Vector2Int)CurrPos);
+                CurrPos = pos;
+                pieces[targetSquare] = this;
+            }
+
+            return MoveType.Normal;
+        }
+
+        private MoveType CapturePiece(Dictionary<Vector2Int, PieceMovementComponent> pieces,
+            Vector2Int targetSquare,
+            Vector3 targetPos,
+            Vector3Int pos,
+            Vector3 currentPos,
+            PieceMovementComponent occupied)
+        {
+            transform.position = Vector2.MoveTowards(currentPos, targetPos, 10);
+            GameManager.Instance.CommandStack.Push(targetSquare);
+            SelectionComponent.OnDeselect();
+            pieces.Remove(targetSquare);
+            pieces.Add(targetSquare, this);
+            Destroy(occupied.gameObject);
+            if (!pos.Equals(CurrPos))
+            {
+                pieces.Remove((Vector2Int)CurrPos);
+                CurrPos = pos;
+                pieces[targetSquare] = this;
+            }
+
+            return MoveType.Capture;
         }
 
         #endregion
