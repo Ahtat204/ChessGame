@@ -7,11 +7,11 @@ namespace Assets.Scripts.Classes.Command
 {
     public abstract class AbstractPieceCommand : ICommand
     {
-        protected readonly IMove _move;
+        protected readonly IMove Move;
 
         protected AbstractPieceCommand(IMove move)
         {
-            _move = move;
+            Move = move;
         }
 
         public abstract MoveType moveType {  get; set; }

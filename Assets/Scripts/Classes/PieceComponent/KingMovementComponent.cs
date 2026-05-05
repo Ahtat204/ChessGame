@@ -3,6 +3,7 @@ using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
 using UnityEngine;
 
+#nullable disable
 namespace Assets.Scripts.Classes.PieceComponent
 {
     /// <inheritdoc/>
@@ -55,8 +56,10 @@ namespace Assets.Scripts.Classes.PieceComponent
             {
                 if (targetPos.Equals(Board.BoardInstance.WhiteKingShortCastlePosition))
                 {
-                    var rightWhiteRook = pieces[Board.BoardInstance.WhiteRightRook];
-                    rightWhiteRook?.MovePiece(pieces, Board.BoardInstance.WhiteRightRookAfterShortCastlePosition);
+                    bool exists = pieces.TryGetValue(Board.BoardInstance.WhiteRightRook, out var rightWhiteRook);
+                    if (!exists) return MoveType.None;
+                    var rookMoved = rightWhiteRook.MovePiece(pieces,
+                        Board.BoardInstance.WhiteRightRookAfterShortCastlePosition);
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     SelectionComponent.OnDeselect();
                     //  Count = 1;
@@ -66,8 +69,10 @@ namespace Assets.Scripts.Classes.PieceComponent
 
                 if (targetPos.Equals(Board.BoardInstance.WhiteKingLongCastlePosition))
                 {
-                    var leftWhiteRook = pieces[Board.BoardInstance.WhiteLeftRook];
-                    leftWhiteRook.MovePiece(pieces, Board.BoardInstance.WhiteLeftRookAfterLongCastlePosition);
+                    var exists = pieces.TryGetValue(Board.BoardInstance.WhiteLeftRook, out var leftWhiteRook);
+                    if (!exists) return MoveType.None;
+                    var rookMoved = leftWhiteRook.MovePiece(pieces,
+                        Board.BoardInstance.WhiteLeftRookAfterLongCastlePosition);
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     SelectionComponent.OnDeselect();
                     UpdatePosition(pieces, targetPos, newPosition);
@@ -76,9 +81,11 @@ namespace Assets.Scripts.Classes.PieceComponent
 
                 if (targetPos.Equals(Board.BoardInstance.BlackKingShortCastlePosition))
                 {
+                    bool exists = pieces.TryGetValue(Board.BoardInstance.BlackLeftRook, out var rightBlackRook);
+                    if (!exists) return MoveType.None;
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
-                    var rightWhiteRook = pieces[Board.BoardInstance.BlackRightRook];
-                    rightWhiteRook.MovePiece(pieces, Board.BoardInstance.BlackRightRookAfterShortCastlePosition);
+                    var rookMoved = rightBlackRook.MovePiece(pieces,
+                        Board.BoardInstance.BlackRightRookAfterShortCastlePosition);
                     SelectionComponent.OnDeselect();
                     UpdatePosition(pieces, targetPos, newPosition);
                     return MoveType.ShortCastle;
@@ -86,9 +93,11 @@ namespace Assets.Scripts.Classes.PieceComponent
 
                 if (targetPos.Equals(Board.BoardInstance.BlackKingLongCastlePosition))
                 {
+                    bool exists = pieces.TryGetValue(Board.BoardInstance.BlackLeftRook, out var blackLeftRook);
+                    if (!exists) return MoveType.None;
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
-                    var leftWhiteRook = pieces[Board.BoardInstance.BlackLeftRook];
-                    leftWhiteRook.MovePiece(pieces, Board.BoardInstance.BlackLeftRookAfterLongCastlePosition);
+                    var rookMoved = blackLeftRook.MovePiece(pieces,
+                        Board.BoardInstance.BlackLeftRookAfterLongCastlePosition);
                     SelectionComponent.OnDeselect();
                     UpdatePosition(pieces, targetPos, newPosition);
                     return MoveType.LongCastle;
@@ -97,6 +106,7 @@ namespace Assets.Scripts.Classes.PieceComponent
 
             return 0;
         }
+
         /// <summary>
         /// Updates the King's logical position in the piece registry after a physical move has already occurred.
         /// The transform position is updated by the caller before this method is invoked —
@@ -118,5 +128,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                 _canCastle = false;
             }
         }
+        
     }
 }

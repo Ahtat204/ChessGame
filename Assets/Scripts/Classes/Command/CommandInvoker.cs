@@ -1,19 +1,11 @@
-﻿using Assets.Scripts.Classes.GameClasses;
-using Assets.Scripts.Interfaces;
+﻿using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Classes.Command
 {
     public class CommandInvoker
     {
         private readonly ISelectable _pieceSelectionComponent;
-
-        public CommandInvoker(ISelectable pieceSelectionComponent) =>
-            _pieceSelectionComponent = pieceSelectionComponent;
-
-        public void ExecuteCommand(ICommand command)
-        {
-            command.Execute(_pieceSelectionComponent.Target);
-            
-        }
+        public CommandInvoker(ISelectable pieceSelectionComponent) =>_pieceSelectionComponent = pieceSelectionComponent;
+        public void ExecuteCommand(ICommand command) => command.Execute(_pieceSelectionComponent.Target);
     }
 }
