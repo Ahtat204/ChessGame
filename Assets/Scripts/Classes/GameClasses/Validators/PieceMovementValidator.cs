@@ -24,10 +24,8 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
         {
             pieces.TryGetValue(start, out var component);
             var piece=component?.piece;
-            int dx = Math.Abs(end.x -
-                              start.x); //difference between int the current position's x and target position's x 
-            int dy = Math.Abs(end.y -
-                              start.y); //difference between int the current position's y and target position's y 
+            int dx = end.x - start.x; //difference between int the current position's x and target position's x 
+            int dy = end.y -start.y; //difference between int the current position's y and target position's y 
            
             return piece switch
             {
