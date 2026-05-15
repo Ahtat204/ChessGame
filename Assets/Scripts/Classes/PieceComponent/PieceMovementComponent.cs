@@ -69,15 +69,21 @@ namespace Assets.Scripts.Classes.PieceComponent
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(position);
             piece.CalculateLegalMoves(position);
             if (!CanMove) return 0;
-            Vector3Int pos = new Vector3Int(targetPos.x, targetPos.y, 0);
+            var pos = new Vector3Int(targetPos.x, targetPos.y, 0);
             var worldCellCenter = Board.BoardInstance.tilemap.GetCellCenterWorld(pos);
             if (!piece.PossibleMoves.Contains(targetPos)) return 0;
-            var occupied = pieces.GetValueOrDefault(targetPos);
+            PieceMovementComponent occupied = pieces.GetValueOrDefault(targetPos);
             if (occupied is null) return MoveToEmptySquare(pieces, targetPos, worldCellCenter, pos, position);
             if (occupied.piece.Color == piece.Color) return MoveType.None;
             if (occupied.piece.Color != piece.Color)
             {
+                
                 if (occupied.piece is King) return 0;
+                if (piece is Pawn)
+                {
+                    
+                }
+
                 return CapturePiece(pieces, targetPos, worldCellCenter, pos, position, occupied);
             }
 

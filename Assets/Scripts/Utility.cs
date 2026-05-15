@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using UnityEngine;
@@ -155,6 +157,12 @@ namespace Assets.Scripts
         public static bool PawnValidator(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end, int dx, int dy)
         {
+            var validation=Math.Abs(start.x - end.x) == 1 && Math.Abs(start.y - end.y) == 1;
+            if (validation)
+            {
+                return pieces.ValidateCapturing(start, end);
+            }
+
             return true;
         }
     }
