@@ -29,7 +29,7 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
            
             return piece switch
             {
-                Pawn => PawnValidator(pieces, start, end, dx, dy),
+                Pawn => PawnValidator(pieces, start, end),
                 Knight => true,
                 Bishop => BishopValidator(pieces, start, end, dx, dy),
                 Rook => RookValidator(pieces, start, end, dx, dy),
