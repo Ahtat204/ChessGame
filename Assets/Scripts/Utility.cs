@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using UnityEngine;
@@ -35,7 +34,7 @@ namespace Assets.Scripts
         {
             if (dx == 1 || dy == 1) return true;
             var result1 = RookValidator(pieces, start, end, dx, dy);
-            var result2=BishopValidator(pieces, start, end, dx, dy) ;
+            var result2 = BishopValidator(pieces, start, end, dx, dy);
             return result1 && result2;
         }
 
@@ -154,15 +153,14 @@ namespace Assets.Scripts
             return true;
         }
 
-        public static bool PawnValidator(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
-            Vector2Int end, int dx, int dy)
-        {
-            var validation=Math.Abs(start.x - end.x) == 1 && Math.Abs(start.y - end.y) == 1;
-            if (validation)
-            {
-                return pieces.ValidateCapturing(start, end);
-            }
+        private static bool ValidateCapturing(this Dictionary<Vector2Int, PieceMovementComponent> pieces,
+            Vector2Int end) => pieces.GetValueOrDefault(end) is not null;
 
+        public static bool PawnValidator(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
+            Vector2Int end)
+        {
+            var validation = Math.Abs(start.x - end.x) == 1 && Math.Abs(start.y - end.y) == 1;
+            if (validation) return pieces.ValidateCapturing(end);
             return true;
         }
     }
