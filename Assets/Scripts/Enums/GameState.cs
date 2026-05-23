@@ -18,8 +18,8 @@ namespace Assets.Scripts.Enums
     /// </summary>
     public enum PlayerTurn : ushort
     {
-        WhitePlayer=0,
-        BlackPlayer=1
+        WhitePlayer = 0,
+        BlackPlayer = 1
     }
 
 }

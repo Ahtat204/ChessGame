@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
 {
-    
+
     public class Benchmark01_UGUI : MonoBehaviour
     {
 

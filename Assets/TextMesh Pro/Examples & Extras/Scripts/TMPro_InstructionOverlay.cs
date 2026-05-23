@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
 {
-    
+
     public class TMPro_InstructionOverlay : MonoBehaviour
     {
 

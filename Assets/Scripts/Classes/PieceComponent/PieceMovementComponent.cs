@@ -77,11 +77,11 @@ namespace Assets.Scripts.Classes.PieceComponent
             if (occupied.piece.Color == piece.Color) return MoveType.None;
             if (occupied.piece.Color != piece.Color)
             {
-                
+
                 if (occupied.piece is King) return 0;
                 if (piece is Pawn)
                 {
-                    
+
                 }
 
                 return CapturePiece(pieces, targetPos, worldCellCenter, pos, position, occupied);

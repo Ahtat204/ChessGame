@@ -8,7 +8,7 @@ namespace Assets.Scripts.Classes.Command
 {
     public class ConcreteMoveCommand : AbstractPieceCommand
     {
-        
+
         public ConcreteMoveCommand(IMove move) : base(move)
         {
         }
@@ -17,8 +17,8 @@ namespace Assets.Scripts.Classes.Command
 
         public override void Execute(Vector2Int target)
         {
-          
-            moveType=Move.MovePiece(GameManager.Instance.Pieces, target); 
+
+            moveType = Move.MovePiece(GameManager.Instance.Pieces, target);
         }
         public override void Undo()
         {

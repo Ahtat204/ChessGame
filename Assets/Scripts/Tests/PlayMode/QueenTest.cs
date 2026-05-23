@@ -26,7 +26,7 @@ namespace Tests.PlayMode
             Assert.IsNotNull(queenComponent);
             var queen = queenComponent.piece;
             Assert.IsNotNull(queen);
-            
+
         }
     }
 }

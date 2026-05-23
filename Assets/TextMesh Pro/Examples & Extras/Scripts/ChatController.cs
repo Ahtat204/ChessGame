@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
 {
-    public class ChatController : MonoBehaviour {
+    public class ChatController : MonoBehaviour
+    {
 
 
         public TMP_InputField ChatInputField;

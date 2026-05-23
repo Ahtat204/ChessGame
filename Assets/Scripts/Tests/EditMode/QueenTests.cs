@@ -7,7 +7,7 @@ namespace Assets.Scripts.Tests.EditMode
 {
     public class QueenTests
     {
-        
+
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.

@@ -128,6 +128,6 @@ namespace Assets.Scripts.Classes.PieceComponent
                 _canCastle = false;
             }
         }
-        
+
     }
 }

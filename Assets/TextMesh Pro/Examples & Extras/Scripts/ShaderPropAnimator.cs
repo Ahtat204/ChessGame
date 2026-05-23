@@ -5,7 +5,7 @@ using TMPro;
 
 namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
 {
-    
+
     public class ShaderPropAnimator : MonoBehaviour
     {
 

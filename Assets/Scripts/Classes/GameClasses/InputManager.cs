@@ -13,6 +13,6 @@ namespace Assets.Scripts.Classes.GameClasses
         {
             Instance = this;
             MousDirection = new Vector3();
-        } 
+        }
     }
 }

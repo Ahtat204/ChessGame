@@ -31,7 +31,7 @@ namespace Assets.Scripts.Classes.Pieces
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
 
         /// <inheritdoc/>
-        [field: SerializeField] 
+        [field: SerializeField]
         public override PieceColor Color { get; protected set; }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Classes.Pieces
         public override void CalculateLegalMoves(Vector3 position)
         {
             _possibleMoves.Clear();
-            
+
             // Quantization of world-space to discrete grid-space
             var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
 

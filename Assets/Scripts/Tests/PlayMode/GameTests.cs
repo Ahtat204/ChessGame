@@ -98,6 +98,6 @@ namespace Tests.PlayMode
             Assert.AreEqual(new Vector2Int(4, 1), (Vector2Int)whiteQueen.CurrPos);
         }
 
-        
+
     }
 }

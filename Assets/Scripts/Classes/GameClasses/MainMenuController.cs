@@ -8,11 +8,11 @@ namespace Assets.Scripts.Classes.GameClasses
     /// </summary>
     internal sealed class MainMenuController : MonoBehaviour
     {
-      public void Play()
+        public void Play()
         {
             SceneManager.LoadScene("GameScene");
         }
 
-       
+
     }
 }

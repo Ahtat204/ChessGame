@@ -32,7 +32,7 @@ namespace Assets.Scripts.Classes.Pieces
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
 
         /// <inheritdoc/>
-        [field: SerializeField] 
+        [field: SerializeField]
         public override PieceColor Color { get; protected set; }
 
         /// <summary>

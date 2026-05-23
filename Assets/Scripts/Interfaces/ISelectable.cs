@@ -31,6 +31,6 @@ namespace Assets.Scripts.Interfaces
         /// The retrieved target coordinate from the latest interaction, 
         /// to be exported to the movement engine.
         /// </summary>
-       public Vector2Int Target { get;  set; }
+        public Vector2Int Target { get; set; }
     }
 }

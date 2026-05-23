@@ -5,7 +5,7 @@ using TMPro;
 
 namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
 {
-    
+
     public class TMP_FrameRateCounter : MonoBehaviour
     {
         public float UpdateInterval = 5.0f;
