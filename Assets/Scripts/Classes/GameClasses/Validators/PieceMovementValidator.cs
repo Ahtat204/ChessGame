@@ -23,10 +23,10 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
             Vector2Int end)
         {
             pieces.TryGetValue(start, out var component);
-            var piece=component?.piece;
+            var piece = component?.piece;
             int dx = end.x - start.x; //difference between int the current position's x and target position's x 
-            int dy = end.y -start.y; //difference between int the current position's y and target position's y 
-           
+            int dy = end.y - start.y; //difference between int the current position's y and target position's y 
+
             return piece switch
             {
                 Pawn => PawnValidator(pieces, start, end),

@@ -24,7 +24,7 @@ namespace Tests.PlayMode
             Assert.IsNotNull(e4Pawn);
             var move1 = PawnValidator(pieces, (Vector2Int)e4Pawn.CurrPos, new Vector2Int(6, 3));
             Assert.AreEqual(move1, false);
-            move1=PawnValidator(pieces, (Vector2Int)e4Pawn.CurrPos, new Vector2Int(4, 3));
+            move1 = PawnValidator(pieces, (Vector2Int)e4Pawn.CurrPos, new Vector2Int(4, 3));
             Assert.AreEqual(move1, false);
             var e7Pawn = pieces[new Vector2Int(5, 7)];
             Assert.IsNotNull(e7Pawn);

@@ -34,13 +34,13 @@ namespace Assets.Scripts.Classes.GameClasses
         /// <summary>
         /// Unsubscribes from the global event to prevent memory leaks or null reference exceptions.
         /// </summary>
-        public void OnDisable() => PieceSelectionComponent.OnPieceSelectedEvent -=SwitchPlayerTurn;
+        public void OnDisable() => PieceSelectionComponent.OnPieceSelectedEvent -= SwitchPlayerTurn;
 
         private void Start()
         {
             Pieces ??= new(32);
         }
-        private void SwitchPlayerTurn()=> Turn = Turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
-        
+        private void SwitchPlayerTurn() => Turn = Turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
+
     }
 }

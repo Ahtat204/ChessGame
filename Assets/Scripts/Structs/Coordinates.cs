@@ -10,12 +10,12 @@ namespace Assets.Scripts.Structs
         /// <summary>
         /// X coordinate property
         /// </summary>
-        public char X { get;  }
+        public char X { get; }
 
         /// <summary>
         /// Y coordinate property
         /// </summary>
-        public uint Y { get;  }
+        public uint Y { get; }
 
 
         /// <summary>

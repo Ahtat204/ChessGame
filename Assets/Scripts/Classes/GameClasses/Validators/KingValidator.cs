@@ -20,13 +20,13 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
         public void RestrictMoving()
         {
             _threatnedpositions.Clear();
-            foreach (var piece  in _enemyPieces )
+            foreach (var piece in _enemyPieces)
             {
                 foreach (var move in piece.PossibleMoves)
                 {
                     _threatnedpositions.Add(move);
-                }  
-            } 
+                }
+            }
             // TODO: _king.PossibleMoves.RemoveAll(move => _threatnedpositions.Contains(move));
         }
     }

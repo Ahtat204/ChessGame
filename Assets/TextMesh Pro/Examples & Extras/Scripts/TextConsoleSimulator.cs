@@ -60,7 +60,7 @@ namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
                 if (hasTextChanged)
                 {
                     totalVisibleCharacters = textInfo.characterCount; // Update visible character count.
-                    hasTextChanged = false; 
+                    hasTextChanged = false;
                 }
 
                 if (visibleCount > totalVisibleCharacters)

@@ -23,19 +23,19 @@ namespace Assets.Scripts.Classes.PieceComponent
 
         private void Update()
         {
-            if (_castlePosition!= Board.BoardInstance.tilemap.WorldToCell(transform.position))
+            if (_castlePosition != Board.BoardInstance.tilemap.WorldToCell(transform.position))
             {
                 _canCastle = false;
             }
         }
 
-        
+
 
         private void OnMouseDrag()
         {
-            if(!_canCastle) return;
-            
+            if (!_canCastle) return;
+
         }
-        
+
     }
 }

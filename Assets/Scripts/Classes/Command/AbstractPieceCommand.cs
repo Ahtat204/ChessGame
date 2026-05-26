@@ -14,7 +14,7 @@ namespace Assets.Scripts.Classes.Command
             Move = move;
         }
 
-        public abstract MoveType moveType {  get; set; }
+        public abstract MoveType moveType { get; set; }
         public abstract void Execute(Vector2Int target);
         public abstract void Undo();
 

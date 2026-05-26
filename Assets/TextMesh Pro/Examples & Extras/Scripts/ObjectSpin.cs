@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
 {
-    
+
     public class ObjectSpin : MonoBehaviour
     {
 

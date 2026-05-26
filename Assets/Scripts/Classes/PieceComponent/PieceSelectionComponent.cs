@@ -109,7 +109,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 if (!checkPath) return;
                 // Fire movement instruction event
                 OnPieceSelectedEvent?.Invoke();
-               
+
                 // Re-evaluate turn status post-action
             }
         }

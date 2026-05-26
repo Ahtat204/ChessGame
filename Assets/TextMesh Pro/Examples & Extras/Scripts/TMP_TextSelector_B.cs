@@ -287,7 +287,7 @@ namespace Assets.TextMesh_Pro.Examples___Extras.Scripts
                     m_lastIndex = -1;
                 }
             }
-            
+
         }
 
 
