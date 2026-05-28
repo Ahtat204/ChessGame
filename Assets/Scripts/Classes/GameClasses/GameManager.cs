@@ -40,7 +40,10 @@ namespace Assets.Scripts.Classes.GameClasses
         {
             Pieces ??= new(32);
         }
-        private void SwitchPlayerTurn() => Turn = Turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
+        private void SwitchPlayerTurn() {
+            Turn = Turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
+            
+        }
 
     }
 }

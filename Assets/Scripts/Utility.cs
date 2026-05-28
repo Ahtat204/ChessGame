@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Classes;
 using Assets.Scripts.Classes.PieceComponent;
+using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
+using Assets.Scripts.Structs;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -153,6 +156,19 @@ namespace Assets.Scripts
             return true;
         }
 
+        public static bool IsInCheck(King king, ReadOnlySpan<PieceInfo> pieces)
+        {
+            return false;
+        }
+
+        public static void PopulateSpan(ReadOnlySpan<PieceInfo> stackPieces,
+            Dictionary<Vector2Int, PieceMovementComponent> pieces)
+        {
+            for (int i = 0; i < pieces.Count; i++)
+            {
+                
+            }
+        }
         private static bool ValidateCapturing(this Dictionary<Vector2Int, PieceMovementComponent> pieces,
             Vector2Int end) => pieces.GetValueOrDefault(end) is not null;
 
