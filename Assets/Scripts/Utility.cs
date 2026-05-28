@@ -161,14 +161,17 @@ namespace Assets.Scripts
             return false;
         }
 
-        public static void PopulateSpan(ReadOnlySpan<PieceInfo> stackPieces,
-            Dictionary<Vector2Int, PieceMovementComponent> pieces)
+        public static void ToSpan(this Dictionary<Vector2Int, PieceMovementComponent> pieces, Span<PieceInfo> piecesSpan)
         {
-            for (int i = 0; i < pieces.Count; i++)
+            int i = 0;
+            foreach (var piece in pieces)
             {
-                
+                if (i > pieces.Count) return;
+                piecesSpan[i] = new PieceInfo(piece.Key, piece.Value.piece.Color, piece.Value.piece.Value);
+                i++;
             }
         }
+
         private static bool ValidateCapturing(this Dictionary<Vector2Int, PieceMovementComponent> pieces,
             Vector2Int end) => pieces.GetValueOrDefault(end) is not null;
 

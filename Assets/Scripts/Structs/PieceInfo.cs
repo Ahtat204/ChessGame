@@ -7,10 +7,10 @@ namespace Assets.Scripts.Structs
     public struct PieceInfo
     {
         public PieceColor Color;
-        public ushort MaterialValue;
+        public byte MaterialValue;
         public Vector2Int Position;
 
-        public PieceInfo(PieceColor color, ushort materialValue, Vector2Int position)
+        public PieceInfo(Vector2Int position, PieceColor color, byte materialValue)
         {
             Color = color;
             MaterialValue = materialValue;

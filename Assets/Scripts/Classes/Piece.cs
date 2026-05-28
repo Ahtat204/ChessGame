@@ -37,7 +37,7 @@ namespace Assets.Scripts.Classes
         /// The relative material worth of the piece used for AI evaluation 
         /// and game-state weighting.
         /// </summary>
-        public abstract uint Value { get; }
+        public abstract byte Value { get; }
 
         /// <summary>
         /// Evaluates the board state and populates the legal move-set for the piece.

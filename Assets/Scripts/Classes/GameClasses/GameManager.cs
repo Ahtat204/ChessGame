@@ -1,8 +1,10 @@
-﻿using Assets.Scripts.Enums;
+﻿using System;
+using Assets.Scripts.Enums;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Assets.Scripts.Classes.PieceComponent;
-
+using Assets.Scripts.Structs;
 
 
 namespace Assets.Scripts.Classes.GameClasses
@@ -40,9 +42,15 @@ namespace Assets.Scripts.Classes.GameClasses
         {
             Pieces ??= new(32);
         }
-        private void SwitchPlayerTurn() {
+        private void SwitchPlayerTurn()
+        {
             Turn = Turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
-            
+            Span<PieceInfo> pieces = stackalloc PieceInfo[Pieces.Count];
+            Pieces.ToSpan(pieces);
+            var size = Marshal.SizeOf(typeof(PieceInfo));
+            Debug.Log(size);
+            var totalsize = size * Pieces.Count;
+            Debug.Log(totalsize);
         }
 
     }

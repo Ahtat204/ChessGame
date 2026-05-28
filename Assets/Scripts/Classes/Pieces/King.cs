@@ -26,7 +26,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// The King has no material value (0) because its loss terminates the simulation.
         /// In AI heuristics, this is often treated as positive/negative infinity.
         /// </summary>
-        public override uint Value => 0;
+        public override byte Value => 0;
 
         /// <inheritdoc cref="Piece.PossibleMoves"/>
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
