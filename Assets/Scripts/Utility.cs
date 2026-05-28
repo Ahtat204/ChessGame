@@ -156,8 +156,22 @@ namespace Assets.Scripts
             return true;
         }
 
-        public static bool IsInCheck(King king, ReadOnlySpan<PieceInfo> pieces)
+        
+        public static bool IsInCheck(PieceColor color,Vector2Int kingPos, ReadOnlySpan<PieceInfo> pieces)
         {
+            switch (color)
+            {
+                case PieceColor.White:
+                    break;
+                case PieceColor.Black: 
+                    break;                   
+            }
+            for (byte i = 0;i < pieces.Length; i++)
+            {
+                var piece = pieces[i];
+                
+            }
+
             return false;
         }
 

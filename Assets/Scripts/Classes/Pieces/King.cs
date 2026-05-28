@@ -25,8 +25,9 @@ namespace Assets.Scripts.Classes.Pieces
         /// <summary>
         /// The King has no material value (0) because its loss terminates the simulation.
         /// In AI heuristics, this is often treated as positive/negative infinity.
+        /// <remarks>these values are used to simplify King check detection using a Span to avoid using Dictionary in hot paths and nested loops where cache locality is critical</remarks>
         /// </summary>
-        public override byte Value => 0;
+        public override byte Value => Color == PieceColor.White ? (byte)10 : (byte)11;
 
         /// <inheritdoc cref="Piece.PossibleMoves"/>
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
@@ -46,15 +47,11 @@ namespace Assets.Scripts.Classes.Pieces
         public override void CalculateLegalMoves(Vector3 position)
         {
             _possibleMoves.Clear();
-            Vector2Int positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
-
-            // Orthogonal Directions
+            var positionCell = (Vector2Int)Board.BoardInstance.tilemap.WorldToCell(position);
             _possibleMoves.AddIfValid(positionCell.x, positionCell.y + 1); // North
             _possibleMoves.AddIfValid(positionCell.x, positionCell.y - 1); // South
             _possibleMoves.AddIfValid(positionCell.x - 1, positionCell.y); // West
             _possibleMoves.AddIfValid(positionCell.x + 1, positionCell.y); // East
-
-            // Diagonal Directions
             _possibleMoves.AddIfValid(positionCell.x - 1, positionCell.y - 1); // South-West
             _possibleMoves.AddIfValid(positionCell.x - 1, positionCell.y + 1); // North-West
             _possibleMoves.AddIfValid(positionCell.x + 1, positionCell.y - 1); // South-East

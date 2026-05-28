@@ -2,7 +2,6 @@
 using Assets.Scripts.Enums;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Structs;
 
@@ -47,10 +46,6 @@ namespace Assets.Scripts.Classes.GameClasses
             Turn = Turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
             Span<PieceInfo> pieces = stackalloc PieceInfo[Pieces.Count];
             Pieces.ToSpan(pieces);
-            var size = Marshal.SizeOf(typeof(PieceInfo));
-            Debug.Log(size);
-            var totalsize = size * Pieces.Count;
-            Debug.Log(totalsize);
         }
 
     }
