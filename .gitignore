@@ -75,3 +75,6 @@ crashlytics-build.properties
 READYOU.md 
 output22.txt 
 Runtree.py 
+Scripts.csproj.DotSettings
+Tests.csproj.DotSettings
+format-report.txt

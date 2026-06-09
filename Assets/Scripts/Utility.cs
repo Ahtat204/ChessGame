@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Assets.Scripts.Classes;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Classes.Pieces;
@@ -27,6 +28,7 @@ namespace Assets.Scripts
         /// <param name="pieces">The list of positions.</param>
         /// <param name="x">The x-coordinate.</param>
         /// <param name="y">The y-coordinate.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddIfValid(this List<Vector2Int> pieces, int x, int y)
         {
             if (x is >= 1 and <= 8 && y is >= 1 and <= 8)
@@ -42,6 +44,7 @@ namespace Assets.Scripts
         /// <param name="color">The color of the piece.</param>
         /// <param name="turn">The current player's turn.</param>
         /// <returns>1 if valid, otherwise 0.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Mapper(PieceColor color, PlayerTurn turn)
         {
             if (turn == PlayerTurn.BlackPlayer && color == PieceColor.Black) return 1;
@@ -218,7 +221,7 @@ namespace Assets.Scripts
         public static void ToSpan(this Dictionary<Vector2Int, PieceMovementComponent> pieces,
             Span<PieceInfo> piecesSpan)
         {
-            int i = 0;
+            byte i = 0;
             foreach (var piece in pieces)
             {
                 if (i > pieces.Count) return;
@@ -227,9 +230,11 @@ namespace Assets.Scripts
             }
         }
 
+
         /// <summary>
         /// Checks if a capture is valid by verifying if a piece exists at the target position.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool ValidateCapturing(this Dictionary<Vector2Int, PieceMovementComponent> pieces,
             Vector2Int end) => pieces.GetValueOrDefault(end) is not null;
 
@@ -237,6 +242,7 @@ namespace Assets.Scripts
         /// Validates pawn movement, ensuring diagonal captures are only allowed
         /// if an opponent piece exists at the target position.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool PawnValidator(Dictionary<Vector2Int, PieceMovementComponent> pieces, Vector2Int start,
             Vector2Int end)
         {

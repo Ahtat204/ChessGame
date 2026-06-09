@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using static Assets.Scripts.Utility;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
@@ -77,6 +78,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnDeselect()
         {
             if (SelectedPiece == this) SelectedPiece = null;
