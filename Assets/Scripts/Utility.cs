@@ -217,15 +217,15 @@ namespace Assets.Scripts
         /// Converts a dictionary of pieces into a span of <see cref="PieceInfo"/>.
         /// </summary>
         /// <param name="pieces">The dictionary of pieces.</param>
-        /// <param name="piecesSpan">The span to populate.</param>
+        /// <param name="compressedBoard">The span to populate.</param>
         public static void ToSpan(this Dictionary<Vector2Int, PieceMovementComponent> pieces,
-            Span<PieceInfo> piecesSpan)
+            Span<PieceInfo> compressedBoard)
         {
             byte i = 0;
             foreach (var piece in pieces)
             {
                 if (i > pieces.Count) return;
-                piecesSpan[i] = new PieceInfo(piece.Key, piece.Value.piece.Color, piece.Value.piece.Value);
+                compressedBoard[i] = new PieceInfo(piece.Key, piece.Value.piece.Color, piece.Value.piece.Value);
                 i++;
             }
         }

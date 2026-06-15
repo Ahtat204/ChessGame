@@ -27,7 +27,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// In AI heuristics, this is often treated as positive/negative infinity.
         /// <remarks>these values are used to simplify King check detection using a Span to avoid using Dictionary in hot paths and nested loops where cache locality is critical</remarks>
         /// </summary>
-        public override byte Value => Color == PieceColor.White ? (byte)10 : (byte)11;
+        public override byte Value => 0;
 
         /// <inheritdoc cref="Piece.PossibleMoves"/>
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
