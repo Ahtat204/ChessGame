@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Structs;
 using UnityEngine.Serialization;
-
+using static Assets.Scripts.Utility;
 
 namespace Assets.Scripts.Classes.GameClasses
 {
@@ -44,24 +44,24 @@ namespace Assets.Scripts.Classes.GameClasses
         }
         private void SwitchPlayerTurn()
         {
+            byte attackers = 0;
             turn = turn == PlayerTurn.WhitePlayer ? PlayerTurn.BlackPlayer : PlayerTurn.WhitePlayer;
             Span<PieceInfo> pieces = stackalloc PieceInfo[Pieces.Count];
             Pieces.ToSpan(pieces);
-            PieceInfo targetKing=new PieceInfo();
+            PieceInfo targetKing = new PieceInfo();
             if (turn == PlayerTurn.BlackPlayer)
             {
-                for (var i = 0; i < pieces.Length; i++)
+                for (byte i = 0; i < pieces.Length; i++)
                 {
                     if (pieces[i].Color == PieceColor.Black && pieces[i].MaterialValue == 0)
                     {
                         targetKing = pieces[i];
                     }
-                    
                 }
             }
             else if (turn == PlayerTurn.WhitePlayer)
             {
-                for (var i = 0; i < pieces.Length; i++)
+                for (byte i = 0; i < pieces.Length; i++)
                 {
                     if (pieces[i].Color == PieceColor.White && pieces[i].MaterialValue == 0)
                     {
@@ -69,7 +69,24 @@ namespace Assets.Scripts.Classes.GameClasses
                     }
                 }
             }
-            
+            //check if knight is attacking the king
+            for (byte i = 0; i < pieces.Length; i++)
+            {
+                var piece = pieces[i];
+                if (piece.Color != targetKing.Color)
+                {
+                    if (piece.MaterialValue == 1)
+                    {
+                    
+                    }
+                    if(piece.MaterialValue==3)//making sure that a pawn is not considered a knight
+                    {
+                        attackers += IsAttackedByKnights(targetKing.Position, piece.Position);
+                    } 
+                }
+               
+            }
+
         }
 
     }

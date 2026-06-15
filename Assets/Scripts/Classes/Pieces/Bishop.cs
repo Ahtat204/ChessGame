@@ -23,7 +23,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// Typically weighted as 3 in standard evaluation, though often 
         /// valued slightly higher (3.25) in "Bishop Pair" heuristics.
         /// </summary>
-        public override byte Value => 3;
+        public override byte Value => 4;
 
         /// <summary>
         /// Internal buffer for pre-calculated legal coordinates. 
