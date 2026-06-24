@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using static Assets.Scripts.Utility;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
@@ -53,14 +54,12 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         [SerializeField] private Vector2Int target;
-
         private void Start()
         {
             _piece = GetComponent<Piece>();
             Status = SelectionStatus.UnSelected;
-            canMove = Mapper(_piece.Color, GameManager.Instance.Turn);
+            canMove = Mapper(_piece.Color, GameManager.Instance.turn);
         }
-
         /// <inheritdoc />
         public void OnSelect()
         {
@@ -77,6 +76,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnDeselect()
         {
             if (SelectedPiece == this) SelectedPiece = null;
@@ -88,12 +88,11 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// </summary>
         private void OnMouseDown()
         {
-            canMove = Mapper(_piece.Color, GameManager.Instance.Turn);
+            canMove = Mapper(_piece.Color, GameManager.Instance.turn);
             if (canMove == 0) return;
             if (Status == SelectionStatus.Selected) OnDeselect();
             else OnSelect();
         }
-
         /// <summary>
         /// Orchestrates the 'Selection -> Target' input sequence.
         /// </summary>
@@ -107,10 +106,7 @@ namespace Assets.Scripts.Classes.PieceComponent
                 Target = target;
                 bool checkPath = GameManager.Instance.Pieces.ValidatePath((Vector2Int)CurrentPosition, Target);
                 if (!checkPath) return;
-                // Fire movement instruction event
                 OnPieceSelectedEvent?.Invoke();
-
-                // Re-evaluate turn status post-action
             }
         }
     }

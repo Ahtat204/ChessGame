@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Enums
 {
-    public enum PieceColor : ushort
+    public enum PieceColor : byte
     {
         White,
         Black

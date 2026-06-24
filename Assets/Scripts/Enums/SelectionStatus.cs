@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Enums
 {
-    public enum SelectionStatus
+    public enum SelectionStatus : byte
     {
         Selected,
         UnSelected
