@@ -244,6 +244,57 @@ namespace Assets.Scripts
             return count;
         }
 
+        public static byte IsAttackedByBishops(in Vector2Int kingPos, in Vector2Int bishopPos)
+        {
+            byte count = 0;
+            if(bishopPos.x==kingPos.x+1 && bishopPos.y==kingPos.y+1) count++;
+            if(bishopPos.x==kingPos.x+1&& bishopPos.y==kingPos.y-1) count++;
+            if(bishopPos.x==kingPos.x-1 && bishopPos.y==kingPos.y-1) count++;
+            if(bishopPos.x==kingPos.x-1 && bishopPos.y==kingPos.y+1) count++;
+            return count;
+        }
+
+        public static byte IsAttackedByPawns(in Vector2Int kingPos, in Vector2Int pawnPos,in PieceColor pieceColor)
+        {
+            byte count = 0;
+            if (pieceColor== PieceColor.White)
+            {
+                if (kingPos.x == pawnPos.x + 1 &&
+                    kingPos.y == pawnPos.y + 1)
+                {
+                    count++;
+                }
+
+                if (kingPos.x == pawnPos.x - 1 &&
+                    kingPos.y == pawnPos.y + 1)
+                {
+                    count++;
+                }
+            }
+
+            if (pieceColor == PieceColor.Black)
+            {
+                if (kingPos.x == pawnPos.x + 1 &&
+                    kingPos.y == pawnPos.y - 1)
+                {
+                    count++;
+                }
+
+                if (kingPos.x == pawnPos.x - 1 &&
+                    kingPos.y == pawnPos.y - 1)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+        
+        public static byte IsAttackedByRooks(in Vector2Int kingPos, in Vector2Int rookPos)
+        {
+            byte count = 0;
+          
+            return count;
+        }
         /// <summary>
         /// Checks if a capture is valid by verifying if a piece exists at the target position.
         /// </summary>

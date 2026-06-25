@@ -31,6 +31,7 @@ namespace Assets.Scripts.Classes.GameClasses
                 Instance = this;
             }
         }
+
         public void OnEnable() => PieceSelectionComponent.OnPieceSelectedEvent += SwitchPlayerTurn;
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace Assets.Scripts.Classes.GameClasses
         {
             Pieces ??= new(32);
         }
+
         private void SwitchPlayerTurn()
         {
             byte attackers = 0;
@@ -69,25 +71,47 @@ namespace Assets.Scripts.Classes.GameClasses
                     }
                 }
             }
+
             //check if knight is attacking the king
             for (byte i = 0; i < pieces.Length; i++)
             {
                 var piece = pieces[i];
                 if (piece.Color != targetKing.Color)
                 {
-                    if (piece.MaterialValue == 1)
+                    //pawn check detection
+                    if (piece.MaterialValue == 1) attackers += IsAttackedByPawns(targetKing.Position, piece.Position, piece.Color);
+                    //knight check detection
+                    if (piece.MaterialValue == 3) attackers += IsAttackedByKnights(targetKing.Position, piece.Position);
+                    //rook check detection
+                    if (piece.MaterialValue == 5)
                     {
+                        if (piece.Position.x == targetKing.Position.x)
+                        {
+                            //check vertically
+                            for (byte j = 0; j < Math.Abs(targetKing.Position.y - piece.Position.y); j++)
+                            {
+                                if (pieces[j].Color == targetKing.Color)
+                                    break; // we found a piece that covers the rook's attack on the king, the piece is pinned
+                            }
+                        }
 
+                        if (piece.Position.y == targetKing.Position.y)
+                        {
+                            //check horizontally
+                            for (byte j = 0; j < Math.Abs(targetKing.Position.x - piece.Position.x); j++)
+                            {
+                                if (pieces[j].Color == targetKing.Color)
+                                    break; // we found a piece that covers the rook's attack on the king, the piece is pinned
+                            }
+                        }
                     }
-                    if (piece.MaterialValue == 3)//making sure that a pawn is not considered a knight
+                    //bishop check detection
+                    if (piece.MaterialValue == 4)
                     {
-                        attackers += IsAttackedByKnights(targetKing.Position, piece.Position);
+                        
                     }
                 }
-
             }
-
         }
-
     }
 }
