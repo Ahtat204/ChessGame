@@ -77,14 +77,14 @@ namespace Assets.Scripts.Classes.GameClasses
                 {
                     if (piece.MaterialValue == 1)
                     {
-                    
+
                     }
-                    if(piece.MaterialValue==3)//making sure that a pawn is not considered a knight
+                    if (piece.MaterialValue == 3)//making sure that a pawn is not considered a knight
                     {
                         attackers += IsAttackedByKnights(targetKing.Position, piece.Position);
-                    } 
+                    }
                 }
-               
+
             }
 
         }

@@ -230,17 +230,17 @@ namespace Assets.Scripts
             }
         }
 
-       public static byte IsAttackedByKnights(in Vector2Int kingPos,in Vector2Int knightPos)
+        public static byte IsAttackedByKnights(in Vector2Int kingPos, in Vector2Int knightPos)
         {
             byte count = 0;
             if ((knightPos.x == kingPos.x + 2 && knightPos.y == kingPos.y + 1)) count++;
             if ((knightPos.x == kingPos.x + 2 && knightPos.y == kingPos.y - 1)) count++;
             if ((knightPos.x == kingPos.x - 2 && knightPos.y == kingPos.y + 1)) count++;
             if ((knightPos.x == kingPos.x - 2 && knightPos.y == kingPos.y - 1)) count++;
-            if ((knightPos.x == kingPos.x +1 && knightPos.y == kingPos.y +2)) count++;
-            if ((knightPos.x == kingPos.x +1 && knightPos.y == kingPos.y -2)) count++;
-            if ((knightPos.x == kingPos.x -1 && knightPos.y == kingPos.y + 2)) count++;
-            if ((knightPos.x == kingPos.x -1 && knightPos.y == kingPos.y -2)) count++;
+            if ((knightPos.x == kingPos.x + 1 && knightPos.y == kingPos.y + 2)) count++;
+            if ((knightPos.x == kingPos.x + 1 && knightPos.y == kingPos.y - 2)) count++;
+            if ((knightPos.x == kingPos.x - 1 && knightPos.y == kingPos.y + 2)) count++;
+            if ((knightPos.x == kingPos.x - 1 && knightPos.y == kingPos.y - 2)) count++;
             return count;
         }
 
