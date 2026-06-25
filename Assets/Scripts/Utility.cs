@@ -8,6 +8,7 @@ using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Structs;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Assets.Scripts
 {
@@ -247,54 +248,47 @@ namespace Assets.Scripts
         public static byte IsAttackedByBishops(in Vector2Int kingPos, in Vector2Int bishopPos)
         {
             byte count = 0;
-            if(bishopPos.x==kingPos.x+1 && bishopPos.y==kingPos.y+1) count++;
-            if(bishopPos.x==kingPos.x+1&& bishopPos.y==kingPos.y-1) count++;
-            if(bishopPos.x==kingPos.x-1 && bishopPos.y==kingPos.y-1) count++;
-            if(bishopPos.x==kingPos.x-1 && bishopPos.y==kingPos.y+1) count++;
+            if (bishopPos.x == kingPos.x + 1 && bishopPos.y == kingPos.y + 1) count++;
+            if (bishopPos.x == kingPos.x + 1 && bishopPos.y == kingPos.y - 1) count++;
+            if (bishopPos.x == kingPos.x - 1 && bishopPos.y == kingPos.y - 1) count++;
+            if (bishopPos.x == kingPos.x - 1 && bishopPos.y == kingPos.y + 1) count++;
             return count;
         }
 
-        public static byte IsAttackedByPawns(in Vector2Int kingPos, in Vector2Int pawnPos,in PieceColor pieceColor)
+        public static byte IsAttackedByPawns(in Vector2Int kingPos, in Vector2Int pawnPos, in PieceColor pieceColor)
+        {
+            int yDir = (pieceColor == PieceColor.White) ? 1 : -1;
+
+            // Check if the vertical distance is exactly 1 in the pawn's forward direction
+            bool correctY = (kingPos.y - pawnPos.y) == yDir;
+
+            // Check if the horizontal distance is exactly 1 (either side)
+            bool correctX = Math.Abs(kingPos.x - pawnPos.x) == 1;
+
+            // Return 1 if both conditions are met, 0 otherwise
+            return (byte)((correctX && correctY) ? 1 : 0);
+        }
+
+        public static byte IsAttackedByRooks(in PieceInfo king, in PieceInfo rook, Span<PieceInfo> pieces)
         {
             byte count = 0;
-            if (pieceColor== PieceColor.White)
-            {
-                if (kingPos.x == pawnPos.x + 1 &&
-                    kingPos.y == pawnPos.y + 1)
-                {
-                    count++;
-                }
 
-                if (kingPos.x == pawnPos.x - 1 &&
-                    kingPos.y == pawnPos.y + 1)
+            if (king.Position.y == rook.Position.y)
+            {
+                 int y=king.Position.y;
+                for (var i = king.Position.x+1; i < rook.Position.x ; i++)
                 {
-                    count++;
+                    var found = pieces[i];
+                    if (found.Color==king.Color&&found.Position == new Vector2Int(i, y))
+                    {
+                        break;
+                    }
                 }
             }
 
-            if (pieceColor == PieceColor.Black)
-            {
-                if (kingPos.x == pawnPos.x + 1 &&
-                    kingPos.y == pawnPos.y - 1)
-                {
-                    count++;
-                }
+            return count;
+        }
 
-                if (kingPos.x == pawnPos.x - 1 &&
-                    kingPos.y == pawnPos.y - 1)
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-        
-        public static byte IsAttackedByRooks(in Vector2Int kingPos, in Vector2Int rookPos)
-        {
-            byte count = 0;
-          
-            return count;
-        }
         /// <summary>
         /// Checks if a capture is valid by verifying if a piece exists at the target position.
         /// </summary>

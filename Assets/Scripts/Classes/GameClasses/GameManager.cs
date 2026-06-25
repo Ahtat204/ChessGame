@@ -108,7 +108,7 @@ namespace Assets.Scripts.Classes.GameClasses
                     //bishop check detection
                     if (piece.MaterialValue == 4)
                     {
-                        
+
                     }
                 }
             }
