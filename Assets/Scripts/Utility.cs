@@ -280,6 +280,7 @@ namespace Assets.Scripts
                 {
                     byte k = 1;
                     int x = king.Position.x + k;
+                    //right direction
                     while (x < Board.Size)
                     {
                         var piece = pieces[i];
@@ -290,13 +291,34 @@ namespace Assets.Scripts
                                 count++;
                                 break; //first check if there's an enemy rook, if there's one we break because a piece found later on can't cover the king ;
                             }
-                            else if(piece.Color == king.Color)
+                            else if (piece.Color == king.Color)
                             {
                                 break; // we found a friendly piece before an enemy piece , meaning the king is covered (only from the right side)
                             }
                         }
 
                         k++;
+                    }
+                    
+                    x = king.Position.x - k;
+                    //left direction
+                    while (x > 0)
+                    {
+                        var piece = pieces[i];
+                        if (piece.Position.x == x)
+                        {
+                            if (piece.Color != king.Color && piece.MaterialValue == 5)
+                            {
+                                count++;
+                                break; //first check if there's an enemy rook, if there's one we break because a piece found later on can't cover the king ;
+                            }
+                            else if (piece.Color == king.Color)
+                            {
+                                break; // we found a friendly piece before an enemy piece , meaning the king is covered (only from the right side)
+                            }
+                        }
+
+                        k--;
                     }
                 }
             }
