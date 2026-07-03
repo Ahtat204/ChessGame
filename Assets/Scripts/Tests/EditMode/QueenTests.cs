@@ -1,6 +1,4 @@
 using System.Collections;
-using Assets.Scripts.Classes.Pieces;
-using NUnit.Framework;
 using UnityEngine.TestTools;
 
 namespace Assets.Scripts.Tests.EditMode

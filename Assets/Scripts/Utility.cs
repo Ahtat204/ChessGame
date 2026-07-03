@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Assets.Scripts.Classes;
+using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.PieceComponent;
-using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Structs;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.Scripts
 {
@@ -275,13 +273,30 @@ namespace Assets.Scripts
 
             if (king.Position.y == rook.Position.y)
             {
-                 int y=king.Position.y;
-                for (var i = king.Position.x+1; i < rook.Position.x ; i++)
+                int y = king.Position.y;
+
+                //   (var i = king.Position.x + 1; i < rook.Position.x; i++)
+                for (var i = 0; i < pieces.Length; i++)
                 {
-                    var found = pieces[i];
-                    if (found.Color==king.Color&&found.Position == new Vector2Int(i, y))
+                    byte k = 1;
+                    int x = king.Position.x + k;
+                    while (x < Board.Size)
                     {
-                        break;
+                        var piece = pieces[i];
+                        if (piece.Position.x == x)
+                        {
+                            if (piece.Color != king.Color && piece.MaterialValue == 5)
+                            {
+                                count++;
+                                break; //first check if there's an enemy rook, if there's one we break because a piece found later on can't cover the king ;
+                            }
+                            else if(piece.Color == king.Color)
+                            {
+                                break; // we found a friendly piece before an enemy piece , meaning the king is covered (only from the right side)
+                            }
+                        }
+
+                        k++;
                     }
                 }
             }
