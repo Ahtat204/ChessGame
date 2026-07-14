@@ -26,7 +26,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// Base unit value. In endgame heuristics, this value scales non-linearly 
         /// as the Pawn approaches the promotion rank.
         /// </summary>
-        public override byte Value => 1;
+        public override uint Value => 1;
 
         /// <inheritdoc cref="Piece.PossibleMoves"/>
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;

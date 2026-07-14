@@ -4,7 +4,7 @@ namespace Assets.Scripts.Enums
     /// <summary>
     /// an Enum representing the Move type , whether it's capturing , Normal move , Check ...
     /// </summary>
-    public enum MoveType : byte
+    public enum MoveType : ushort
     {
         None = 0,
         Normal,

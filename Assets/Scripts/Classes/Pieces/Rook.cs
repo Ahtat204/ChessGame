@@ -19,7 +19,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// Valued at 5, reflecting its superior "Heavy Piece" status and its ability 
         /// to force checkmate with only King support.
         /// </summary>
-        public override byte Value => 5;
+        public override uint Value => 5;
 
         /// <summary>
         /// Internal buffer for pre-calculated orthogonal coordinates.

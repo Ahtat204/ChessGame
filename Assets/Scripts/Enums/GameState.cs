@@ -5,7 +5,7 @@ namespace Assets.Scripts.Enums
     /// <summary>
     /// Represents the current state of the Game
     /// </summary>
-    public enum GameState : byte
+    public enum GameState : ushort
     {
         WaitingForPlayer,
         Check,
@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enums
     /// <summary>
     /// enum representing who's turn is to play
     /// </summary>
-    public enum PlayerTurn : byte
+    public enum PlayerTurn : ushort
     {
         WhitePlayer = 0,
         BlackPlayer = 1

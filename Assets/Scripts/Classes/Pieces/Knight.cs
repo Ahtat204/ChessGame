@@ -25,7 +25,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// Standard material value. While nominally 3, Knights are strategically 
         /// valued higher in "closed" positions where sliding pieces are obstructed.
         /// </summary>
-        public override byte Value => 3;
+        public override uint Value => 3;
 
         /// <inheritdoc cref="Piece.PossibleMoves"/>
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;
