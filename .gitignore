@@ -75,3 +75,5 @@ crashlytics-build.properties
 READYOU.md 
 output22.txt 
 Runtree.py 
+format-report.txt
+test.sh
