@@ -81,7 +81,7 @@ namespace Assets.Scripts.Classes.PieceComponent
 
                 if (targetPos.Equals(Board.BoardInstance.BlackKingShortCastlePosition))
                 {
-                    bool exists = pieces.TryGetValue(Board.BoardInstance.BlackLeftRook, out var rightBlackRook);
+                    bool exists = pieces.TryGetValue(Board.BoardInstance.BlackRightRook, out var rightBlackRook);
                     if (!exists) return MoveType.None;
                     transform.position = Vector2.MoveTowards(position, worldCellCenter, 10);
                     var rookMoved = rightBlackRook.MovePiece(pieces,
