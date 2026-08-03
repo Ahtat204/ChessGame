@@ -79,7 +79,8 @@ namespace Assets.Scripts.Classes.GameClasses
                 if (piece.Color != targetKing.Color)
                 {
                     //pawn check detection
-                    if (piece.MaterialValue == 1) attackers += IsAttackedByPawns(targetKing.Position, piece.Position, piece.Color);
+                    if (piece.MaterialValue == 1)
+                        attackers += IsAttackedByPawns(targetKing.Position, piece.Position, piece.Color);
                     //knight check detection
                     if (piece.MaterialValue == 3) attackers += IsAttackedByKnights(targetKing.Position, piece.Position);
                     //rook check detection
@@ -105,10 +106,13 @@ namespace Assets.Scripts.Classes.GameClasses
                             }
                         }
                     }
-                    //bishop check detection
-                    if (piece.MaterialValue == 4)
-                    {
 
+                    //bishop check detection
+                    if (piece.MaterialValue == 4) attackers += IsAttackedByBishops(targetKing.Position, piece.Position);
+
+                    //queen check detection
+                    if (piece.MaterialValue == 9)
+                    {
                     }
                 }
             }
