@@ -4,24 +4,24 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Structs;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Classes
 {
     public static partial class Utility
     {
-        
         public static byte IsAttackedByKnights(in Vector2Int kingPos, in Vector2Int knightPos)
         {
             byte count = 0;
-            if ((knightPos.x == kingPos.x + 2 && knightPos.y == kingPos.y + 1)) count++;
-            if ((knightPos.x == kingPos.x + 2 && knightPos.y == kingPos.y - 1)) count++;
-            if ((knightPos.x == kingPos.x - 2 && knightPos.y == kingPos.y + 1)) count++;
-            if ((knightPos.x == kingPos.x - 2 && knightPos.y == kingPos.y - 1)) count++;
-            if ((knightPos.x == kingPos.x + 1 && knightPos.y == kingPos.y + 2)) count++;
-            if ((knightPos.x == kingPos.x + 1 && knightPos.y == kingPos.y - 2)) count++;
-            if ((knightPos.x == kingPos.x - 1 && knightPos.y == kingPos.y + 2)) count++;
-            if ((knightPos.x == kingPos.x - 1 && knightPos.y == kingPos.y - 2)) count++;
+            if (knightPos.x == kingPos.x + 2 && knightPos.y == kingPos.y + 1) count++;
+            if (knightPos.x == kingPos.x + 2 && knightPos.y == kingPos.y - 1) count++;
+            if (knightPos.x == kingPos.x - 2 && knightPos.y == kingPos.y + 1) count++;
+            if (knightPos.x == kingPos.x - 2 && knightPos.y == kingPos.y - 1) count++;
+            if (knightPos.x == kingPos.x + 1 && knightPos.y == kingPos.y + 2) count++;
+            if (knightPos.x == kingPos.x + 1 && knightPos.y == kingPos.y - 2) count++;
+            if (knightPos.x == kingPos.x - 1 && knightPos.y == kingPos.y + 2) count++;
+            if (knightPos.x == kingPos.x - 1 && knightPos.y == kingPos.y - 2) count++;
             return count;
         }
+
         public static byte IsAttackedByBishops(in Vector2Int kingPos, in Vector2Int bishopPos)
         {
             byte count = 0;
@@ -31,32 +31,34 @@ namespace Assets.Scripts
             if (bishopPos.x == kingPos.x - 1 && bishopPos.y == kingPos.y + 1) count++;
             return count;
         }
+
         public static byte IsAttackedByPawns(in Vector2Int kingPos, in Vector2Int pawnPos, in PieceColor pieceColor)
         {
-            int yDir = (pieceColor == PieceColor.White) ? 1 : -1;
+            var yDir = pieceColor == PieceColor.White ? 1 : -1;
 
             // Check if the vertical distance is exactly 1 in the pawn's forward direction
-            bool correctY = (kingPos.y - pawnPos.y) == yDir;
+            var correctY = kingPos.y - pawnPos.y == yDir;
 
             // Check if the horizontal distance is exactly 1 (either side)
-            bool correctX = Math.Abs(kingPos.x - pawnPos.x) == 1;
+            var correctX = Math.Abs(kingPos.x - pawnPos.x) == 1;
 
             // Return 1 if both conditions are met, 0 otherwise
-            return (byte)((correctX && correctY) ? 1 : 0);
+            return (byte)(correctX && correctY ? 1 : 0);
         }
+
         public static byte IsAttackedByRooks(in PieceInfo king, in PieceInfo rook, Span<PieceInfo> pieces)
         {
             byte count = 0;
 
             if (king.Position.y == rook.Position.y)
             {
-                int y = king.Position.y;
+                var y = king.Position.y;
 
                 //   (var i = king.Position.x + 1; i < rook.Position.x; i++)
                 for (var i = 0; i < pieces.Length; i++)
                 {
                     byte k = 1;
-                    int x = king.Position.x + k;
+                    var x = king.Position.x + k;
                     //right direction
                     while (x < Board.Size)
                     {
@@ -68,15 +70,15 @@ namespace Assets.Scripts
                                 count++;
                                 break; //first check if there's an enemy rook, if there's one we break because a piece found later on can't cover the king ;
                             }
-                            else if (piece.Color == king.Color)
-                            {
+
+                            if (piece.Color ==
+                                king.Color)
                                 break; // we found a friendly piece before an enemy piece , meaning the king is covered (only from the right side)
-                            }
                         }
 
                         k++;
                     }
-                    
+
                     x = king.Position.x - k;
                     //left direction
                     while (x > 0)
@@ -89,10 +91,10 @@ namespace Assets.Scripts
                                 count++;
                                 break; //first check if there's an enemy rook, if there's one we break because a piece found later on can't cover the king ;
                             }
-                            else if (piece.Color == king.Color)
-                            {
+
+                            if (piece.Color ==
+                                king.Color)
                                 break; // we found a friendly piece before an enemy piece , meaning the king is covered (only from the right side)
-                            }
                         }
 
                         k--;
@@ -102,7 +104,11 @@ namespace Assets.Scripts
 
             return count;
         }
-        public static byte IsAttackedByQueens(in PieceInfo king, in PieceInfo queen, Span<PieceInfo> pieces){}
+
+        public static byte IsAttackedByQueens(in PieceInfo king, in PieceInfo queen, Span<PieceInfo> pieces)
+        {
+            byte attackers = 0;
+            return attackers;
+        }
     }
-    
 }

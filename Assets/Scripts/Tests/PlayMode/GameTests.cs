@@ -1,15 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
-using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Enums;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using static Assets.Scripts.Utility;
 
 namespace Tests.PlayMode
 {
@@ -26,7 +22,7 @@ namespace Tests.PlayMode
 
             yield return new WaitForSeconds(1.1f);
 
-            Dictionary<Vector2Int, PieceMovementComponent> pieces = GameManager.Instance.Pieces;
+            var pieces = GameManager.Instance.Pieces;
             //Arrange
             //// e4
             var e4pawn = pieces[new Vector2Int(5, 2)]; // Pawn At (5.2)
@@ -66,7 +62,7 @@ namespace Tests.PlayMode
             Assert.AreEqual(move6, MoveType.Normal);
             //// Ba4
             var move7 = whiterighBishop.MovePiece(pieces, new Vector2Int(1, 4));
-            Assert.AreEqual(new Vector2Int(1, 4), ((Vector2Int)whiterighBishop.CurrPos));
+            Assert.AreEqual(new Vector2Int(1, 4), (Vector2Int)whiterighBishop.CurrPos);
             Assert.AreEqual(move1, MoveType.Normal);
             ////Nf6
             var blackRightKnight2 = pieces[new Vector2Int(7, 8)];
@@ -97,7 +93,5 @@ namespace Tests.PlayMode
             Assert.IsTrue(canMove);
             Assert.AreEqual(new Vector2Int(4, 1), (Vector2Int)whiteQueen.CurrPos);
         }
-
-
     }
 }
