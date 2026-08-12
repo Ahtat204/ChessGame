@@ -39,7 +39,7 @@ namespace Assets.Scripts.Classes
         /// <param name="turn">The current player's turn.</param>
         /// <returns>1 if valid, otherwise 0.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Mapper(PieceColor color, PlayerTurn turn)
+        public static byte Mapper(PieceColor color, PlayerTurn turn)
         {
             if (turn == PlayerTurn.BlackPlayer && color == PieceColor.Black) return 1;
             if (turn == PlayerTurn.WhitePlayer && color == PieceColor.White) return 1;

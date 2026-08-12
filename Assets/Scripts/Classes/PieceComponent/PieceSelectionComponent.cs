@@ -31,7 +31,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// <summary>
         ///     Delegate for broadcast notifications when a valid movement target is finalized.
         /// </summary>
-        public int canMove;
+        public byte canMove;
 
         [SerializeField] private Vector2Int target;
         private Piece _piece;

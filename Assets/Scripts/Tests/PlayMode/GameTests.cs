@@ -6,7 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-
+using static Tests.PlayMode.Helper;
 namespace Tests.PlayMode
 {
     public class GameTests
@@ -26,34 +26,39 @@ namespace Tests.PlayMode
             //Arrange
             //// e4
             var e4pawn = pieces[new Vector2Int(5, 2)]; // Pawn At (5.2)
-            Assert.IsNotNull(e4pawn);
+            /*Assert.IsNotNull(e4pawn);
             var move1 = e4pawn.MovePiece(pieces, new Vector2Int(5, 4));
             Assert.AreEqual(new Vector2Int(5, 4), (Vector2Int)e4pawn.CurrPos);
-            Assert.AreEqual(move1, MoveType.Normal);
+            Assert.AreEqual(move1, MoveType.Normal);*/
+            ArrangeAndAssert(pieces, e4pawn,new Vector2Int(5, 4), MoveType.Normal);
             ////e5
             var e5pawn = pieces[new Vector2Int(5, 7)];
-            Assert.IsNotNull(e5pawn);
+            /*Assert.IsNotNull(e5pawn);
             var move2 = e5pawn.MovePiece(pieces, new Vector2Int(5, 5));
             Assert.AreEqual(new Vector2Int(5, 5), (Vector2Int)e5pawn.CurrPos);
-            Assert.AreEqual(move2, MoveType.Normal);
+            Assert.AreEqual(move2, MoveType.Normal);*/
+            ArrangeAndAssert(pieces, e5pawn, new Vector2Int(5, 5), MoveType.Normal);
             ////Nf3
             var whiteRightKnight = pieces[new Vector2Int(7, 1)];
-            Assert.IsNotNull(whiteRightKnight);
+            /*Assert.IsNotNull(whiteRightKnight);
             var move3 = whiteRightKnight.MovePiece(pieces, new Vector2Int(6, 3));
             Assert.AreEqual(new Vector2Int(6, 3), (Vector2Int)whiteRightKnight.CurrPos);
-            Assert.AreEqual(move3, MoveType.Normal);
+            Assert.AreEqual(move3, MoveType.Normal);*/
+            ArrangeAndAssert(pieces, whiteRightKnight, new Vector2Int(6, 3), MoveType.Normal);
             ////Nc6
             var blackLeftKnight = pieces[new Vector2Int(2, 8)];
-            Assert.IsNotNull(blackLeftKnight);
+            /*Assert.IsNotNull(blackLeftKnight);
             var move4 = blackLeftKnight.MovePiece(pieces, new Vector2Int(3, 6));
             Assert.AreEqual(new Vector2Int(3, 6), (Vector2Int)blackLeftKnight.CurrPos);
-            Assert.AreEqual(move4, MoveType.Normal);
+            Assert.AreEqual(move4, MoveType.Normal);*/
+            ArrangeAndAssert(pieces, blackLeftKnight, new Vector2Int(6, 3), MoveType.Normal);
             ////Bb5
             var whiterighBishop = pieces[new Vector2Int(6, 1)];
             Assert.IsNotNull(whiterighBishop);
             var move5 = whiterighBishop.MovePiece(pieces, new Vector2Int(2, 5));
             Assert.AreEqual(new Vector2Int(2, 5), (Vector2Int)whiterighBishop.CurrPos);
             Assert.AreEqual(move5, MoveType.Normal);
+            ArrangeAndAssert(pieces, whiterighBishop,  new Vector2Int(2, 5),MoveType.Normal);
             ////a6
             var a7pawn = pieces[new Vector2Int(1, 7)];
             Assert.IsNotNull(a7pawn);
@@ -63,7 +68,7 @@ namespace Tests.PlayMode
             //// Ba4
             var move7 = whiterighBishop.MovePiece(pieces, new Vector2Int(1, 4));
             Assert.AreEqual(new Vector2Int(1, 4), (Vector2Int)whiterighBishop.CurrPos);
-            Assert.AreEqual(move1, MoveType.Normal);
+            Assert.AreEqual(move7, MoveType.Normal);
             ////Nf6
             var blackRightKnight2 = pieces[new Vector2Int(7, 8)];
             Assert.IsNotNull(blackRightKnight2);
@@ -92,6 +97,18 @@ namespace Tests.PlayMode
             canMove = pieces.ValidatePath(new Vector2Int(4, 1), new Vector2Int(6, 3));
             Assert.IsTrue(canMove);
             Assert.AreEqual(new Vector2Int(4, 1), (Vector2Int)whiteQueen.CurrPos);
+        }
+
+        [UnityTest]
+        public IEnumerator TestQueensGambitOpening()
+        {
+            SceneManager.LoadScene("GameScene");
+            yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "GameScene");
+            yield return new WaitForSeconds(1.1f);
+            IDictionary pieces = GameManager.Instance.Pieces;
+            Assert.IsNotNull(pieces);
+            var d4Pawn = pieces[new Vector2Int(4, 2)];
+            Assert.IsNotNull(d4Pawn);
         }
     }
 }
