@@ -1,4 +1,4 @@
-using static Assets.Scripts.Utility;
+using static Assets.Scripts.Classes.Utility;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.GameClasses.Validators;
 using Assets.Scripts.Enums;
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Classes.PieceComponent
         /// <summary>
         /// Global event triggered when a piece selection lifecycle completes a movement instruction.
         /// </summary>
-        public static event OnPieceSelected OnPieceSelectedEvent;
+        public static event Utility.OnPieceSelected OnPieceSelectedEvent;
 
         /// <inheritdoc />
         public Vector2Int Target

@@ -25,7 +25,7 @@ namespace Assets.Scripts.Classes.Pieces
         /// Standard material value. In strategic evaluation, the Queen is the 
         /// primary force-multiplier for tactical combinations.
         /// </summary>
-        public override uint Value => 9;
+        public override byte Value => 9;
 
         /// <inheritdoc cref="Piece.PossibleMoves"/>
         public override IReadOnlyList<Vector2Int> PossibleMoves => _possibleMoves;

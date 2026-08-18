@@ -11,9 +11,6 @@ namespace Assets.Scripts.Classes.GameClasses
     /// shared engine resources like the Tilemap and the Main Camera. 
     /// This prevents redundant expensive lookups (e.g., Camera.main) across the entity stack
     /// </remarks>
-    /// <list type="fields">
-    ///
-    /// </list>
     public sealed class Board : MonoBehaviour
     {
         /**
@@ -29,9 +26,15 @@ namespace Assets.Scripts.Classes.GameClasses
          */
         public readonly Vector2Int BlackLeftRook = new(1, 8);
         /**
+         * 
+         */
+        /**
          *a1
          */
         public readonly Vector2Int WhiteLeftRook = new(1, 1);
+        /**
+         * 
+         */
         /**
          * g8
          */
