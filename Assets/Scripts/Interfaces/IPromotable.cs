@@ -9,6 +9,11 @@ namespace Assets.Scripts.Interfaces
     /// </summary>
     public interface IPromotable
     {
-        public Piece Promote(Pawn pawn);
+        
+    }
+
+    public interface IPromote
+    {
+        public IPromotable Promotable();
     }
 }

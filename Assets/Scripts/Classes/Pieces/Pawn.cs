@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Classes.GameClasses;
+using Assets.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Classes.Pieces
     /// 2. Diagonal displacement is restricted to capturing maneuvers.
     /// 3. Initial state allows for double-impulse movement (2 cells).
     /// </remarks>
-    public sealed class Pawn : Piece
+    public sealed class Pawn : Piece,IPromote
     {
         /// <summary>
         /// Internal buffer for potential moves, including standard, double-step, 
@@ -64,6 +65,16 @@ namespace Assets.Scripts.Classes.Pieces
             // 3. Diagonal Captures (requires opponent occupancy or En Passant state)
             _possibleMoves.AddIfValid(positionCell.x + 1, positionCell.y + forward);
             _possibleMoves.AddIfValid(positionCell.x - 1, positionCell.y + forward);
+        }
+
+        /*public static explicit operator Queen(Pawn pawn)
+        {
+           
+           
+        }*/
+        public IPromotable Promotable()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

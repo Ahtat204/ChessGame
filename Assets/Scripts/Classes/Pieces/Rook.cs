@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Enums;
+using Assets.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Pieces
@@ -12,7 +13,7 @@ namespace Assets.Scripts.Classes.Pieces
     /// The Rook's influence is mapped across the cardinal axes (X and Y). 
     /// It is a critical component for endgame "ladder" maneuvers and King safety (Castling).
     /// </remarks>
-    public sealed class Rook : Piece
+    public sealed class Rook : Piece,IPromotable
     {
         /// <summary>
         /// Material value of the Rook. 
