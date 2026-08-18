@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Assets.Scripts.Classes.PieceComponent;
+using Assets.Scripts.Classes.Pieces;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Structs;
 using UnityEngine;

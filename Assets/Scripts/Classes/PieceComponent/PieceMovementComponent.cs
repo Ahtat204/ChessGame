@@ -2,9 +2,11 @@
 using System.Linq;
 using Assets.Scripts.Classes.GameClasses;
 using Assets.Scripts.Classes.Pieces;
+using static Assets.Scripts.Classes.GameClasses.GameManager;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
+using static UnityEngine.Vector2;
 namespace Assets.Scripts.Classes.PieceComponent
 {
     /// <summary>
@@ -65,8 +67,8 @@ namespace Assets.Scripts.Classes.PieceComponent
         private void Start()
         {
             CurrPos = Board.BoardInstance.tilemap.WorldToCell(transform.position);
-            GameManager.Instance.Pieces ??= new();
-            GameManager.Instance.Pieces?.Add((Vector2Int)CurrPos, this);
+            Instance.Pieces ??= new();
+            Instance.Pieces?.Add((Vector2Int)CurrPos, this);
             SelectionComponent = GetComponent<PieceSelectionComponent>();
         }
 
@@ -125,8 +127,8 @@ namespace Assets.Scripts.Classes.PieceComponent
         private MoveType MoveToEmptySquare(Dictionary<Vector2Int, PieceMovementComponent> pieces,
             Vector2Int targetSquare, Vector3 targetPos, Vector3Int pos, Vector3 currentPos)
         {
-            transform.position = Vector2.MoveTowards(currentPos, targetPos, 10);
-            GameManager.Instance.CommandStack.Push(targetSquare);
+            transform.position = MoveTowards(currentPos, targetPos, 10);
+            Instance.CommandStack.Push(targetSquare);
             SelectionComponent.OnDeselect();
 
             if (!pos.Equals(CurrPos))
@@ -157,8 +159,8 @@ namespace Assets.Scripts.Classes.PieceComponent
             Vector3 currentPos,
             PieceMovementComponent occupied)
         {
-            transform.position = Vector2.MoveTowards(currentPos, targetPos, 10);
-            GameManager.Instance.CommandStack.Push(targetSquare);
+            transform.position = MoveTowards(currentPos, targetPos, 10);
+            Instance.CommandStack.Push(targetSquare);
             SelectionComponent.OnDeselect();
 
             pieces.Remove(targetSquare);
