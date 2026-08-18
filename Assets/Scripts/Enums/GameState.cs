@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Assets.Scripts.Enums
+﻿namespace Assets.Scripts.Enums
 {
     /// <summary>
     /// Represents the current state of the Game
