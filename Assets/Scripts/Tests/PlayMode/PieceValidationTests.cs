@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Assets.Scripts.Classes.GameClasses;
-using Assets.Scripts.Classes.PieceComponent;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using static Assets.Scripts.Utility;
+using static Assets.Scripts.Classes.Utility;
 
 namespace Tests.PlayMode
 {
@@ -19,8 +17,9 @@ namespace Tests.PlayMode
             SceneManager.LoadScene("GameScene");
             yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "GameScene");
             yield return new WaitForSeconds(1.1f);
-            Dictionary<Vector2Int, PieceMovementComponent> pieces = GameManager.Instance.Pieces;
-            var e4Pawn = pieces[new Vector2Int(5, 2)] ?? throw new ArgumentNullException("pieces[new Vector2Int(5, 2)]"); // Pawn At (5.2)
+            var pieces = GameManager.Instance.Pieces;
+            var e4Pawn = pieces[new Vector2Int(5, 2)] ??
+                         throw new ArgumentNullException("pieces[new Vector2Int(5, 2)]"); // Pawn At (5.2)
             Assert.IsNotNull(e4Pawn);
             var move1 = PawnValidator(pieces, (Vector2Int)e4Pawn.CurrPos, new Vector2Int(6, 3));
             Assert.AreEqual(move1, false);

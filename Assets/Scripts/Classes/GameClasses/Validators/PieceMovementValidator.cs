@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Classes.PieceComponent;
 using Assets.Scripts.Classes.Pieces;
 using UnityEngine;
-using static Assets.Scripts.Utility;
+using static Assets.Scripts.Classes.Utility;
 
 namespace Assets.Scripts.Classes.GameClasses.Validators
 {
     /// <summary>
-    /// this is class is responsible for preventing a piece from overtake a friendly piece or take its place
+    ///     this is class is responsible for preventing a piece from overtake a friendly piece or take its place
     /// </summary>
     public static class PieceMovementValidator
     {
         /// <summary>
-        /// Validate Piece Move and stop any penetration ,but it delegates the actual verification to a Utility function,in case of knight ,it always returns true , 
+        ///     Validate Piece Move and stop any penetration ,but it delegates the actual verification to a Utility function,in
+        ///     case of knight ,it always returns true ,
         /// </summary>
         /// <param name="pieces">this is the single source of truth of the positions of all the 32 pieces</param>
         /// <param name="start">the position of the piece</param>
@@ -24,8 +24,8 @@ namespace Assets.Scripts.Classes.GameClasses.Validators
         {
             pieces.TryGetValue(start, out var component);
             var piece = component?.piece;
-            int dx = end.x - start.x; //difference between int the current position's x and target position's x 
-            int dy = end.y - start.y; //difference between int the current position's y and target position's y 
+            var dx = end.x - start.x; //difference between int the current position's x and target position's x 
+            var dy = end.y - start.y; //difference between int the current position's y and target position's y 
 
             return piece switch
             {
