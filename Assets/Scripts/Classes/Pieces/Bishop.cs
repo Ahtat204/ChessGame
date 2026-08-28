@@ -17,7 +17,7 @@ namespace Assets.Scripts.Classes.Pieces
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PieceMovementComponent))]
     [RequireComponent(typeof(PieceSelectionComponent))]
-    public sealed class Bishop : Piece,IPromotable
+    public sealed class Bishop : Piece
     {
         /// <summary>
         /// Material value of the Bishop. 
